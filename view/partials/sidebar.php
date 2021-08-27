@@ -62,12 +62,12 @@
 							<div class="collapse" id="producto">
 								<ul class="nav nav-collapse">
 									<li>
-										<a href="">
+										<a href="<?php echo getUrl("producto","proyecto","consult");?>">
 											<span class="sub-item">Proyecto</span>
 										</a>
 									</li>
 									<li>
-										<a href="">
+										<a href="<?php echo getUrl("producto","productobase","consult");?>">
 											<span class="sub-item">Producto Base</span>
 										</a>
 									</li>
@@ -83,7 +83,7 @@
 							<div class="collapse" id="procesos">
 								<ul class="nav nav-collapse">
 									<li>
-										<a href="">
+										<a href="<?php echo getUrl("procesos","procesos","consult");?>">
 											<span class="sub-item">Gestionar proceso</span>
 										</a>
 									</li>
@@ -104,7 +104,7 @@
 							<div class="collapse" id="maquina">
 								<ul class="nav nav-collapse">
 									<li>
-										<a href="">
+										<a href="<?php echo getUrl("maquina","maquina","consult");?>">
 											<span class="sub-item">Gestionar maquina</span>
 										</a>
 									</li>
