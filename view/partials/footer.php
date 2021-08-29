@@ -238,3 +238,13 @@
 			fillColor: "rgba(255, 165, 52, .14)",
 		});
 	</script>
+
+
+    <!-- agregados de STPO  -->
+	<script src="js/general.js"></script>
+
+	<!-- importacion de scrips especificos de cada url -->
+
+	<script src="js/home.js"></script>
+	<script src="js/maquina.js"></script>
+

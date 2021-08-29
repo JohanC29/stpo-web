@@ -16,18 +16,18 @@ Circles.create({
 })
 
 //Notify
-$.notify({
-	icon: 'flaticon-alarm-1',
-	title: 'Trabajo de grado',
-	message: 'Desarrollado por la universidad cooperativa.',
-},{
-	type: 'info',
-	placement: {
-		from: "bottom",
-		align: "right"
-	},
-	time: 1000,
-});
+// $.notify({
+// 	icon: 'flaticon-alarm-1',
+// 	title: 'Trabajo de grado',
+// 	message: 'Desarrollado por la universidad cooperativa.',
+// },{
+// 	type: 'info',
+// 	placement: {
+// 		from: "bottom",
+// 		align: "right"
+// 	},
+// 	time: 1000,
+// });
 
 // JQVmap
 $('#map-example').vectorMap(
