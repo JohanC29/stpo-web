@@ -23,8 +23,7 @@
                     <div class="card-head-row">
                         <div class="card-title">Gestion de Maquina</div>
                         <div class="card-tools">
-                            <button class="btn btn-primary btn-round ml-auto" data-toggle="modal"
-                                data-target="#agregarMaquinaModal">
+                            <button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#agregarMaquinaModal">
                                 <i class="fa fa-plus"></i>
                                 Agregar Maquina
                             </button>
@@ -59,32 +58,89 @@
                                             <div class="col-sm-12">
                                                 <div class="form-group form-group-default">
                                                     <label>Identificador Maquina</label>
-                                                    <input id="idenMaquina" name="idenMaquina" type="text" class="form-control"
-                                                        placeholder="Ingrese identificador Maquina">
+                                                    <input id="idenMaquina" name="idenMaquina" type="text" class="form-control" placeholder="Ingrese identificador Maquina">
                                                 </div>
                                             </div>
                                             <div class="col-sm-12">
                                                 <div class="form-group form-group-default">
                                                     <label>Nombre Maquina</label>
-                                                    <input id="nomMaquina" name="nomMaquina" type="text" class="form-control"
-                                                        placeholder="Ingerese nombre Maquina">
+                                                    <input id="nomMaquina" name="nomMaquina" type="text" class="form-control" placeholder="Ingerese nombre Maquina">
                                                 </div>
                                             </div>
                                         </div>
                                     </form>
                                 </div>
                                 <div class="modal-footer no-bd">
-                                    <button type="button" id="agregarMaquina" data-url="<?php echo getUrl('maquina','maquina','insertar',false,'ajax');?>" class="btn btn-primary">Agregar</button>
+                                    <button type="button" id="agregarMaquina" data-url="<?php echo getUrl('maquina', 'maquina', 'insertar', false, 'ajax'); ?>" class="btn btn-primary">Agregar</button>
                                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                                 </div>
                             </div>
                         </div>
                     </div>
 
+
+
+                    <!-- modal editar -->
+
+                    <div class="modal fade" id="editarMaquinaModal" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header no-bd">
+                                    <h5 class="modal-title">
+                                        <span class="fw-mediumbold">
+                                            Editar</span>
+                                        <span class="fw-light">
+                                            Maquina
+                                        </span>
+                                    </h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p class="small">Por favor ingrese los datos para actualizar la informacion de la maquina: </p>
+                                    <form id="formEditarMaquina">
+                                        <div class="row">
+                                        <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-sm-8" style="text-align: right;">
+                                                        <label >Codigo Maquina</label>
+                                                        </div>
+                                                        <div class="col-sm-4" >
+                                                        <input id="editCodigoMaquina" name="editCodigoMaquina" type="text" class="form-control" style="text-align: right;" readonly>        
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="form-group form-group-default">
+                                                    <label>Identificador Maquina</label>
+                                                    <input id="editIdenMaquina" name="editIdenMaquina" type="text" class="form-control" placeholder="Ingrese identificador Maquina">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="form-group form-group-default">
+                                                    <label>Nombre Maquina</label>
+                                                    <input id="editNomMaquina" name="editNomMaquina" type="text" class="form-control" placeholder="Ingerese nombre Maquina">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer no-bd">
+                                    <button type="button" id="editarMaquina" data-url="<?php echo getUrl('maquina', 'maquina', 'editar', false, 'ajax'); ?>" class="btn btn-primary">Agregar</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
                     <!-- Table -->
                     <div class="table-responsive">
                         <table id="tablaGestionarMaquina" class="display table table-striped table-hover">
-                            
+
                             <thead>
                                 <tr>
                                     <th>Codigo</th>
@@ -102,7 +158,7 @@
                                 </tr>
                             </tfoot>
                             <tbody>
-                                
+
                                 <?php
                                 /*
                                 foreach ($maquinas as $maq) {

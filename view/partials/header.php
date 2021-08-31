@@ -35,4 +35,7 @@
 
 	<!-- CSS Just for demo purpose, don't include it in your project -->
 	<link rel="stylesheet" href="../assets/css/demo.css" />
+
+	<!-- loading -->
+	<link rel="stylesheet" href="css/loading.css" />
 </head>

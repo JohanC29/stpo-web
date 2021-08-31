@@ -3,6 +3,9 @@
     include_once '../lib/helpersLogin.php';
     include_once '../view/partials/header.php';
     
+    // loading
+    include_once '../view/partials/loading.php';
+    
     include_once '../view/partials/navbar.php';
     include_once '../view/partials/sidebar.php';
         echo "<div class='main-panel'>";
