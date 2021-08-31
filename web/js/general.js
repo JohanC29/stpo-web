@@ -4,9 +4,9 @@
 $(document).ready(function () {
     
     // Add Row
-			$('#tablaGestionar').DataTable({
-				"pageLength": 5,
-			});
+    $('#tablaGestionar').DataTable({
+        "pageLength": 5,
+    });
     
 });
 

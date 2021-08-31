@@ -27,5 +27,20 @@
 
             return end($account)+1;
         }
+
+        public function convertirJSON($sql){
+            $result=mysqli_query($this->getConnect(),$sql);
+
+            $result_array = array();
+            if (mysqli_num_rows($result) > 0) {
+                $item_array = array();
+                while($row = mysqli_fetch_assoc($result)) {
+                    $result_array[]=$row;
+                }
+                return json_encode($result_array);                
+            }
+            return -1;
+            
+        }
     }
 ?>

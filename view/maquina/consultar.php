@@ -87,24 +87,24 @@
                             
                             <thead>
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Position</th>
-                                    <th>Office</th>
+                                    <th>Codigo</th>
+                                    <th>Identificador</th>
+                                    <th>Nombre</th>
                                     <th style="width: 10%">Action</th>
                                 </tr>
                             </thead>
                             <tfoot>
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Position</th>
-                                    <th>Office</th>
+                                    <th>Codigo</th>
+                                    <th>Identificador</th>
+                                    <th>Nombre</th>
                                     <th>Action</th>
                                 </tr>
                             </tfoot>
                             <tbody>
                                 
                                 <?php
-                                
+                                /*
                                 foreach ($maquinas as $maq) {
                                     echo '<tr>';
                                     echo "<td>".$maq['maq_codigo']."</td>";
@@ -136,7 +136,7 @@
                                     echo '</td>';
 
                                 }
-                                
+                                */
                                 ?>
                             </tbody>
                         </table>
