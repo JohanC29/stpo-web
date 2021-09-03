@@ -23,12 +23,10 @@
                     <div class="card-head-row">
                         <div class="card-title">Gestion de Procesos</div>
                         <div class="card-tools">
-                            <a href="#" class="btn btn-info btn-border btn-round btn-sm">
-                                <span class="btn-label">
-                                    <i class="fas fa-plus"></i>
-                                </span>
+                            <button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#agregarProcesoModal">
+                                <i class="fa fa-plus"></i>
                                 Agregar Proceso
-                            </a>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -38,8 +36,199 @@
                         <canvas id="statisticsChart"></canvas>
                     </div>
                     <div id="myChartLegend"></div> -->
+                    <div class="modal fade" id="agregarProcesoModal" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header no-bd">
+                                    <h5 class="modal-title">
+                                        <span class="fw-mediumbold">
+                                            Agregar</span>
+                                        <span class="fw-light">
+                                            Proceso
+                                        </span>
+                                    </h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p class="small">Por favor ingrese los datos para agregar el proceso: </p>
+                                    <form id="formAgregarProceso">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="form-group form-group-default">
+                                                    <label>Identificador Proceso</label>
+                                                    <input id="idenProceso" name="idenProceso" type="text" class="form-control" placeholder="Ingrese identificador Proceso">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="form-group form-group-default">
+                                                    <label>Nombre PRoceso</label>
+                                                    <input id="nomProceso" name="nomProceso" type="text" class="form-control" placeholder="Ingerese nombre Proceso">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer no-bd">
+                                    <button type="button" id="agregarProceso" data-url="<?php echo getUrl('procesos', 'procesos', 'insertar', false, 'ajax'); ?>" class="btn btn-primary">Agregar</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <!-- modal editar -->
+
+                    <div class="modal fade" id="editarProcesoModal" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header no-bd">
+                                    <h5 class="modal-title">
+                                        <span class="fw-mediumbold">
+                                            Editar</span>
+                                        <span class="fw-light">
+                                            Proceso
+                                        </span>
+                                    </h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p class="small">Por favor ingrese los datos para actualizar la informacion del proceso: </p>
+                                    <form id="formEditarProceso">
+                                        <div class="row">
+                                        <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-sm-8" style="text-align: right;">
+                                                        <label >Codigo Proceso</label>
+                                                        </div>
+                                                        <div class="col-sm-4" >
+                                                        <input id="editCodigoProceso" name="editCodigoProceso" type="text" class="form-control" style="text-align: right;" readonly>        
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="form-group form-group-default">
+                                                    <label>Identificador Proceso</label>
+                                                    <input id="editIdenProceso" name="editIdenProceso" type="text" class="form-control" placeholder="Ingrese identificador Maquina">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="form-group form-group-default">
+                                                    <label>Nombre Proceso</label>
+                                                    <input id="editNomProceso" name="editNomProceso" type="text" class="form-control" placeholder="Ingerese nombre Maquina">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer no-bd">
+                                    <button type="button" id="editarProceso" data-url="<?php echo getUrl('procesos', 'procesos', 'editar', false, 'ajax'); ?>" class="btn btn-primary">Agregar</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Table -->
+                    <div class="table-responsive">
+                        <table id="tablaGestionarProceso" class="display table table-striped table-hover">
+
+                            <thead>
+                                <tr>
+                                    <th>Codigo</th>
+                                    <th>Identificador</th>
+                                    <th>Nombre</th>
+                                    <th style="width: 10%">Action</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>Codigo</th>
+                                    <th>Identificador</th>
+                                    <th>Nombre</th>
+                                    <th>Action</th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+
+
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row mt--2">
+        <div class="col-md-6">
+            <div class="card full-height">
+                <div class="card-body">
+                    <div class="card-title">Estadisticas del sistema</div>
+                    <div class="card-category">
+                        Informacion diaria sobre estadisticas en el sistema.
+                    </div>
+                    <div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
+                        <div class="px-2 pb-2 pb-md-0 text-center">
+                            <div id="circles-1"></div>
+                            <h6 class="fw-bold mt-3 mb-0">Usuarios trabajando</h6>
+                        </div>
+                        <div class="px-2 pb-2 pb-md-0 text-center">
+                            <div id="circles-2"></div>
+                            <h6 class="fw-bold mt-3 mb-0">Ordenes en sistema</h6>
+                        </div>
+                        <div class="px-2 pb-2 pb-md-0 text-center">
+                            <div id="circles-3"></div>
+                            <h6 class="fw-bold mt-3 mb-0">Maquinaria en operacion</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card full-height">
+                <div class="card-body">
+                    <div class="card-title">
+                        Pendiente - Total income & spend statistics
+                    </div>
+                    <div class="row py-3">
+                        <div class="col-md-4 d-flex flex-column justify-content-around">
+                            <div>
+                                <h6 class="fw-bold text-uppercase text-success op-8">
+                                    Total Income
+                                </h6>
+                                <h3 class="fw-bold">$9.782</h3>
+                            </div>
+                            <div>
+                                <h6 class="fw-bold text-uppercase text-danger op-8">
+                                    Total Spend
+                                </h6>
+                                <h3 class="fw-bold">$1,248</h3>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div id="chart-container">
+                                <canvas id="totalIncomeChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+
+
+
 </div>
