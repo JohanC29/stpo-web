@@ -87,6 +87,11 @@
 											<span class="sub-item">Gestionar proceso</span>
 										</a>
 									</li>
+									<li>
+										<a href="<?php echo getUrl("procesos","procesos","consultAsignacionMaquina");?>">
+											<span class="sub-item">Asignacion Maquina para proceso</span>
+										</a>
+									</li>
 									<!-- <li>
 										<a href="">
 											<span class="sub-item">Gestionar Base</span>

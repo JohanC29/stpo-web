@@ -114,6 +114,13 @@ class ProcesosController {
 
     }
 
+    public function consultAsignacionMaquina(){
+        //$obj = new ProcesosModel();
+        //$sql = "SELECT * FROM unidadOperativa";
+        //$unidadesOperativas = $obj->consult($sql);
+        include_once '../view/procesos/ProcesoMaquina/consultar.php';
+    }
+
 
 }
 
