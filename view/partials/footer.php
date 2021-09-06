@@ -239,7 +239,7 @@
 		});
 	</script>
 
-
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <!-- agregados de STPO  -->
 	<script src="js/general.js"></script>
 

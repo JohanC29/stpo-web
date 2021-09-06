@@ -37,16 +37,18 @@
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <label>Codigo Proceso</label>
-                                    <input id="" name="" type="text" class="form-control"
+                                    <input id="idCodigoProceso" name="idCodigoProceso" type="text" class="form-control"
                                         placeholder="Ingrese identificador Proceso">
                                 </div>
                             </div>
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <label>Identificador Proceso</label>
-                                    <input id="" name="" type="text" class="form-control"
+                                    <input id="idenProcesoA" name="idenProcesoA"  class="form-control"
                                         placeholder="Ingrese identificador Proceso">
+                                        
                                 </div>
+                                
                             </div>
                         </div>
                     </div>
@@ -191,7 +193,7 @@
 
                     <!-- Table -->
                     <div class="table-responsive">
-                        <table id="tablaGestionarProceso" class="display table table-striped table-hover">
+                        <table id="" class="display table table-striped table-hover">
                             <thead>
                                 <tr>
                                     <th>Codigo</th>

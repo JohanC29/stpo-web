@@ -3,6 +3,7 @@ $(document).ready(function () {
 
   // Proceso de -- Gestionar Maquina
   // Se Crea la tabla y se deja activa para el resto de procesos
+  
   var table = $("#tablaGestionarProceso").DataTable({
     ajax: {
       url: "ajax.php?modulo=procesos&controlador=procesos&funcion=getTable",
@@ -15,6 +16,7 @@ $(document).ready(function () {
       { data: "est_codigo" },
     ],
   });
+  
 
   obtener_data_editar_proceso("#tablaGestionarProceso tbody", table);
 
@@ -100,6 +102,86 @@ $(document).ready(function () {
       { data: "est_codigo" },
     ],
   });
+
+
+  
+
+  // Auto completado - Identificador maquina
+
+  // idenProcesoA
+  var local_sourse = [
+    {id: 1,value: "proceso1"},
+    {id: 2,value: "proceso2"},
+    {id: 3,value: "proceso3"},
+    {id: 4,value: "proceso4"},
+    {id: 5,value: "proceso5"},
+    {id: 3,value: "proceso6"},
+    {id: 7,value: "proceso7"},
+    {id: 2,value: "proceso8"},
+    {id: 3,value: "proceso9"},
+    {id: 8,value: "proceso10"},
+    {id: 2,value: "proceso21"},
+    {id: 9,value: "proceso31"},
+    {id: 2,value: "proceso11"},
+    {id: 2,value: "proceso21"},
+    {id: 3,value: "proceso31"},
+    {id: 2,value: "proceso12"},
+    {id: 2,value: "proceso22"},
+    {id: 3,value: "proceso32"},
+  ];
+
+  
+  $("#idenProcesoA").autocomplete({
+    source: function( request, response ) {
+      // Fetch data
+      $.ajax({
+        url:"ajax.php?modulo=procesos&controlador=procesos&funcion=getProcesos",
+       type: 'POST',
+       dataType: "json",
+       data: {
+        search: request.term
+       },
+       success: function( data ) {
+        response( data );
+       }
+      });
+     },
+     select: function (event, ui) {
+      // Set selection
+      $('#idenProcesoA').val(ui.item.label); // display the selected text
+      $('#idCodigoProceso').val(ui.item.value); // save selected id to input
+      return false;
+      },
+      focus: function(event, ui){
+        $( "#idenProcesoA" ).val( ui.item.label );
+        $( "#idCodigoProceso" ).val( ui.item.value );
+        return false;
+      },
+  //   select:function(event,ui){
+  //     $(this).val(ui.item.value)
+  //     $("#idCodigoProceso").val(ui.item.id)
+  //   },
+  //   minLength:2,   
+  //  delay:500,   
+  //   autoFocus: true
+  // source:local_sourse
+  });
+  
+
+  // $.ajax({
+  //   url:"ajax.php?modulo=procesos&controlador=procesos&funcion=getProcesos",
+  //   type:"GET",
+  //   dataType:"json",
+  //   success:function(data){
+  //     console.log(data);
+  //     $("#idenProcesoA").fuzzycomplete(
+  //     data
+  //     );
+
+  //   }
+  // });
+
+
 
 });
 

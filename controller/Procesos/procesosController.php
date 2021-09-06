@@ -121,6 +121,42 @@ class ProcesosController {
         include_once '../view/procesos/ProcesoMaquina/consultar.php';
     }
 
+    public function getProcesos(){
+        
+
+        // $sql = "SELECT pro_identificador FROM proceso";
+        
+        // //$maquinasJSON = $obj->convertirJSON($sql);
+        // //echo getUrl("maquina","maquina","getTable",false,"ajax");
+        // //echo $maquinasJSON;
+
+        // $result_array = array();
+        // if (mysqli_num_rows($maquinas) > 0) {
+        //     $item_array = array();
+        //     while($row = mysqli_fetch_assoc($maquinas)) {
+        //           $result_array[]=$row;
+        //     }
+        //     echo json_encode($result_array);                
+        // }
+
+
+        //
+        if(isset($_POST['search'])){
+            $obj = new ProcesosModel();
+            $search = mysqli_real_escape_string($con,$_POST['search']);
+           
+            $sql = "SELECT * FROM proceso WHERE pro_identificador like'%".$search."%'";
+            $procesos = $obj->consult($sql);
+           
+            $response = array();
+            while($row = mysqli_fetch_array($procesos) ){
+              $response[] = array("value"=>$row['pro_codigo'],"label"=>$row['pro_identificador']);
+            }
+           
+            echo json_encode($response);
+           }
+    }
+
 
 }
 
