@@ -146,7 +146,7 @@
                                     <th>Codigo</th>
                                     <th>Identificador</th>
                                     <th>Nombre</th>
-                                    <th style="width: 10%">Action</th>
+                                    <th style="width: 10%">Acciones</th>
                                 </tr>
                             </thead>
                             <tfoot>
@@ -154,7 +154,7 @@
                                     <th>Codigo</th>
                                     <th>Identificador</th>
                                     <th>Nombre</th>
-                                    <th>Action</th>
+                                    <th>Acciones</th>
                                 </tr>
                             </tfoot>
                             <tbody>
