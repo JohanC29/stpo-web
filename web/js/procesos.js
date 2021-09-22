@@ -5,21 +5,21 @@ $(document).ready(function () {
   // Se Crea la tabla y se deja activa para el resto de procesos
   
   var table = $("#tablaGestionarProceso").DataTable({
-    ajax: {
-      url: "ajax.php?modulo=procesos&controlador=procesos&funcion=getTable",
-      dataSrc: "",
+    "ajax": {
+      "url": "ajax.php?modulo=procesos&controlador=procesos&funcion=getTable",
+      "dataSrc": "",
     },
-    columns: [
-      { data: "pro_codigo" },
-      { data: "pro_identificador" },
-      { data: "pro_nombre" },
-      { data: "est_codigo" },
-    ],
+    "columns": [
+      { "data": "pro_codigo" },
+      { "data": "pro_identificador" },
+      { "data": "pro_nombre" },
+      { "data": "est_codigo" },
+    ]
   });
   
 
   obtener_data_editar_proceso("#tablaGestionarProceso tbody", table);
-
+  
   $("#agregarProceso").click(function () {
     $(".loading").show();
     var url = $(this).attr("data-url");
@@ -38,7 +38,7 @@ $(document).ready(function () {
   });
 
   //Editar Proceso
-
+  
   $("#editarProceso").click(function () {
     $(".loading").show();
     var url = $(this).attr("data-url");
@@ -89,8 +89,11 @@ $(document).ready(function () {
     });
   });
 
+
+
+  
   // Proceso de Asignacion de Maquina
-  var tableAsignacionMaquina = $("#tablaGestionarProceso").DataTable({
+  var tableAsignacionMaquina = $("#tablaDetalleProcesoMaquina").DataTable({
     ajax: {
       url: "ajax.php?modulo=procesos&controlador=procesos&funcion=getTable",
       dataSrc: "",
@@ -181,6 +184,7 @@ $(document).ready(function () {
   //   }
   // });
 
+  
 
 
 });

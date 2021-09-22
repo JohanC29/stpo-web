@@ -193,7 +193,7 @@
 
                     <!-- Table -->
                     <div class="table-responsive">
-                        <table id="" class="display table table-striped table-hover">
+                        <table id="tablaDetalleProcesoMaquina" class="display table table-striped table-hover">
                             <thead>
                                 <tr>
                                     <th>Codigo</th>
