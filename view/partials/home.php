@@ -50,7 +50,7 @@
                     <div class="card full-height">
                         <div class="card-body">
                             <div class="card-title">
-                                Pendiente - Total income & spend statistics
+                                Estadistica de uso
                             </div>
                             <div class="row py-3">
                                 <div class="col-md-4 d-flex flex-column justify-content-around">
@@ -58,13 +58,13 @@
                                         <h6 class="fw-bold text-uppercase text-success op-8">
                                             Total Income
                                         </h6>
-                                        <h3 class="fw-bold">$9.782</h3>
+                                        <h3 class="fw-bold">9 veces</h3>
                                     </div>
                                     <div>
                                         <h6 class="fw-bold text-uppercase text-danger op-8">
                                             Total Spend
                                         </h6>
-                                        <h3 class="fw-bold">$1,248</h3>
+                                        <h3 class="fw-bold">2 veces</h3>
                                     </div>
                                 </div>
                                 <div class="col-md-8">
@@ -110,12 +110,12 @@
                 <div class="col-md-4">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <div class="card-title">Pendiente - Daily Sales</div>
-                            <div class="card-category">March 25 - April 02</div>
+                            <div class="card-title">Fecha de instalacion</div>
+                            <div class="card-category">Septiembre 11 </div>
                         </div>
                         <div class="card-body pb-0">
                             <div class="mb-4 mt-2">
-                                <h1>$4,578.58</h1>
+                                <h1>15 veces</h1>
                             </div>
                             <div class="pull-in">
                                 <canvas id="dailySalesChart"></canvas>
@@ -140,7 +140,7 @@
                 <div class="col-md-6">
                     <div class="card full-height">
                         <div class="card-header">
-                            <div class="card-title">PENDIENTE - Proceso Ordenes de trabajo</div>
+                            <div class="card-title">Proceso Ordenes de trabajo</div>
                         </div>
                         <div class="card-body">
                             <ol class="activity-feed">

@@ -1,6 +1,9 @@
 <?php
+    //session_destroy();
     session_start();
-    $_SESSION['auth']="ok";
+    
+   // $_SESSION['auth']="ok";
+
     function redirect($url){
         echo "<script type='text/javascript'>"
             ."window.location.href='$url'"

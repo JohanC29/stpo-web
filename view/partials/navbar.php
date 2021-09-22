@@ -43,8 +43,8 @@
 													class="avatar-img rounded" />
 											</div>
 											<div class="u-text">
-												<h4>Hizrian</h4>
-												<p class="text-muted">hello@example.com</p>
+												<h4>Johan</h4>
+												<p class="text-muted">johan@stpoucc.com</p>
 												<a href="profile.html" class="btn btn-xs btn-secondary btn-sm">View
 													Profile</a>
 											</div>
@@ -54,7 +54,7 @@
 										<div class="dropdown-divider"></div>
 										<a class="dropdown-item" href="#">Mi perfil</a>
 										<div class="dropdown-divider"></div>
-										<a class="dropdown-item" href="#">Cerrar sesion</a>
+										<a class="dropdown-item" href="<?php echo getUrl("login","login","logout")?>">Cerrar sesion</a>
 									</li>
 								</div>
 							</ul>
