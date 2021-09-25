@@ -115,9 +115,16 @@ class ProcesosController {
     }
 
     public function consultAsignacionMaquina(){
-        //$obj = new ProcesosModel();
-        //$sql = "SELECT * FROM unidadOperativa";
-        //$unidadesOperativas = $obj->consult($sql);
+        $obj = new ProcesosModel();
+
+        $sql = "SELECT p.pro_codigo,p.pro_nombre
+                FROM
+                proceso p
+                WHERE
+                    p.est_codigo = 1
+                ORDER BY p.pro_nombre";
+        
+        $procesos = $obj->consult($sql);
         include_once '../view/procesos/ProcesoMaquina/consultar.php';
     }
 
@@ -155,6 +162,72 @@ class ProcesosController {
            
             echo json_encode($response);
            }
+    }
+
+
+    public function getTableAsignacionMaquina(){
+        $obj = new ProcesosModel();
+
+        $id = $_GET['id'];
+        $idenP = $_GET['idenP'];
+
+        if($id!=0 && !is_null($idenP)){
+            $sql = "SELECT m.* FROM maquina m, 
+                    detalleprocesomaquina d, proceso p
+                    WHERE m.maq_codigo = d.maq_codigo
+                    AND d.pro_codigo = p.pro_codigo
+                    AND d.pro_codigo = $id 
+                    AND upper(p.pro_identificador) = upper('$idenP')
+                    ORDER BY m.est_codigo ASC";
+        }elseif ($id==0 && !is_null($idenP)) {
+            $sql = "SELECT m.* FROM maquina m, 
+                    detalleprocesomaquina d, proceso p
+                    WHERE m.maq_codigo = d.maq_codigo
+                    AND d.pro_codigo = p.pro_codigo
+                    AND upper(p.pro_identificador) = upper('$idenP')
+                    ORDER BY m.est_codigo ASC";
+        }elseif ($id!=0 && is_null($idenP)) {
+            $sql = "SELECT m.* FROM maquina m, 
+                    detalleprocesomaquina d, proceso p
+                    WHERE m.maq_codigo = d.maq_codigo
+                    AND d.pro_codigo = p.pro_codigo
+                    AND d.pro_codigo = $id
+                    ORDER BY m.est_codigo ASC";
+        }else{
+            $sql = "SELECT m.* FROM maquina m, 
+                    detalleprocesomaquina d, proceso p
+                    WHERE m.maq_codigo = d.maq_codigo
+                    AND d.pro_codigo = p.pro_codigo
+                    AND d.pro_codigo = 0 
+                    AND p.pro_identificador = 0
+                    ORDER BY m.est_codigo ASC";
+        }
+        
+        
+        $maquinas = $obj->consult($sql);
+        //$maquinasJSON = $obj->convertirJSON($sql);
+        //echo getUrl("maquina","maquina","getTable",false,"ajax");
+        //echo $maquinasJSON;
+
+        $result_array = array();
+        if (mysqli_num_rows($maquinas) > 0) {
+            $item_array = array();
+            while($row = mysqli_fetch_assoc($maquinas)) {
+                $btnAcciones = "<div class='form-button-action'><button type='button' title='Editar' class='editar btn btn-link btn-primary btn-lg' data-original-title='Editar'  data-toggle='modal' data-target='#editarProcesoModal' ><i class='fa fa-edit'></i></button>";
+                if($row['est_codigo']==1){
+                    $btnAcciones=$btnAcciones."<button estado = '1' type='button' data-toggle='tooltip' title='Eliminar'class='eliminar btn btn-link btn-danger' data-original-title='Eliminar'><i class='fas fa-eye-slash'></i></button>";
+                }else{
+                    $btnAcciones = $btnAcciones."<button estado = '2' type='button' data-toggle='tooltip' title='Habilitar' class='eliminar btn btn-link btn-success' data-original-title='Habilitar'><i class=' fas fa-eye'></i></button>";
+                }
+                $btnAcciones = $btnAcciones."</div>";
+                $row['est_codigo'] = $btnAcciones;
+                $result_array[]=$row;
+            }
+            echo json_encode($result_array);                
+        }
+        //return -1;
+        // print_r($result_array);
+
     }
 
 

@@ -36,16 +36,22 @@
                         <div class="col-md-8">
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <label>Codigo Proceso</label>
-                                    <input id="idCodigoProceso" name="idCodigoProceso" type="text" class="form-control"
+                                    <label>Identificador Proceso</label>
+                                    <input id="idenProcesoA" name="idenProcesoA" type="text" class="form-control"
                                         placeholder="Ingrese identificador Proceso">
                                 </div>
                             </div>
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <label>Identificador Proceso</label>
-                                    <input id="idenProcesoA" name="idenProcesoA"  class="form-control"
-                                        placeholder="Ingrese identificador Proceso">
+                                    <label>Nombre Proceso</label>
+                                        <select name="idCodigoProceso" id="idCodigoProceso" class="form-control">
+                                            <option value="0" selected>Seleccione Proceso</option>
+                                            <?php
+                                            foreach ($procesos as $rs) {
+                                                echo "<option value= '" . $rs['pro_codigo'] . "'>" . $rs['pro_nombre'] . "</option>";
+                                            }
+                                            ?>
+                                        </select>
                                         
                                 </div>
                                 
@@ -56,7 +62,7 @@
                         <!-- Botones de accion -->
                         <div class="ml-md-auto py-2 py-md-0 ">
                             <a href="#" class="btn btn-danger">Limpiar</a>
-                            <a href="#" class="btn btn-success">Consultar</a>
+                            <a href="#" class="btn btn-success" id="consultar">Consultar</a>
                         </div>
                     </div>
                 </div>
@@ -189,6 +195,8 @@
                             </div>
                         </div>
                     </div>
+
+                    <?php echo getUrl("costos","cotizacion","insertDetalleCotizacion",array('Ped_id' =>'hola','Ped_id2' =>'hola2'));?>
 
 
                     <!-- Table -->
