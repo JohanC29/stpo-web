@@ -31,16 +31,21 @@ class LoginController {
         $username = $_POST['username'];
         $password = $_POST['password'];
         if($username == "admin"){
-            $_SESSION['auth']="ok";
+            // $_SESSION['auth']="ok";
+            redirect("index.php");
         }else{
-            $_SESSION['errorLogin'] = "Usuario y/o Contraseña invalida. <br> Por favor vuelva a intentar.";
+            echo "<script type='text/javascript'>"."alert('Usuario y/o Contraseña invalida. <br> Por favor vuelva a intentar.')"."</script>";
+            
+            redirect("login.php");
+            // $_SESSION['errorLogin'] = "Usuario y/o Contraseña invalida. <br> Por favor vuelva a intentar.";
         }
-        redirect("index.php");
+        //redirect("index.php");
     }
 
     public function logout(){
         session_destroy();
-        echo "<script type='text/javascript'>"."window.location.href='index.php'"."</script>";
+        redirect('login.php');
+        //echo "<script type='text/javascript'>"."window.location.href='index.php'"."</script>";
     }
 }
 ?>

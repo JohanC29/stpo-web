@@ -4,9 +4,11 @@
     
    // $_SESSION['auth']="ok";
 
-    function redirect($url){
+    function redirect($url,$time=0){
         echo "<script type='text/javascript'>"
+        ."setTimeout(function(){"
             ."window.location.href='$url'"
+        ."},".$time.");"
             ."</script>";
     }
     function dd($var){

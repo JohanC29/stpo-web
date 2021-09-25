@@ -29,7 +29,7 @@
             <img src="../assets_metalPlast/img/logo-100px.png" alt="Computer" class="img">
         </div>
         <div class="login-container">
-            <form action="<?php echo getUrl("login","login","login")?>" method="POST">
+            <form action="<?php echo getUrl("login","login","login",false,"ajax")?>" method="POST">
                 <img src="../assets_metalPlast/img/4.avatarLogin.svg" alt="Avatar" class="avatar">
                 <h2>Bienvenido</h2>
                 <!-- Alerta -->
