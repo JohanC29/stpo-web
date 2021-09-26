@@ -171,35 +171,19 @@ class ProcesosController {
         $id = $_GET['id'];
         $idenP = $_GET['idenP'];
 
-        if($id!=0 && !is_null($idenP)){
-            $sql = "SELECT m.* FROM maquina m, 
-                    detalleprocesomaquina d, proceso p
-                    WHERE m.maq_codigo = d.maq_codigo
-                    AND d.pro_codigo = p.pro_codigo
-                    AND d.pro_codigo = $id 
-                    AND upper(p.pro_identificador) = upper('$idenP')
-                    ORDER BY m.est_codigo ASC";
-        }elseif ($id==0 && !is_null($idenP)) {
+        if ($id==0 && (!$idenP=='')) {
             $sql = "SELECT m.* FROM maquina m, 
                     detalleprocesomaquina d, proceso p
                     WHERE m.maq_codigo = d.maq_codigo
                     AND d.pro_codigo = p.pro_codigo
                     AND upper(p.pro_identificador) = upper('$idenP')
                     ORDER BY m.est_codigo ASC";
-        }elseif ($id!=0 && is_null($idenP)) {
+        }elseif ($id!=0 && ($idenP=='')) {
             $sql = "SELECT m.* FROM maquina m, 
                     detalleprocesomaquina d, proceso p
                     WHERE m.maq_codigo = d.maq_codigo
                     AND d.pro_codigo = p.pro_codigo
                     AND d.pro_codigo = $id
-                    ORDER BY m.est_codigo ASC";
-        }else{
-            $sql = "SELECT m.* FROM maquina m, 
-                    detalleprocesomaquina d, proceso p
-                    WHERE m.maq_codigo = d.maq_codigo
-                    AND d.pro_codigo = p.pro_codigo
-                    AND d.pro_codigo = 0 
-                    AND p.pro_identificador = 0
                     ORDER BY m.est_codigo ASC";
         }
         
@@ -227,6 +211,93 @@ class ProcesosController {
         }
         //return -1;
         // print_r($result_array);
+
+    }
+
+    public function validaAsigancionMaquina(){
+        $obj = new ProcesosModel();
+
+        $id = $_POST['id'];
+        
+
+        $result_array = array();
+        if($id != 0){
+            //Valida si existe proceso
+            
+
+            $sql = "SELECT COUNT(1) vaProceso
+            FROM proceso p 
+            WHERE
+            p.pro_codigo = $id";
+
+            $resultado = $obj->consult($sql);
+            if (mysqli_num_rows($resultado) > 0) {
+                while($row = mysqli_fetch_assoc($resultado)) {
+                    $result_array[]=$row;
+                }
+            }
+
+            if($result_array[0]['vaProceso'] >0){
+                //Valida si existe maquina asociada
+            $sql = "SELECT count(1) vaMaquina FROM
+            detalleprocesomaquina d 
+            where
+            d.pro_codigo = $id";
+
+            $resultado = $obj->consult($sql);
+            if (mysqli_num_rows($resultado) > 0) {
+                while($row = mysqli_fetch_assoc($resultado)) {
+                    $result_array[]=$row;
+                }
+            }
+            }else{
+                $result_array[]=['vaMaquina' => '0'];
+            }
+
+            echo json_encode($result_array);
+
+        }
+        if(isset($_POST['idenP'])){
+            $idenP = $_POST['idenP'];
+
+            if($idenP != ''){
+                //Valida si existe proceso
+                $sql = "SELECT COUNT(1) vaProceso
+                FROM proceso p 
+                WHERE
+                upper(p.pro_identificador) = upper('$idenP')";
+
+                $resultado = $obj->consult($sql);
+                if (mysqli_num_rows($resultado) > 0) {
+                    while($row = mysqli_fetch_assoc($resultado)) {
+                        $result_array[]=$row;
+                    }
+                }
+
+                if($result_array[0]['vaProceso']>0){                
+                //Valida si existe maquina asociada
+                $sql = "SELECT COUNT(1) vaMaquina FROM maquina m, 
+                detalleprocesomaquina d, proceso p
+                WHERE m.maq_codigo = d.maq_codigo
+                AND d.pro_codigo = p.pro_codigo
+                AND upper(p.pro_identificador) = upper('$idenP')
+                ";
+    
+                $resultado = $obj->consult($sql);
+                if (mysqli_num_rows($resultado) > 0) {
+                    while($row = mysqli_fetch_assoc($resultado)) {
+                        $result_array[]=$row;
+                    }
+                }
+
+                }else{
+                    $result_array[]=['vaMaquina' => 0];
+                }
+    
+                echo json_encode($result_array);
+            }
+        }
+        
 
     }
 

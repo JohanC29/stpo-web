@@ -61,8 +61,10 @@
                     <div class="row align-items-end align-self-end" style="margin-right: 50px;">
                         <!-- Botones de accion -->
                         <div class="ml-md-auto py-2 py-md-0 ">
-                            <a href="#" class="btn btn-danger">Limpiar</a>
-                            <a href="#" class="btn btn-success" id="consultar">Consultar</a>
+                            <button class="btn btn-danger" id="limpiar">Limpiar</button>
+                            <!-- <a href="#" class="btn btn-danger">Limpiar</a> -->
+                            <button class="btn btn-success" id="consultar">Consultar</button>
+                            <!-- <a href="#" class="btn btn-success" id="consultar">Consultar</a> -->
                         </div>
                     </div>
                 </div>
@@ -196,7 +198,7 @@
                         </div>
                     </div>
 
-                    <?php echo getUrl("costos","cotizacion","insertDetalleCotizacion",array('Ped_id' =>'hola','Ped_id2' =>'hola2'));?>
+                    <!-- <?php echo getUrl("costos","cotizacion","insertDetalleCotizacion",array('Ped_id' =>'hola','Ped_id2' =>'hola2'));?> -->
 
 
                     <!-- Table -->
