@@ -125,6 +125,18 @@ class ProcesosController {
                 ORDER BY p.pro_nombre";
         
         $procesos = $obj->consult($sql);
+
+
+        // Maquina
+        $sql = "SELECT m.maq_codigo, m.maq_nombre
+                FROM
+                maquina m
+                WHERE
+                    m.est_codigo = 1
+                ORDER BY m.maq_nombre";
+        
+        $maquinas = $obj->consult($sql);
+
         include_once '../view/procesos/ProcesoMaquina/consultar.php';
     }
 
@@ -239,10 +251,13 @@ class ProcesosController {
 
             if($result_array[0]['vaProceso'] >0){
                 //Valida si existe maquina asociada
-            $sql = "SELECT count(1) vaMaquina FROM
-            detalleprocesomaquina d 
-            where
-            d.pro_codigo = $id";
+            $sql = "SELECT count(1) vaMaquina, 
+                           (SELECT p.pro_codigo FROM proceso p WHERE p.pro_codigo = d.pro_codigo) pro_codigo, 
+                           (SELECT pr.pro_nombre FROM proceso pr WHERE pr.pro_codigo = d.pro_codigo) pro_descripcion 
+                    FROM 
+                        detalleprocesomaquina d 
+                    WHERE
+                        d.pro_codigo = $id";
 
             $resultado = $obj->consult($sql);
             if (mysqli_num_rows($resultado) > 0) {
@@ -251,7 +266,9 @@ class ProcesosController {
                 }
             }
             }else{
-                $result_array[]=['vaMaquina' => '0'];
+                $result_array[]=['vaMaquina' => '0',
+                                 'pro_codigo' => '0',
+                                 'pro_descripcion' => '0',];
             }
 
             echo json_encode($result_array);
@@ -276,12 +293,18 @@ class ProcesosController {
 
                 if($result_array[0]['vaProceso']>0){                
                 //Valida si existe maquina asociada
-                $sql = "SELECT COUNT(1) vaMaquina FROM maquina m, 
-                detalleprocesomaquina d, proceso p
-                WHERE m.maq_codigo = d.maq_codigo
-                AND d.pro_codigo = p.pro_codigo
-                AND upper(p.pro_identificador) = upper('$idenP')
-                ";
+                $sql = "SELECT  COUNT(1) vaMaquina, 
+                                (SELECT p1.pro_codigo FROM proceso p1 WHERE upper(p1.pro_identificador) = upper('$idenP')) pro_codigo, 
+                                (SELECT pr.pro_nombre FROM proceso pr WHERE upper(pr.pro_identificador) = upper('$idenP')) pro_descripcion 
+                        FROM 
+                            maquina m, 
+                            detalleprocesomaquina d, 
+                            proceso p
+                        WHERE 
+                            m.maq_codigo = d.maq_codigo
+                        AND d.pro_codigo = p.pro_codigo
+                        AND upper(p.pro_identificador) = upper('$idenP')
+                        ";
     
                 $resultado = $obj->consult($sql);
                 if (mysqli_num_rows($resultado) > 0) {
@@ -291,7 +314,9 @@ class ProcesosController {
                 }
 
                 }else{
-                    $result_array[]=['vaMaquina' => 0];
+                    $result_array[]=[   'vaMaquina' => '0',
+                                        'pro_codigo' => '0',
+                                        'pro_descripcion' => '0',];
                 }
     
                 echo json_encode($result_array);
@@ -301,6 +326,33 @@ class ProcesosController {
 
     }
 
+
+    public function insertarMaquinaProceso(){
+        $obj = new ProcesosModel();
+
+        $id = $obj->autoIncrement('detalleprocesomaquina','dpm_codigo');
+
+        $pmIdCodigoNombreProceso    = $_POST['pmIdCodigoNombreProceso'];
+        $pmIdCodigoMaquina          = $_POST['pmIdCodigoMaquina'];
+        $pmIdCodigoMaquinaSelect    = $_POST['pmIdCodigoMaquinaSelect'];
+
+        //---
+        $pmIdCodigoNombreProceso    = substr($pmIdCodigoNombreProceso,0,strpos($pmIdCodigoNombreProceso,'-'));
+
+
+
+        $sql="INSERT INTO `detalleprocesomaquina` (`dpm_codigo`, `maq_codigo`, `pro_codigo`)
+              VALUES ($id, $pmIdCodigoMaquinaSelect, $pmIdCodigoNombreProceso )";
+
+        $ejecutar= $obj->insert($sql);
+        if($ejecutar){
+            echo 'Insercion exitosa';
+        }else{
+            echo $ejecutar;
+            echo "Ocurrio un error creando el nuevo proceso.";
+        }
+        
+    }
 
 }
 

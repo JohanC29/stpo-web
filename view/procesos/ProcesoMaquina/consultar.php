@@ -87,7 +87,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-
+                    <!-- modal agegar Maquina -->
                     <div class="modal fade" id="agregarAsignacionMaquinaModal" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
@@ -104,22 +104,40 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
+                                    
                                     <p class="small">Por favor ingrese los datos para asociar la maquina: </p>
                                     <form id="formAsociarMaquina">
                                         <div class="row">
                                             <div class="col-sm-12">
-                                                <div class="form-group form-group-default">
-                                                    <label>Codigo Maquina</label>
-                                                    <input id="" name="" type="text"
+                                                <div class="form-group">
+                                                    <label>Codigo Proceso</label>
+                                                    <input id="pmIdCodigoNombreProceso" name="pmIdCodigoNombreProceso" type="text" value="001-Proceso Prueba"
                                                         class="form-control"
-                                                        placeholder="Ingrese identificador Proceso">
+                                                        readonly>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <label>Codigo Maquina</label>
+                                                    <input id="pmIdCodigoMaquina" name="pmIdCodigoMaquina" type="number" value="0"
+                                                        class="form-control"
+                                                        readonly>
                                                 </div>
                                             </div>
                                             <div class="col-sm-12">
                                                 <div class="form-group form-group-default">
                                                     <label>Nombre Maquina</label>
-                                                    <input id="" name="" type="text"
-                                                        class="form-control" placeholder="Ingerese nombre Proceso">
+                                                        <select name="pmIdCodigoMaquinaSelect" id="pmIdCodigoMaquinaSelect" class="form-control">
+                                                            <option value="0" selected>Seleccione Maquina</option>
+                                                            <?php
+                                                            foreach ($maquinas as $mrs) {
+                                                                echo "<option value= '" . $mrs['maq_codigo'] . "'>" . $mrs['maq_nombre'] . "</option>";
+                                                            }
+                                                            ?>
+                                                        </select>
+
+
                                                 </div>
                                             </div>
                                         </div>
@@ -127,7 +145,7 @@
                                 </div>
                                 <div class="modal-footer no-bd">
                                     <button type="button" id="agregarAsignacionMaquina"
-                                        data-url="<?php echo getUrl('procesos', 'procesos', 'insertar', false, 'ajax'); ?>"
+                                        data-url="<?php echo getUrl('procesos', 'procesos', 'insertarMaquinaProceso', false, 'ajax'); ?>"
                                         class="btn btn-primary">Agregar</button>
                                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                                 </div>

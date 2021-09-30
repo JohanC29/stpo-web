@@ -148,6 +148,8 @@ $(document).ready(function () {
           { data: "est_codigo" },
         ],
       });
+
+      $("#pmIdCodigoNombreProceso").val('');
       $(".loading").hide();
     }else if(id != 0 && iden != ""){
       Notify(
@@ -166,6 +168,8 @@ $(document).ready(function () {
           { data: "est_codigo" },
         ],
       });
+
+      $("#pmIdCodigoNombreProceso").val('');
       $(".loading").hide();
     }else {
       //Se valida que los parametros de ingreso tengan datos
@@ -186,6 +190,10 @@ $(document).ready(function () {
 
           // Validar si el proceso no existe
           if (errorJson[0]["vaProceso"] > 0) {
+
+            var idProcesoConsultado     = errorJson[1]["pro_codigo"];
+            var nombreProcesoConsultado = errorJson[1]["pro_descripcion"];
+            $("#pmIdCodigoNombreProceso").val(idProcesoConsultado+'-'+nombreProcesoConsultado);
             // El proceso si existe
             // Validar si tiene maquinas asociadas
             if (errorJson[1]["vaMaquina"] > 0) {
@@ -208,6 +216,7 @@ $(document).ready(function () {
                     { data: "est_codigo" },
                   ],
                 });
+                $("#pmIdCodigoNombreProceso").val('');
               } else if (id == 0 && iden != "") {
                 // Consulta por identificador text
 
@@ -275,6 +284,9 @@ $(document).ready(function () {
                   { data: "est_codigo" },
                 ],
               });
+
+              // Si debe de tener el retorno del proceso
+              
             }
           } else {
             // El proceso no existe
@@ -289,7 +301,10 @@ $(document).ready(function () {
                 { data: "est_codigo" },
               ],
             });
+            $("#pmIdCodigoNombreProceso").val('');
           }
+
+          
           $(".loading").hide();
         },
       });
@@ -315,7 +330,33 @@ $(document).ready(function () {
     // }
   });
 
-  // Auto completado - Identificador maquina
+  // MODAL ASIGANCION MAQUINA
+  $('#pmIdCodigoMaquinaSelect').change(function() {
+    var valor = $(this).val();
+    $('#pmIdCodigoMaquina').val(valor);
+  });
+
+  // Dato Titulo
+  $('#agregarAsignacionMaquina').click(function(){
+
+    $(".loading").show();
+
+    var url = $(this).attr("data-url");
+    var formulario = $("#formAsociarMaquina").serialize();
+    $.ajax({
+      url: url,
+      type: "POST",
+      data: formulario,
+      success: function (mensaje) {
+        Notify(mensaje, "Exito!", "success", "fas fa-check");
+        table.ajax.reload();
+        $(".loading").hide();
+      },
+    });
+
+    $("#agregarProcesoModal").modal("hide");
+  });
+
 });
 
 // Proceso Gestionar Maquina
