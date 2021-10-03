@@ -111,6 +111,7 @@
                                             <div class="col-sm-12">
                                                 <div class="form-group">
                                                     <label>Codigo Proceso</label>
+                                                    <input type="number" id="pmidCodigo" hidden value="0">
                                                     <input id="pmIdCodigoNombreProceso" name="pmIdCodigoNombreProceso" type="text" value="001-Proceso Prueba"
                                                         class="form-control"
                                                         readonly>
@@ -146,69 +147,6 @@
                                 <div class="modal-footer no-bd">
                                     <button type="button" id="agregarAsignacionMaquina"
                                         data-url="<?php echo getUrl('procesos', 'procesos', 'insertarMaquinaProceso', false, 'ajax'); ?>"
-                                        class="btn btn-primary">Agregar</button>
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- modal editar -->
-                    <div class="modal fade" id="editarProcesoModal" tabindex="-1" role="dialog" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header no-bd">
-                                    <h5 class="modal-title">
-                                        <span class="fw-mediumbold">
-                                            Editar</span>
-                                        <span class="fw-light">
-                                            Proceso
-                                        </span>
-                                    </h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <p class="small">Por favor ingrese los datos para actualizar la informacion del
-                                        proceso: </p>
-                                    <form id="formEditarProceso">
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-sm-8" style="text-align: right;">
-                                                            <label>Codigo Proceso</label>
-                                                        </div>
-                                                        <div class="col-sm-4">
-                                                            <input id="editCodigoProceso" name="editCodigoProceso"
-                                                                type="text" class="form-control"
-                                                                style="text-align: right;" readonly>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-12">
-                                                <div class="form-group form-group-default">
-                                                    <label>Identificador Proceso</label>
-                                                    <input id="editIdenProceso" name="editIdenProceso" type="text"
-                                                        class="form-control"
-                                                        placeholder="Ingrese identificador Maquina">
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-12">
-                                                <div class="form-group form-group-default">
-                                                    <label>Nombre Proceso</label>
-                                                    <input id="editNomProceso" name="editNomProceso" type="text"
-                                                        class="form-control" placeholder="Ingerese nombre Maquina">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="modal-footer no-bd">
-                                    <button type="button" id="editarProceso"
-                                        data-url="<?php echo getUrl('procesos', 'procesos', 'editar', false, 'ajax'); ?>"
                                         class="btn btn-primary">Agregar</button>
                                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                                 </div>

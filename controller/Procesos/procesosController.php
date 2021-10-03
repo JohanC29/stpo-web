@@ -183,20 +183,71 @@ class ProcesosController {
         $id = $_GET['id'];
         $idenP = $_GET['idenP'];
 
+        // Validar si tiene resultados
+        $contador = 0;
+
         if ($id==0 && (!$idenP=='')) {
-            $sql = "SELECT m.* FROM maquina m, 
+            // Contador validador
+            $sql="SELECT COUNT(1) contador FROM maquina m, 
                     detalleprocesomaquina d, proceso p
                     WHERE m.maq_codigo = d.maq_codigo
                     AND d.pro_codigo = p.pro_codigo
                     AND upper(p.pro_identificador) = upper('$idenP')
                     ORDER BY m.est_codigo ASC";
+
+            $resultadoCount = $obj->consult($sql);
+            
+
+            foreach ($resultadoCount as $rsc) {
+                $contador = $rsc['contador'];
+            }
+
+            if($contador!= '0'){
+                $sql = "SELECT m.* FROM maquina m, 
+                    detalleprocesomaquina d, proceso p
+                    WHERE m.maq_codigo = d.maq_codigo
+                    AND d.pro_codigo = p.pro_codigo
+                    AND upper(p.pro_identificador) = upper('$idenP')
+                    ORDER BY m.est_codigo ASC";
+            }
+
+            
+
+            
         }elseif ($id!=0 && ($idenP=='')) {
-            $sql = "SELECT m.* FROM maquina m, 
+            // Contador validador
+            $sql="SELECT COUNT(1) contador FROM maquina m, 
                     detalleprocesomaquina d, proceso p
                     WHERE m.maq_codigo = d.maq_codigo
                     AND d.pro_codigo = p.pro_codigo
                     AND d.pro_codigo = $id
                     ORDER BY m.est_codigo ASC";
+
+            $resultadoCount = $obj->consult($sql);
+
+
+            foreach ($resultadoCount as $rsc) {
+                $contador = $rsc['contador'];
+            }
+
+            if($contador != '0'){
+                $sql = "SELECT m.* FROM maquina m, 
+                    detalleprocesomaquina d, proceso p
+                    WHERE m.maq_codigo = d.maq_codigo
+                    AND d.pro_codigo = p.pro_codigo
+                    AND d.pro_codigo = $id
+                    ORDER BY m.est_codigo ASC";
+            }
+
+            // echo $sql;
+ 
+        }
+
+        if($contador == '0' ){
+            $sql = "SELECT -1 maq_codigo, 
+                        'Sin Resultados' maq_identificador, 
+                        '' maq_nombre, 1 est_codigo 
+                    FROM DUAL";
         }
         
         
@@ -209,13 +260,20 @@ class ProcesosController {
         if (mysqli_num_rows($maquinas) > 0) {
             $item_array = array();
             while($row = mysqli_fetch_assoc($maquinas)) {
-                $btnAcciones = "<div class='form-button-action'><button type='button' title='Editar' class='editar btn btn-link btn-primary btn-lg' data-original-title='Editar'  data-toggle='modal' data-target='#editarProcesoModal' ><i class='fa fa-edit'></i></button>";
-                if($row['est_codigo']==1){
-                    $btnAcciones=$btnAcciones."<button estado = '1' type='button' data-toggle='tooltip' title='Eliminar'class='eliminar btn btn-link btn-danger' data-original-title='Eliminar'><i class='fas fa-eye-slash'></i></button>";
+                if($row['maq_codigo'] != -1){
+                    $btnAcciones = "<div class='form-button-action'>";
+
+                    $btnAcciones=$btnAcciones."<button estado = '1' type='button' data-toggle='tooltip' title='Eliminar'class='eliminar btn btn-link btn-danger' data-original-title='Eliminar'><i class='fas fa-trash-alt'></i></button>";
+                    
+                    $btnAcciones = $btnAcciones."</div>";
                 }else{
-                    $btnAcciones = $btnAcciones."<button estado = '2' type='button' data-toggle='tooltip' title='Habilitar' class='eliminar btn btn-link btn-success' data-original-title='Habilitar'><i class=' fas fa-eye'></i></button>";
+                    $btnAcciones = "<div class='form-button-action'>";
+
+                    //  $btnAcciones=$btnAcciones."<button estado = '1' type='button' data-toggle='tooltip' title='Eliminar'class='eliminar btn btn-link btn-danger' data-original-title='Eliminar'><i class='fas fa-trash-alt'></i></button>";
+                    
+                    $btnAcciones = $btnAcciones."</div>";
                 }
-                $btnAcciones = $btnAcciones."</div>";
+                
                 $row['est_codigo'] = $btnAcciones;
                 $result_array[]=$row;
             }
@@ -347,6 +405,24 @@ class ProcesosController {
         $ejecutar= $obj->insert($sql);
         if($ejecutar){
             echo 'Insercion exitosa';
+        }else{
+            echo $ejecutar;
+            echo "Ocurrio un error creando el nuevo proceso.";
+        }
+        
+    }
+
+    public function elimiarMaquinaProceso(){
+        $obj = new ProcesosModel();
+
+        $idProceso          = $_POST['idCampo1'];
+        $idMaquina          = $_POST['idCampo2'];
+
+        $sql="DELETE FROM `detalleprocesomaquina` WHERE `pro_codigo`= $idProceso AND `maq_codigo` = $idMaquina";
+
+        $ejecutar= $obj->insert($sql);
+        if($ejecutar){
+            echo 'Eliminacion exitosa';
         }else{
             echo $ejecutar;
             echo "Ocurrio un error creando el nuevo proceso.";
