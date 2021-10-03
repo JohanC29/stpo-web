@@ -249,4 +249,6 @@
 	<script src="js/procesos.js"></script>
 	<script src="js/maquina.js"></script>
 	<script src="js/producto.js"></script>
+	<script src="js/ordentrabajo.js"></script>
+	
 

@@ -42,14 +42,20 @@
 								<ul class="nav nav-collapse">
 									<li>
 										<a href="">
-											<span class="sub-item">Orden Trabajo</span>
+											<span class="sub-item">Consultar</span>
 										</a>
 									</li>
 									<li>
 										<a href="">
-											<span class="sub-item">Consultar</span>
+											<span class="sub-item">Configurar Orden Trabajo</span>
 										</a>
 									</li>
+									<li>
+										<a href="<?php echo getUrl("ordentrabajo","ordentrabajo","consult");?>">
+											<span class="sub-item">Gestionar Orden Trabajo</span>
+										</a>
+									</li>
+									
 								</ul>
 							</div>
 						</li>
