@@ -1,178 +1,92 @@
 $(document).ready(function () {
   $(".loading").hide();
 
-  // Proceso de -- Gestionar Maquina
-  // Se Crea la tabla y se deja activa para el resto de procesos
-
-  var table = $("#tablaGestionarProceso").DataTable({
-    ajax: {
-      url: "ajax.php?modulo=procesos&controlador=procesos&funcion=getTable",
-      dataSrc: "",
-    },
+  
+  // Proceso de Producto Detalle
+  var tabladprod = $("#tablaDetalleProducto").DataTable({
+    destroy: true, //Cada vez que se construya una nueva tabla, destruye la anterior
+    processing: true, //En caso de que sea mucha data, aparecerá un texto "procesando"
     columns: [
       { data: "pro_codigo" },
       { data: "pro_identificador" },
       { data: "pro_nombre" },
-      { data: "est_codigo" },
-    ],
-  });
-
-  obtener_data_editar_proceso("#tablaGestionarProceso tbody", table);
-
-  $("#agregarProceso").click(function () {
-    $(".loading").show();
-    var url = $(this).attr("data-url");
-    var formulario = $("#formAgregarProceso").serialize();
-    $.ajax({
-      url: url,
-      type: "POST",
-      data: formulario,
-      success: function (mensaje) {
-        Notify(mensaje, "Exito!", "success", "fas fa-check");
-        table.ajax.reload();
-        $(".loading").hide();
-      },
-    });
-    $("#agregarProcesoModal").modal("hide");
-  });
-
-  //Editar Proceso
-
-  $("#editarProceso").click(function () {
-    $(".loading").show();
-    var url = $(this).attr("data-url");
-    var formulario = $("#formEditarProceso").serialize();
-    $.ajax({
-      url: url,
-      type: "POST",
-      data: formulario,
-      success: function (mensaje) {
-        Notify(mensaje, "Exito!", "success", "fas fa-check");
-        table.ajax.reload();
-        $(".loading").hide();
-      },
-    });
-    $("#editarProcesoModal").modal("hide");
-  });
-
-  // Deshabilitar Maquina
-
-  $("#tablaGestionarProceso tbody").on("click", "button.eliminar", function () {
-    var data = table.row($(this).parents("tr")).data();
-    //console.log(data.est_codigo);
-    var titulo = "";
-    var est_codigo = data.est_codigo.substr(
-      data.est_codigo.indexOf("<button estado = ") + 18,
-      1
-    );
-    var urlEliminar =
-      "ajax.php?modulo=procesos&controlador=procesos&funcion=eliminar";
-
-    if (est_codigo == 1) {
-      titulo = "¿Desea Deshabilidar el proceso " + data.pro_identificador + "?";
-    } else {
-      titulo = "¿Desea Habilitar el proceso " + data.pro_identificador + "?";
-    }
-
-    swal({
-      title: titulo,
-      text: "Una vez realizada esta operación puede volver a realizar el cambio.",
-      icon: "warning",
-      buttons: true,
-      dangerMode: true,
-    }).then((willDelete) => {
-      if (willDelete) {
-        //Se le deja el control del tiempo de espera a la funcion
-        cambioEstado(data.pro_codigo, est_codigo, urlEliminar, table);
-      }
-    });
-  });
-
-
-
-
-  
-  // Proceso de Asignacion de Maquina
-  var tabladpm = $("#tablaDetalleProcesoMaquina").DataTable({
-    destroy: true, //Cada vez que se construya una nueva tabla, destruye la anterior
-    processing: true, //En caso de que sea mucha data, aparecerá un texto "procesando"
-    columns: [
-      { data: "maq_codigo" },
-      { data: "maq_identificador" },
-      { data: "maq_nombre" },
+      { data: "dprod_orden" },
       { data: "est_codigo" },
     ],
   });
 
   // Limpiar variables y campos
-  $("#limpiar").click(function () {
+  $("#limpiardprod").click(function () {
     // Limpiar variables
-    $("#idCodigoProceso").val(0);
-    $("#idenProcesoA").val("");
+    $("#idCodigoProducto").val(0);
+    $("#idenProductoA").val("");
     $("#pmidCodigo").val(0);
     $("#pmIdCodigoNombreProceso").val("");
 
     // Limpiar Data Table
-    tabladpm.destroy();
-    tabladpm = $("#tablaDetalleProcesoMaquina").DataTable({
+    tabladprod.destroy();
+    tabladprod = $("#tablaDetalleProducto").DataTable({
       destroy: true, //Cada vez que se construya una nueva tabla, destruye la anterior
       processing: true, //En caso de que sea mucha data, aparecerá un texto "procesando"
       columns: [
-        { data: "maq_codigo" },
-        { data: "maq_identificador" },
-        { data: "maq_nombre" },
+        { data: "pro_codigo" },
+        { data: "pro_identificador" },
+        { data: "pro_nombre" },
+        { data: "dprod_orden" },
         { data: "est_codigo" },
       ],
     });
   });
 
   // Consultar asosiacion
-  $("#consultar").click(function () {
+  $("#consultardprod").click(function () {
     
     $(".loading").show();
-    var id = $("#idCodigoProceso").val();
-    var iden = $("#idenProcesoA").val() + "";
+    var id = $("#idCodigoProducto").val();
+    var iden = $("#idenProductoA").val();
 
-    tabladpm.destroy();
+    tabladprod.destroy();
 
     //Validacion de datos ingresados
-    if (id == 0 && iden == "") {
+    if (id == 0 && (iden == "" || iden == 0) ) {
       Notify(
         "Datos no validos. Ingrese un parametro de filtro.",
         "Error",
         "danger"
       );
 
-      tabladpm = $("#tablaDetalleProcesoMaquina").DataTable({
+      tabladprod = $("#tablaDetalleProducto").DataTable({
         destroy: true, //Cada vez que se construya una nueva tabla, destruye la anterior
         processing: true, //En caso de que sea mucha data, aparecerá un texto "procesando"
         columns: [
-          { data: "maq_codigo" },
-          { data: "maq_identificador" },
-          { data: "maq_nombre" },
+          { data: "pro_codigo" },
+          { data: "pro_identificador" },
+          { data: "pro_nombre" },
+          { data: "dprod_orden" },
           { data: "est_codigo" },
         ],
       });
 
-      $("#pmidCodigo").val(0);
-      $("#pmIdCodigoNombreProceso").val("");
+      $("#dprodIdCodigo").val(0);
+      $("#dprodIdCodigoNombre").val("");
       $(".loading").hide();
     } else if (id != 0 && iden != "") {
       Notify("Datos no validos. Ingrese solo un parametro.", "Error", "danger");
 
-      tabladpm = $("#tablaDetalleProcesoMaquina").DataTable({
+      tabladprod = $("#tablaDetalleProducto").DataTable({
         destroy: true, //Cada vez que se construya una nueva tabla, destruye la anterior
         processing: true, //En caso de que sea mucha data, aparecerá un texto "procesando"
         columns: [
-          { data: "maq_codigo" },
-          { data: "maq_identificador" },
-          { data: "maq_nombre" },
+          { data: "pro_codigo" },
+          { data: "pro_identificador" },
+          { data: "pro_nombre" },
+          { data: "dprod_orden" },
           { data: "est_codigo" },
         ],
       });
 
-      $("#pmidCodigo").val(0);
-      $("#pmIdCodigoNombreProceso").val("");
+      $("#dprodIdCodigo").val(0);
+      $("#dprodIdCodigoNombre").val("");
       $(".loading").hide();
     } else {
       //Se valida que los parametros de ingreso tengan datos
@@ -184,25 +98,27 @@ $(document).ready(function () {
       };
 
       $.ajax({
-        url: "ajax.php?modulo=procesos&controlador=procesos&funcion=validaAsigancionMaquina",
+        url: "ajax.php?modulo=producto&controlador=productobase&funcion=validaDetalleProducto",
         type: "POST",
         data: parametros,
         success: function (error) {
           var errorJson = JSON.parse(error);
           // console.log(errorJson);
+          // console.log(parametros); 
 
           // Validar si el proceso no existe
-          if (errorJson[0]["vaProceso"] > 0) {
-            var idProcesoConsultado = errorJson[1]["pro_codigo"];
-            var nombreProcesoConsultado = errorJson[1]["pro_descripcion"];
-            $("#pmidCodigo").val(idProcesoConsultado);
-            $("#pmIdCodigoNombreProceso").val(
-              idProcesoConsultado + "-" + nombreProcesoConsultado
+          if (errorJson[0]["vaProducto"] > 0) {
+            var idProductoConsultado = errorJson[1]["prod_codigo"];
+            var nombreProductoConsultado = errorJson[1]["prod_descripcion"];
+            $("#dprodIdCodigo").val(idProductoConsultado);
+            $("#dprodIdCodigoNombre").val(
+              idProductoConsultado + "-" + nombreProductoConsultado
             );
             // El proceso si existe
             // Validar si tiene maquinas asociadas
-            if (errorJson[1]["vaMaquina"] > 0) {
+            if (errorJson[1]["vaProceso"] > 0) {
               // El proceso cuenta con maquinas asociadas
+              
 
               if (id != 0 && iden != "") {
                 Notify(
@@ -211,64 +127,75 @@ $(document).ready(function () {
                   "danger"
                 );
 
-                tabladpm = $("#tablaDetalleProcesoMaquina").DataTable({
+                tabladprod = $("#tablaDetalleProducto").DataTable({
                   destroy: true, //Cada vez que se construya una nueva tabla, destruye la anterior
                   processing: true, //En caso de que sea mucha data, aparecerá un texto "procesando"
                   columns: [
-                    { data: "maq_codigo" },
-                    { data: "maq_identificador" },
-                    { data: "maq_nombre" },
+                    { data: "pro_codigo" },
+                    { data: "pro_identificador" },
+                    { data: "pro_nombre" },
+                    { data: "dprod_orden" },
                     { data: "est_codigo" },
                   ],
                 });
-                $("#pmidCodigo").val(0);
-                $("#pmIdCodigoNombreProceso").val("");
+          
+                $("#dprodIdCodigo").val(0);
+                $("#dprodIdCodigoNombre").val("");
               } else if (id == 0 && iden != "") {
                 // Consulta por identificador text
+               
 
-                tabladpm = $("#tablaDetalleProcesoMaquina").DataTable({
+                tabladprod = $("#tablaDetalleProducto").DataTable({
                   ajax: {
                     url:
-                      "ajax.php?modulo=procesos&controlador=procesos&funcion=getTableAsignacionMaquina&id=" +
+                      "ajax.php?modulo=producto&controlador=productobase&funcion=getTableProductoDetalle&id=" +
                       id +
                       "&idenP=" +
                       iden,
                     dataSrc: "",
                   },
                   columns: [
-                    { data: "maq_codigo" },
-                    { data: "maq_identificador" },
-                    { data: "maq_nombre" },
+                    { data: "pro_codigo" },
+                    { data: "pro_identificador" },
+                    { data: "pro_nombre" },
+                    { data: "dprod_orden" },
                     { data: "est_codigo" },
                   ],
                 });
               } else if (id != 0 && iden == "") {
+                
                 // Consulta por id
-                tabladpm = $("#tablaDetalleProcesoMaquina").DataTable({
+                tabladprod = $("#tablaDetalleProducto").DataTable({
                   ajax: {
                     url:
-                      "ajax.php?modulo=procesos&controlador=procesos&funcion=getTableAsignacionMaquina&id=" +
+                      "ajax.php?modulo=producto&controlador=productobase&funcion=getTableProductoDetalle&id=" +
                       id +
                       "&idenP=" +
                       iden,
                     dataSrc: "",
                   },
                   columns: [
-                    { data: "maq_codigo" },
-                    { data: "maq_identificador" },
-                    { data: "maq_nombre" },
+                    { data: "pro_codigo" },
+                    { data: "pro_identificador" },
+                    { data: "pro_nombre" },
+                    { data: "dprod_orden" },
                     { data: "est_codigo" },
                   ],
                 });
+                // console.log("ajax.php?modulo=producto&controlador=productobase&funcion=getTableProductoDetalle&id=" +
+                // id +
+                // "&idenP=" +
+                // iden);
               } else {
                 Notify("Datos no validos.", "Error", "danger");
                 tabladpm = $("#tablaDetalleProcesoMaquina").DataTable({
                   destroy: true, //Cada vez que se construya una nueva tabla, destruye la anterior
                   processing: true, //En caso de que sea mucha data, aparecerá un texto "procesando"
                   columns: [
-                    { data: "maq_codigo" },
-                    { data: "maq_identificador" },
-                    { data: "maq_nombre" },
+                    { data: "pro_codigo" },
+                    { data: "pro_identificador" },
+                    { data: "pro_nombre" },
+                    { data: "dprod_orden" },
                     { data: "est_codigo" },
                   ],
                 });
@@ -276,38 +203,44 @@ $(document).ready(function () {
             } else {
               // El proceso no cuenta con maquinas asociadas
               Notify(
-                "El proceso no cuenta con maquinas asociadas.",
+                "El producto no cuenta con procesos asociados.",
                 "Aviso",
                 "info"
               );
-              tabladpm = $("#tablaDetalleProcesoMaquina").DataTable({
+              tabladprod = $("#tablaDetalleProducto").DataTable({
                 destroy: true, //Cada vez que se construya una nueva tabla, destruye la anterior
                 processing: true, //En caso de que sea mucha data, aparecerá un texto "procesando"
                 columns: [
-                  { data: "maq_codigo" },
-                  { data: "maq_identificador" },
-                  { data: "maq_nombre" },
+                  { data: "pro_codigo" },
+                  { data: "pro_identificador" },
+                  { data: "pro_nombre" },
+                  { data: "dprod_orden" },
                   { data: "est_codigo" },
                 ],
               });
+        
+              // $("#dprodIdCodigo").val(0);
+              // $("#dprodIdCodigoNombre").val("");
 
               // Si debe de tener el retorno del proceso
             }
           } else {
             // El proceso no existe
             Notify("El proceso ingresado no existe.", "Error", "danger");
-            tabladpm = $("#tablaDetalleProcesoMaquina").DataTable({
+            tabladprod = $("#tablaDetalleProducto").DataTable({
               destroy: true, //Cada vez que se construya una nueva tabla, destruye la anterior
               processing: true, //En caso de que sea mucha data, aparecerá un texto "procesando"
               columns: [
-                { data: "maq_codigo" },
-                { data: "maq_identificador" },
-                { data: "maq_nombre" },
+                { data: "pro_codigo" },
+                { data: "pro_identificador" },
+                { data: "pro_nombre" },
+                { data: "dprod_orden" },
                 { data: "est_codigo" },
               ],
             });
-            $("#pmidCodigo").val(0);
-            $("#pmIdCodigoNombreProceso").val("");
+      
+            $("#dprodIdCodigo").val(0);
+            $("#dprodIdCodigoNombre").val("");
           }
 
           $(".loading").hide();
@@ -318,17 +251,17 @@ $(document).ready(function () {
   });
 
   // MODAL ASIGANCION MAQUINA
-  $("#pmIdCodigoMaquinaSelect").change(function () {
+  $("#dprodIdCodigoProcesoSelect").change(function () {
     var valor = $(this).val();
-    $("#pmIdCodigoMaquina").val(valor);
+    $("#dprodIdCodigoProceso").val(valor);
   });
 
   // Dato Titulo
-  $("#agregarAsignacionMaquina").click(function () {
+  $("#agregarProductoDetalle").click(function () {
     $(".loading").show();
 
     var url = $(this).attr("data-url");
-    var formulario = $("#formAsociarMaquina").serialize();
+    var formulario = $("#formProductoDetalle").serialize();
     $.ajax({
       url: url,
       type: "POST",
@@ -338,47 +271,56 @@ $(document).ready(function () {
         // tabladpm.ajax.reload();
 
         //---- CARGA DE LA TABLA RELACION  -------
-          var id = $("#idCodigoProceso").val();
-          var iden = $("#idenProcesoA").val() + "";     
-          tabladpm.destroy();
+
+
+
+    
+          // $(".loading").show();
+          var id = $("#idCodigoProducto").val();
+          var iden = $("#idenProductoA").val();
+      
+          tabladprod.destroy();
+      
           //Validacion de datos ingresados
-          if (id == 0 && iden == "") {
+          if (id == 0 && (iden == "" || iden == 0) ) {
             Notify(
               "Datos no validos. Ingrese un parametro de filtro.",
               "Error",
               "danger"
             );
       
-            tabladpm = $("#tablaDetalleProcesoMaquina").DataTable({
+            tabladprod = $("#tablaDetalleProducto").DataTable({
               destroy: true, //Cada vez que se construya una nueva tabla, destruye la anterior
               processing: true, //En caso de que sea mucha data, aparecerá un texto "procesando"
               columns: [
-                { data: "maq_codigo" },
-                { data: "maq_identificador" },
-                { data: "maq_nombre" },
+                { data: "pro_codigo" },
+                { data: "pro_identificador" },
+                { data: "pro_nombre" },
+                { data: "dprod_orden" },
                 { data: "est_codigo" },
               ],
             });
       
-            $("#pmidCodigo").val(0);
-            $("#pmIdCodigoNombreProceso").val("");
+            $("#dprodIdCodigo").val(0);
+            $("#dprodIdCodigoNombre").val("");
             $(".loading").hide();
           } else if (id != 0 && iden != "") {
             Notify("Datos no validos. Ingrese solo un parametro.", "Error", "danger");
       
-            tabladpm = $("#tablaDetalleProcesoMaquina").DataTable({
+            tabladprod = $("#tablaDetalleProducto").DataTable({
               destroy: true, //Cada vez que se construya una nueva tabla, destruye la anterior
               processing: true, //En caso de que sea mucha data, aparecerá un texto "procesando"
               columns: [
-                { data: "maq_codigo" },
-                { data: "maq_identificador" },
-                { data: "maq_nombre" },
+                { data: "pro_codigo" },
+                { data: "pro_identificador" },
+                { data: "pro_nombre" },
+                { data: "dprod_orden" },
                 { data: "est_codigo" },
               ],
             });
       
-            $("#pmidCodigo").val(0);
-            $("#pmIdCodigoNombreProceso").val("");
+            $("#dprodIdCodigo").val(0);
+            $("#dprodIdCodigoNombre").val("");
             $(".loading").hide();
           } else {
             //Se valida que los parametros de ingreso tengan datos
@@ -388,26 +330,29 @@ $(document).ready(function () {
               id: id,
               idenP: iden,
             };
+      
             $.ajax({
-              url: "ajax.php?modulo=procesos&controlador=procesos&funcion=validaAsigancionMaquina",
+              url: "ajax.php?modulo=producto&controlador=productobase&funcion=validaDetalleProducto",
               type: "POST",
               data: parametros,
               success: function (error) {
                 var errorJson = JSON.parse(error);
                 // console.log(errorJson);
+                // console.log(parametros); 
       
                 // Validar si el proceso no existe
-                if (errorJson[0]["vaProceso"] > 0) {
-                  var idProcesoConsultado = errorJson[1]["pro_codigo"];
-                  var nombreProcesoConsultado = errorJson[1]["pro_descripcion"];
-                  $("#pmidCodigo").val(idProcesoConsultado);
-                  $("#pmIdCodigoNombreProceso").val(
-                    idProcesoConsultado + "-" + nombreProcesoConsultado
+                if (errorJson[0]["vaProducto"] > 0) {
+                  var idProductoConsultado = errorJson[1]["prod_codigo"];
+                  var nombreProductoConsultado = errorJson[1]["prod_descripcion"];
+                  $("#dprodIdCodigo").val(idProductoConsultado);
+                  $("#dprodIdCodigoNombre").val(
+                    idProductoConsultado + "-" + nombreProductoConsultado
                   );
                   // El proceso si existe
                   // Validar si tiene maquinas asociadas
-                  if (errorJson[1]["vaMaquina"] > 0) {
+                  if (errorJson[1]["vaProceso"] > 0) {
                     // El proceso cuenta con maquinas asociadas
+                    
       
                     if (id != 0 && iden != "") {
                       Notify(
@@ -416,64 +361,75 @@ $(document).ready(function () {
                         "danger"
                       );
       
-                      tabladpm = $("#tablaDetalleProcesoMaquina").DataTable({
+                      tabladprod = $("#tablaDetalleProducto").DataTable({
                         destroy: true, //Cada vez que se construya una nueva tabla, destruye la anterior
                         processing: true, //En caso de que sea mucha data, aparecerá un texto "procesando"
                         columns: [
-                          { data: "maq_codigo" },
-                          { data: "maq_identificador" },
-                          { data: "maq_nombre" },
+                          { data: "pro_codigo" },
+                          { data: "pro_identificador" },
+                          { data: "pro_nombre" },
+                          { data: "dprod_orden" },
                           { data: "est_codigo" },
                         ],
                       });
-                      $("#pmidCodigo").val(0);
-                      $("#pmIdCodigoNombreProceso").val("");
+                
+                      $("#dprodIdCodigo").val(0);
+                      $("#dprodIdCodigoNombre").val("");
                     } else if (id == 0 && iden != "") {
                       // Consulta por identificador text
+                     
       
-                      tabladpm = $("#tablaDetalleProcesoMaquina").DataTable({
+                      tabladprod = $("#tablaDetalleProducto").DataTable({
                         ajax: {
                           url:
-                            "ajax.php?modulo=procesos&controlador=procesos&funcion=getTableAsignacionMaquina&id=" +
+                            "ajax.php?modulo=producto&controlador=productobase&funcion=getTableProductoDetalle&id=" +
                             id +
                             "&idenP=" +
                             iden,
                           dataSrc: "",
                         },
                         columns: [
-                          { data: "maq_codigo" },
-                          { data: "maq_identificador" },
-                          { data: "maq_nombre" },
+                          { data: "pro_codigo" },
+                          { data: "pro_identificador" },
+                          { data: "pro_nombre" },
+                          { data: "dprod_orden" },
                           { data: "est_codigo" },
                         ],
                       });
                     } else if (id != 0 && iden == "") {
+                      
                       // Consulta por id
-                      tabladpm = $("#tablaDetalleProcesoMaquina").DataTable({
+                      tabladprod = $("#tablaDetalleProducto").DataTable({
                         ajax: {
                           url:
-                            "ajax.php?modulo=procesos&controlador=procesos&funcion=getTableAsignacionMaquina&id=" +
+                            "ajax.php?modulo=producto&controlador=productobase&funcion=getTableProductoDetalle&id=" +
                             id +
                             "&idenP=" +
                             iden,
                           dataSrc: "",
                         },
                         columns: [
-                          { data: "maq_codigo" },
-                          { data: "maq_identificador" },
-                          { data: "maq_nombre" },
+                          { data: "pro_codigo" },
+                          { data: "pro_identificador" },
+                          { data: "pro_nombre" },
+                          { data: "dprod_orden" },
                           { data: "est_codigo" },
                         ],
                       });
+                      // console.log("ajax.php?modulo=producto&controlador=productobase&funcion=getTableProductoDetalle&id=" +
+                      // id +
+                      // "&idenP=" +
+                      // iden);
                     } else {
                       Notify("Datos no validos.", "Error", "danger");
                       tabladpm = $("#tablaDetalleProcesoMaquina").DataTable({
                         destroy: true, //Cada vez que se construya una nueva tabla, destruye la anterior
                         processing: true, //En caso de que sea mucha data, aparecerá un texto "procesando"
                         columns: [
-                          { data: "maq_codigo" },
-                          { data: "maq_identificador" },
-                          { data: "maq_nombre" },
+                          { data: "pro_codigo" },
+                          { data: "pro_identificador" },
+                          { data: "pro_nombre" },
+                          { data: "dprod_orden" },
                           { data: "est_codigo" },
                         ],
                       });
@@ -481,44 +437,55 @@ $(document).ready(function () {
                   } else {
                     // El proceso no cuenta con maquinas asociadas
                     Notify(
-                      "El proceso no cuenta con maquinas asociadas.",
+                      "El producto no cuenta con procesos asociados.",
                       "Aviso",
                       "info"
                     );
-                    tabladpm = $("#tablaDetalleProcesoMaquina").DataTable({
+                    tabladprod = $("#tablaDetalleProducto").DataTable({
                       destroy: true, //Cada vez que se construya una nueva tabla, destruye la anterior
                       processing: true, //En caso de que sea mucha data, aparecerá un texto "procesando"
                       columns: [
-                        { data: "maq_codigo" },
-                        { data: "maq_identificador" },
-                        { data: "maq_nombre" },
+                        { data: "pro_codigo" },
+                        { data: "pro_identificador" },
+                        { data: "pro_nombre" },
+                        { data: "dprod_orden" },
                         { data: "est_codigo" },
                       ],
                     });
+              
+                    // $("#dprodIdCodigo").val(0);
+                    // $("#dprodIdCodigoNombre").val("");
       
                     // Si debe de tener el retorno del proceso
                   }
                 } else {
                   // El proceso no existe
                   Notify("El proceso ingresado no existe.", "Error", "danger");
-                  tabladpm = $("#tablaDetalleProcesoMaquina").DataTable({
+                  tabladprod = $("#tablaDetalleProducto").DataTable({
                     destroy: true, //Cada vez que se construya una nueva tabla, destruye la anterior
                     processing: true, //En caso de que sea mucha data, aparecerá un texto "procesando"
                     columns: [
-                      { data: "maq_codigo" },
-                      { data: "maq_identificador" },
-                      { data: "maq_nombre" },
+                      { data: "pro_codigo" },
+                      { data: "pro_identificador" },
+                      { data: "pro_nombre" },
+                      { data: "dprod_orden" },
                       { data: "est_codigo" },
                     ],
                   });
-                  $("#pmidCodigo").val(0);
-                  $("#pmIdCodigoNombreProceso").val("");
+            
+                  $("#dprodIdCodigo").val(0);
+                  $("#dprodIdCodigoNombre").val("");
                 }
       
                 // $(".loading").hide();
               },
             });
           }
+          
+        
+
+
+
         //---------------------------------------------
 
         $(".loading").hide();
@@ -529,13 +496,13 @@ $(document).ready(function () {
   });
 
   // Eliminar relacion proceso maquina
-  $("#tablaDetalleProcesoMaquina tbody").on(
+  $("#tablaDetalleProducto tbody").on(
     "click",
     "button.eliminar",
     function () {
-      var data = tabladpm.row($(this).parents("tr")).data();
+      var data = tabladprod.row($(this).parents("tr")).data();
 
-      var idProceso = $("#pmidCodigo").val();
+      var idProducto = $("#dprodIdCodigo").val();
       // console.log(data);
       // console.log(idProceso);
 
@@ -545,9 +512,9 @@ $(document).ready(function () {
       //   1
       // );
       var urlEliminar =
-        "ajax.php?modulo=procesos&controlador=procesos&funcion=elimiarMaquinaProceso";
+        "ajax.php?modulo=producto&controlador=productobase&funcion=elimiarDetalleProducto";
 
-      titulo = "¿Desea eliminar la maquina para el proceso?";
+      titulo = "¿Desea eliminar el proceso para el producto?";
 
       swal({
         title: titulo,
@@ -558,7 +525,7 @@ $(document).ready(function () {
       }).then((willDelete) => {
         if (willDelete) {
           //Se le deja el control del tiempo de espera a la funcion
-          eliminarRelacion(idProceso, data.maq_codigo, urlEliminar, tabladpm);
+          eliminarRelacion(idProducto, data.pro_codigo, urlEliminar, tabladprod);
         }
       });
     }
@@ -569,7 +536,7 @@ $(document).ready(function () {
 var obtener_data_editar_proceso = function (tbody, table) {
   $(tbody).on("click", "button.editar", function () {
     var data = table.row($(this).parents("tr")).data();
-    console.log(data);
+    // console.log(data);
     $("#editIdenProceso").val(data.pro_identificador);
     $("#editNomProceso").val(data.pro_nombre);
     $("#editCodigoProceso").val(data.pro_codigo);

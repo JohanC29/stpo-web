@@ -77,6 +77,12 @@
 											<span class="sub-item">Producto Base</span>
 										</a>
 									</li>
+									
+									<li>
+										<a href="<?php echo getUrl("producto","productobase","consultProductoDetalle");?>">
+											<span class="sub-item">Configuracion Producto Base</span>
+										</a>
+									</li>
 								</ul>
 							</div>
 						</li>
