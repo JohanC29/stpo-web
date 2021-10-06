@@ -251,6 +251,8 @@
 	<script src="js/producto.js"></script>
 	<script src="js/ordentrabajo.js"></script>
 	<script src="js/productoDetalle.js"></script>
+	<script src="js/OtDetallle.js"></script>
+	
 	
 	
 

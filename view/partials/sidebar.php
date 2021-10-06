@@ -46,7 +46,7 @@
 										</a>
 									</li>
 									<li>
-										<a href="">
+										<a href="<?php echo getUrl("ordentrabajo","ordentrabajo","consultOtDetalle");?>">
 											<span class="sub-item">Configurar Orden Trabajo</span>
 										</a>
 									</li>

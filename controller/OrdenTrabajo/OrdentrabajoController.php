@@ -168,6 +168,262 @@ class OrdentrabajoController {
     }
 
 
+
+    // Detalle orden de trabajo
+    public function consultOtDetalle(){
+        $obj = new OrdenTrabajoModel();
+        $sql ="SELECT * FROM `ordentrabajo` o WHERE o.est_codigo = 1 ORDER BY o.otr_identificador ASC";
+        // $sql = "SELECT * FROM producto p WHERE p.est_codigo = 1 ORDER BY p.prod_descripcion ASC";
+        $ordenTrabajo = $obj->consult($sql);
+
+        // Consultar procesos
+        $sql = "SELECT p.pro_codigo, upper(p.pro_nombre) AS pro_nombre
+                    FROM
+                    proceso p
+                    WHERE
+                    p.est_codigo = 1
+                    ORDER BY p.pro_nombre ASC";
+
+        $dotrproceso = $obj->consult($sql);
+
+
+        include_once '../view/ordentrabajo/OtDetalle/consultar.php';
+    }
+
+    // Obtener datos para la tabla
+    public function getTableProductoDetalle(){
+        $obj = new OrdenTrabajoModel();
+
+        $id = $_GET['id'];
+        $idenP = $_GET['idenP'];
+
+        // Validar si tiene resultados
+        $contador = 0;
+
+        if ($id==0 && (!$idenP=='')) {
+            // Contador validador
+            $sql="SELECT COUNT(1) contador FROM
+                    ordentrabajo o,
+                    proceso p,
+                    detalleordentrabajo dot
+                    where 
+                    o.otr_codigo = dot.otr_codigo
+                    and dot.pro_codigo = p.pro_codigo
+                    AND o.otr_identificador = $idenP
+                    ";
+
+            $resultadoCount = $obj->consult($sql);
+            
+
+            foreach ($resultadoCount as $rsc) {
+                $contador = $rsc['contador'];
+            }
+
+            if($contador!= '0'){
+                $sql = "SELECT dot.dotr_codigo, 
+                               p.pro_codigo, 
+                               p.pro_nombre, 
+                               dot.dotr_cantidad, 
+                               dot.dotr_orden,
+                               1 est_codigo
+                            FROM 
+                            ordentrabajo o,
+                            proceso p,
+                            detalleordentrabajo dot
+                            WHERE 
+                            o.otr_codigo = dot.otr_codigo
+                            AND dot.pro_codigo = p.pro_codigo
+                            AND o.otr_identificador = $idenP
+                            ORDER BY dot.dotr_orden ASC";
+            }
+
+            
+
+            
+        }elseif ($id!=0 && ($idenP=='')) {
+            // Contador validador
+            $sql="SELECT COUNT(1) contador FROM
+                    ordentrabajo o,
+                    proceso p,
+                    detalleordentrabajo dot
+                    where 
+                    o.otr_codigo = dot.otr_codigo
+                    and dot.pro_codigo = p.pro_codigo
+                    AND o.otr_codigo = $id";
+
+            $resultadoCount = $obj->consult($sql);
+
+
+            foreach ($resultadoCount as $rsc) {
+                $contador = $rsc['contador'];
+            }
+
+            if($contador != '0'){
+                $sql = "SELECT dot.dotr_codigo, 
+                               p.pro_codigo, 
+                               p.pro_nombre, 
+                               dot.dotr_cantidad, 
+                               dot.dotr_orden,
+                               1 est_codigo
+                            FROM 
+                            ordentrabajo o,
+                            proceso p,
+                            detalleordentrabajo dot
+                            WHERE 
+                            o.otr_codigo = dot.otr_codigo
+                            AND dot.pro_codigo = p.pro_codigo
+                            AND o.otr_codigo = $id
+                            ORDER BY dot.dotr_orden ASC";
+            }
+
+            // echo $sql;
+ 
+        }
+
+        if($contador == '0' ){
+            $sql = "SELECT -1 dotr_codigo, 
+                        ''  pro_codigo, 
+                         'Sin Resultados' pro_nombre, 
+                         '' dotr_cantidad, 
+                         '' dotr_orden,
+                         -1 est_codigo
+                    FROM DUAL";
+        }
+        
+        
+        $procesos = $obj->consult($sql);
+        //$maquinasJSON = $obj->convertirJSON($sql);
+        //echo getUrl("maquina","maquina","getTable",false,"ajax");
+        //echo $maquinasJSON;
+
+        $result_array = array();
+        if (mysqli_num_rows($procesos) > 0) {
+            $item_array = array();
+            while($row = mysqli_fetch_assoc($procesos)) {
+                if($row['pro_codigo'] != -1){
+                    $btnAcciones = "<div class='form-button-action'>";
+
+                    $btnAcciones=$btnAcciones."<button estado = '1' type='button' data-toggle='tooltip' title='Eliminar'class='eliminar btn btn-link btn-danger' data-original-title='Eliminar'><i class='fas fa-trash-alt'></i></button>";
+                    
+                    $btnAcciones = $btnAcciones."</div>";
+                }else{
+                    $btnAcciones = "<div class='form-button-action'>";
+
+                    //  $btnAcciones=$btnAcciones."<button estado = '1' type='button' data-toggle='tooltip' title='Eliminar'class='eliminar btn btn-link btn-danger' data-original-title='Eliminar'><i class='fas fa-trash-alt'></i></button>";
+                    
+                    $btnAcciones = $btnAcciones."</div>";
+                }
+                
+                $row['est_codigo'] = $btnAcciones;
+                $result_array[]=$row;
+            }
+            echo json_encode($result_array);                
+        }
+        //return -1;
+        // print_r($result_array);
+    }
+
+
+    public function validaOtDetalle(){
+        $obj = new OrdenTrabajoModel();
+
+        $id = $_POST['id'];
+        
+
+        $result_array = array();
+        if($id != 0){
+            //Valida si existe producto
+            
+
+            $sql = "SELECT COUNT(1) vaOrdenTrabajo
+            FROM ordentrabajo o 
+            WHERE
+            o.otr_codigo = $id";
+
+            $resultado = $obj->consult($sql);
+            if (mysqli_num_rows($resultado) > 0) {
+                while($row = mysqli_fetch_assoc($resultado)) {
+                    $result_array[]=$row;
+                }
+            }
+
+            if($result_array[0]['vaOrdenTrabajo'] >0){
+                //Valida si existe proceso asociada
+            $sql = "SELECT count(1) vaProceso, 
+                            (SELECT o.otr_codigo FROM ordentrabajo o WHERE o.otr_codigo = d.otr_codigo) otr_codigo, 
+                            (SELECT ot.otr_identificador FROM ordentrabajo ot WHERE ot.otr_codigo = d.otr_codigo) otr_identificador 
+                    FROM 
+                        detalleordentrabajo d 
+                    WHERE
+                        d.otr_codigo = $id";
+
+            $resultado = $obj->consult($sql);
+            if (mysqli_num_rows($resultado) > 0) {
+                while($row = mysqli_fetch_assoc($resultado)) {
+                    $result_array[]=$row;
+                }
+            }
+            }else{
+                $result_array[]=['vaProceso' => '0',
+                                 'otr_codigo' => '0',
+                                 'otr_identificador' => '0',];
+            }
+
+            echo json_encode($result_array);
+
+        }
+        if(isset($_POST['idenP'])){
+            $idenP = $_POST['idenP'];
+
+            if($idenP != ''){
+                //Valida si existe proceso
+                $sql = "SELECT COUNT(1) vaOrdenTrabajo
+                            FROM ordentrabajo o 
+                            WHERE
+                            o.otr_identificador = $idenP";
+
+                
+                $resultado = $obj->consult($sql);
+                if (mysqli_num_rows($resultado) > 0) {
+                    while($row = mysqli_fetch_assoc($resultado)) {
+                        $result_array[]=$row;
+                    }
+                }
+
+                if($result_array[0]['vaProducto']>0){                
+                //Valida si existe maquina asociada
+                $sql = "SELECT count(1) vaProceso, 
+                                (SELECT o.otr_codigo FROM ordentrabajo o WHERE o.otr_codigo = d.otr_codigo) otr_codigo, 
+                                (SELECT ot.otr_identificador FROM ordentrabajo ot WHERE ot.otr_codigo = d.otr_codigo) otr_identificador 
+                        FROM
+                            detalleordentrabajo d,
+                            ordentrabajo otr 
+                        WHERE
+                            otr.otr_codigo = d.otr_codigo
+                            AND otr.otr_identificador = $idenP";
+    
+                $resultado = $obj->consult($sql);
+                if (mysqli_num_rows($resultado) > 0) {
+                    while($row = mysqli_fetch_assoc($resultado)) {
+                        $result_array[]=$row;
+                    }
+                }
+
+                }else{
+                    $result_array[]=[ 'vaProceso' => '0',
+                                      'otr_codigo' => '0',
+                                      'otr_identificador' => '0',];
+                }
+    
+                echo json_encode($result_array);
+            }
+        }
+        
+
+    }
+
+
+
 }
 
 ?>
