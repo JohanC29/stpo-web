@@ -37,7 +37,7 @@
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <label>Identificador Orden de Trabajo</label>
-                                    <input id="idenOT" name="idenOT" type="number" class="form-control"
+                                    <input id="idenOT" name="idenOT" type="number" min="0" class="form-control"
                                         placeholder="Ingrese identificador Orden de Trabajo">
                                 </div>
                             </div>
@@ -144,7 +144,7 @@
                                 </div>
                                 <div class="modal-footer no-bd">
                                     <button type="button" id="agregarOtDetalle"
-                                        data-url="<?php echo getUrl('producto', 'productobase', 'insertarDetalleProducto', false, 'ajax'); ?>"
+                                        data-url="<?php echo getUrl('ordentrabajo', 'ordentrabajo', 'insertarOtDetalle', false, 'ajax'); ?>"
                                         class="btn btn-primary">Agregar</button>
                                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                                 </div>

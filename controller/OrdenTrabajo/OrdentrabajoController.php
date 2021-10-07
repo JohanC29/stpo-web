@@ -22,8 +22,33 @@ class OrdentrabajoController {
               VALUES ($id, '$ortIdentificador', '$prodCodigo', '1')";
 
         $ejecutar= $obj->insert($sql);
+
         if($ejecutar){
             echo 'Insercion exitosa';
+        }else{
+            echo $ejecutar;
+            echo "Ocurrio un error creando la nueva maquina.";
+        }
+
+
+        $sql ="INSERT INTO detalleordentrabajo(dotr_codigo,otr_codigo,pro_codigo,dotr_cantidad)
+                SELECT
+                null,
+                ot.otr_codigo,
+                dp.pro_codigo,
+                0
+                FROM 
+                ordentrabajo ot,
+                producto p,
+                detalleproducto dp
+                WHERE
+                ot.prod_codigo = p.prod_codigo
+                and dp.prod_codigo = p.prod_codigo
+                and ot.otr_codigo = $id";
+
+        $ejecutar= $obj->insert($sql);
+        if($ejecutar){
+            //echo 'Insercion exitosa';
         }else{
             echo $ejecutar;
             echo "Ocurrio un error creando la nueva maquina.";
@@ -390,7 +415,7 @@ class OrdentrabajoController {
                     }
                 }
 
-                if($result_array[0]['vaProducto']>0){                
+                if($result_array[0]['vaOrdenTrabajo']>0){                
                 //Valida si existe maquina asociada
                 $sql = "SELECT count(1) vaProceso, 
                                 (SELECT o.otr_codigo FROM ordentrabajo o WHERE o.otr_codigo = d.otr_codigo) otr_codigo, 
@@ -422,7 +447,49 @@ class OrdentrabajoController {
 
     }
 
+    public function insertarOtDetalle(){
+        $obj = new OrdenTrabajoModel();
 
+        $id = $obj->autoIncrement('detalleordentrabajo','dotr_codigo');
+
+        $dotrIdCodigoNombre           = $_POST['dotrIdCodigoNombre'];
+        $dotrIdCodigoProceso          = $_POST['dotrIdCodigoProceso'];
+        $dotrIdCodigoProcesoSelect    = $_POST['dotrIdCodigoProcesoSelect'];
+
+        //---
+        $dotrIdCodigoNombre    = substr($dotrIdCodigoNombre,0,strpos($dotrIdCodigoNombre,'-'));
+
+        $sql = "INSERT INTO `detalleordentrabajo` (`dotr_codigo`, `otr_codigo`, `pro_codigo`, `dotr_cantidad`, `dotr_orden`) 
+                VALUES ($id, $dotrIdCodigoNombre, $dotrIdCodigoProcesoSelect, '0', '0')";
+              
+        $ejecutar= $obj->insert($sql);
+        if($ejecutar){
+            echo 'Insercion exitosa';
+        }else{
+            echo $ejecutar;
+            echo "Ocurrio un error creando el nuevo proceso.";
+        }
+        
+    }
+
+
+    public function elimiarDetalleProducto(){
+        $obj = new OrdenTrabajoModel();
+
+        $idOrdentrabajo          = $_POST['idCampo1'];
+        $idProceso               = $_POST['idCampo2'];
+
+        $sql="DELETE FROM `detalleordentrabajo` WHERE `otr_codigo`= $idOrdentrabajo AND `pro_codigo` = $idProceso";
+
+        $ejecutar= $obj->insert($sql);
+        if($ejecutar){
+            echo 'Eliminacion exitosa';
+        }else{
+            echo $ejecutar;
+            echo "Ocurrio un error creando el nuevo proceso.";
+        }
+        
+    }
 
 }
 

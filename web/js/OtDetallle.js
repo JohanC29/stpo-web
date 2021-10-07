@@ -276,11 +276,11 @@ $(document).ready(function () {
   });
 
   // Dato Titulo
-  $("#agregarProductoDetalle").click(function () {
+  $("#agregarOtDetalle").click(function () {
     $(".loading").show();
 
     var url = $(this).attr("data-url");
-    var formulario = $("#formProductoDetalle").serialize();
+    var formulario = $("#formOtDetalle").serialize();
     $.ajax({
       url: url,
       type: "POST",
@@ -288,17 +288,13 @@ $(document).ready(function () {
       success: function (mensaje) {
         Notify(mensaje, "Exito!", "success", "fas fa-check");
         // tabladpm.ajax.reload();
-
+ 
         //---- CARGA DE LA TABLA RELACION  -------
-
-
-
-    
-          // $(".loading").show();
-          var id = $("#idCodigoProducto").val();
-          var iden = $("#idenProductoA").val();
       
-          tabladprod.destroy();
+          var id = $("#idCodigoOrdenTrabajo").val();
+          var iden = $("#idenOT").val();
+      
+          tabladotr.destroy();
       
           //Validacion de datos ingresados
           if (id == 0 && (iden == "" || iden == 0) ) {
@@ -308,38 +304,44 @@ $(document).ready(function () {
               "danger"
             );
       
-            tabladprod = $("#tablaDetalleProducto").DataTable({
+            
+            tabladotr = $("#tablaOtDetalle").DataTable({
               destroy: true, //Cada vez que se construya una nueva tabla, destruye la anterior
               processing: true, //En caso de que sea mucha data, aparecerá un texto "procesando"
               columns: [
+                { data: "dotr_codigo" },
                 { data: "pro_codigo" },
-                { data: "pro_identificador" },
                 { data: "pro_nombre" },
-                { data: "dprod_orden" },
+                { data: "dotr_cantidad" },
+                { data: "dotr_orden" },
                 { data: "est_codigo" },
               ],
             });
       
-            $("#dprodIdCodigo").val(0);
-            $("#dprodIdCodigoNombre").val("");
+            $("#dotrIdCodigo").val(0);
+            $("#dotrIdCodigoNombre").val("");
+      
             $(".loading").hide();
           } else if (id != 0 && iden != "") {
             Notify("Datos no validos. Ingrese solo un parametro.", "Error", "danger");
       
-            tabladprod = $("#tablaDetalleProducto").DataTable({
+      
+            tabladotr = $("#tablaOtDetalle").DataTable({
               destroy: true, //Cada vez que se construya una nueva tabla, destruye la anterior
               processing: true, //En caso de que sea mucha data, aparecerá un texto "procesando"
               columns: [
+                { data: "dotr_codigo" },
                 { data: "pro_codigo" },
-                { data: "pro_identificador" },
                 { data: "pro_nombre" },
-                { data: "dprod_orden" },
+                { data: "dotr_cantidad" },
+                { data: "dotr_orden" },
                 { data: "est_codigo" },
               ],
             });
       
-            $("#dprodIdCodigo").val(0);
-            $("#dprodIdCodigoNombre").val("");
+            $("#dotrIdCodigo").val(0);
+            $("#dotrIdCodigoNombre").val("");
+      
             $(".loading").hide();
           } else {
             //Se valida que los parametros de ingreso tengan datos
@@ -351,7 +353,7 @@ $(document).ready(function () {
             };
       
             $.ajax({
-              url: "ajax.php?modulo=producto&controlador=productobase&funcion=validaDetalleProducto",
+              url: "ajax.php?modulo=ordentrabajo&controlador=ordentrabajo&funcion=validaOtDetalle",
               type: "POST",
               data: parametros,
               success: function (error) {
@@ -360,11 +362,12 @@ $(document).ready(function () {
                 // console.log(parametros); 
       
                 // Validar si el proceso no existe
-                if (errorJson[0]["vaProducto"] > 0) {
-                  var idProductoConsultado = errorJson[1]["prod_codigo"];
-                  var nombreProductoConsultado = errorJson[1]["prod_descripcion"];
-                  $("#dprodIdCodigo").val(idProductoConsultado);
-                  $("#dprodIdCodigoNombre").val(
+                if (errorJson[0]["vaOrdenTrabajo"] > 0) {
+                  var idProductoConsultado = errorJson[1]["otr_codigo"];
+                  var nombreProductoConsultado = errorJson[1]["otr_identificador"];
+      
+                  $("#dotrIdCodigo").val(idProductoConsultado);
+                  $("#dotrIdCodigoNombre").val(
                     idProductoConsultado + "-" + nombreProductoConsultado
                   );
                   // El proceso si existe
@@ -380,58 +383,61 @@ $(document).ready(function () {
                         "danger"
                       );
       
-                      tabladprod = $("#tablaDetalleProducto").DataTable({
+                      tabladotr = $("#tablaOtDetalle").DataTable({
                         destroy: true, //Cada vez que se construya una nueva tabla, destruye la anterior
                         processing: true, //En caso de que sea mucha data, aparecerá un texto "procesando"
                         columns: [
+                          { data: "dotr_codigo" },
                           { data: "pro_codigo" },
-                          { data: "pro_identificador" },
                           { data: "pro_nombre" },
-                          { data: "dprod_orden" },
+                          { data: "dotr_cantidad" },
+                          { data: "dotr_orden" },
                           { data: "est_codigo" },
                         ],
                       });
                 
-                      $("#dprodIdCodigo").val(0);
-                      $("#dprodIdCodigoNombre").val("");
+                      $("#dotrIdCodigo").val(0);
+                      $("#dotrIdCodigoNombre").val("");
                     } else if (id == 0 && iden != "") {
                       // Consulta por identificador text
                      
       
-                      tabladprod = $("#tablaDetalleProducto").DataTable({
+                      tabladotr = $("#tablaOtDetalle").DataTable({
                         ajax: {
                           url:
-                            "ajax.php?modulo=producto&controlador=productobase&funcion=getTableProductoDetalle&id=" +
+                            "ajax.php?modulo=ordentrabajo&controlador=ordentrabajo&funcion=getTableProductoDetalle&id=" +
                             id +
                             "&idenP=" +
                             iden,
                           dataSrc: "",
                         },
                         columns: [
+                          { data: "dotr_codigo" },
                           { data: "pro_codigo" },
-                          { data: "pro_identificador" },
                           { data: "pro_nombre" },
-                          { data: "dprod_orden" },
+                          { data: "dotr_cantidad" },
+                          { data: "dotr_orden" },
                           { data: "est_codigo" },
                         ],
                       });
                     } else if (id != 0 && iden == "") {
                       
                       // Consulta por id
-                      tabladprod = $("#tablaDetalleProducto").DataTable({
+                      tabladotr = $("#tablaOtDetalle").DataTable({
                         ajax: {
                           url:
-                            "ajax.php?modulo=producto&controlador=productobase&funcion=getTableProductoDetalle&id=" +
+                            "ajax.php?modulo=ordentrabajo&controlador=ordentrabajo&funcion=getTableProductoDetalle&id=" +
                             id +
                             "&idenP=" +
                             iden,
                           dataSrc: "",
                         },
                         columns: [
+                          { data: "dotr_codigo" },
                           { data: "pro_codigo" },
-                          { data: "pro_identificador" },
                           { data: "pro_nombre" },
-                          { data: "dprod_orden" },
+                          { data: "dotr_cantidad" },
+                          { data: "dotr_orden" },
                           { data: "est_codigo" },
                         ],
                       });
@@ -441,14 +447,15 @@ $(document).ready(function () {
                       // iden);
                     } else {
                       Notify("Datos no validos.", "Error", "danger");
-                      tabladpm = $("#tablaDetalleProcesoMaquina").DataTable({
+                      tabladotr = $("#tablaOtDetalle").DataTable({
                         destroy: true, //Cada vez que se construya una nueva tabla, destruye la anterior
                         processing: true, //En caso de que sea mucha data, aparecerá un texto "procesando"
                         columns: [
+                          { data: "dotr_codigo" },
                           { data: "pro_codigo" },
-                          { data: "pro_identificador" },
                           { data: "pro_nombre" },
-                          { data: "dprod_orden" },
+                          { data: "dotr_cantidad" },
+                          { data: "dotr_orden" },
                           { data: "est_codigo" },
                         ],
                       });
@@ -460,17 +467,20 @@ $(document).ready(function () {
                       "Aviso",
                       "info"
                     );
-                    tabladprod = $("#tablaDetalleProducto").DataTable({
+                    tabladotr = $("#tablaOtDetalle").DataTable({
                       destroy: true, //Cada vez que se construya una nueva tabla, destruye la anterior
                       processing: true, //En caso de que sea mucha data, aparecerá un texto "procesando"
                       columns: [
+                        { data: "dotr_codigo" },
                         { data: "pro_codigo" },
-                        { data: "pro_identificador" },
                         { data: "pro_nombre" },
-                        { data: "dprod_orden" },
+                        { data: "dotr_cantidad" },
+                        { data: "dotr_orden" },
                         { data: "est_codigo" },
                       ],
                     });
+              
+      
               
                     // $("#dprodIdCodigo").val(0);
                     // $("#dprodIdCodigoNombre").val("");
@@ -480,20 +490,21 @@ $(document).ready(function () {
                 } else {
                   // El proceso no existe
                   Notify("El proceso ingresado no existe.", "Error", "danger");
-                  tabladprod = $("#tablaDetalleProducto").DataTable({
+                  tabladotr = $("#tablaOtDetalle").DataTable({
                     destroy: true, //Cada vez que se construya una nueva tabla, destruye la anterior
                     processing: true, //En caso de que sea mucha data, aparecerá un texto "procesando"
                     columns: [
+                      { data: "dotr_codigo" },
                       { data: "pro_codigo" },
-                      { data: "pro_identificador" },
                       { data: "pro_nombre" },
-                      { data: "dprod_orden" },
+                      { data: "dotr_cantidad" },
+                      { data: "dotr_orden" },
                       { data: "est_codigo" },
                     ],
                   });
             
-                  $("#dprodIdCodigo").val(0);
-                  $("#dprodIdCodigoNombre").val("");
+                  $("#dotrIdCodigo").val(0);
+                  $("#dotrIdCodigoNombre").val("");
                 }
       
                 // $(".loading").hide();
@@ -503,25 +514,23 @@ $(document).ready(function () {
           
         
 
-
-
         //---------------------------------------------
 
         $(".loading").hide();
       },
     });
 
-    $("#agregarAsignacionMaquinaModal").modal("hide");
+    $("#agregarOtDetalleModal").modal("hide");
   });
 
   // Eliminar relacion proceso maquina
-  $("#tablaDetalleProducto tbody").on(
+  $("#tablaOtDetalle tbody").on(
     "click",
     "button.eliminar",
     function () {
-      var data = tabladprod.row($(this).parents("tr")).data();
+      var data = tabladotr.row($(this).parents("tr")).data();
 
-      var idProducto = $("#dprodIdCodigo").val();
+      var idOrdentrabajo = $("#dotrIdCodigo").val();
       // console.log(data);
       // console.log(idProceso);
 
@@ -531,7 +540,7 @@ $(document).ready(function () {
       //   1
       // );
       var urlEliminar =
-        "ajax.php?modulo=producto&controlador=productobase&funcion=elimiarDetalleProducto";
+        "ajax.php?modulo=ordentrabajo&controlador=ordentrabajo&funcion=elimiarDetalleProducto";
 
       titulo = "¿Desea eliminar el proceso para el producto?";
 
@@ -544,7 +553,7 @@ $(document).ready(function () {
       }).then((willDelete) => {
         if (willDelete) {
           //Se le deja el control del tiempo de espera a la funcion
-          eliminarRelacion(idProducto, data.pro_codigo, urlEliminar, tabladprod);
+          eliminarRelacion(idOrdentrabajo, data.pro_codigo, urlEliminar, tabladotr);
         }
       });
     }
