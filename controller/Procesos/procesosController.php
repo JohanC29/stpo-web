@@ -47,7 +47,7 @@ class ProcesosController {
 
         $ejecutar= $obj->insert($sql);
         if($ejecutar){
-            echo 'Actualizacion exitosa';
+            echo 'Insercion exitosa';
         }else{
             echo $ejecutar;
             echo "Ocurrio un error actualizando el proceso.";
@@ -77,7 +77,7 @@ class ProcesosController {
 
         $ejecutar= $obj->insert($sql);
         if($ejecutar){
-            echo 'Actualizacion exitosa';
+            echo 'Insercion exitosa';
         }else{
             echo $ejecutar;
             echo "Ocurrio un error actualizando el proceso.";
@@ -397,19 +397,31 @@ class ProcesosController {
         //---
         $pmIdCodigoNombreProceso    = substr($pmIdCodigoNombreProceso,0,strpos($pmIdCodigoNombreProceso,'-'));
 
+        //Validacion de la insercion
+        $sql = "SELECT COUNT(1) 
+                    FROM detalleprocesomaquina dp
+                    WHERE
+                        dp.maq_codigo = $pmIdCodigoMaquinaSelect
+                    AND dp.pro_codigo = $pmIdCodigoNombreProceso";
+        $ejecutar_count = $obj->insert($sql);
 
+        if( $ejecutar_count == '0'){
 
-        $sql="INSERT INTO `detalleprocesomaquina` (`dpm_codigo`, `maq_codigo`, `pro_codigo`)
-              VALUES ($id, $pmIdCodigoMaquinaSelect, $pmIdCodigoNombreProceso )";
+            // Se inserta el detalle proceso maquina
+            $sql="INSERT INTO `detalleprocesomaquina` (`dpm_codigo`, `maq_codigo`, `pro_codigo`)
+            VALUES ($id, $pmIdCodigoMaquinaSelect, $pmIdCodigoNombreProceso )";
 
-        $ejecutar= $obj->insert($sql);
-        if($ejecutar){
-            echo 'Insercion exitosa';
+            $ejecutar= $obj->insert($sql);
+            if($ejecutar){
+                echo 'Insercion exitosa';
+            }else{
+                echo $ejecutar;
+                echo "Ocurrio un error creando el nuevo proceso.";
+            }
         }else{
-            echo $ejecutar;
-            echo "Ocurrio un error creando el nuevo proceso.";
+            echo 'El registro ya existe.';
         }
-        
+
     }
 
     public function elimiarMaquinaProceso(){
@@ -422,7 +434,7 @@ class ProcesosController {
 
         $ejecutar= $obj->insert($sql);
         if($ejecutar){
-            echo 'Eliminacion exitosa';
+            echo 'Insercion exitosa';
         }else{
             echo $ejecutar;
             echo "Ocurrio un error creando el nuevo proceso.";

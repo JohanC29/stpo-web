@@ -2,6 +2,26 @@ $(document).ready(function () {
  $(".loading").hide();
  // Se Crea la tabla y se deja activa para el resto de procesos
  var table = $("#tablaGestionarMaquina").DataTable({
+  language: {
+    "decimal": "",
+    "emptyTable": "No hay información",
+    "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+    "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+    "infoPostFix": "",
+    "thousands": ",",
+    "lengthMenu": "Mostrar _MENU_ Entradas",
+    "loadingRecords": "Cargando...",
+    "processing": "Procesando...",
+    "search": "Buscar:",
+    "zeroRecords": "Sin resultados encontrados",
+    "paginate": {
+        "first": "Primero",
+        "last": "Ultimo",
+        "next": "Siguiente",
+        "previous": "Anterior"
+        }
+    },
     "ajax":{
       "url" : "ajax.php?modulo=maquina&controlador=maquina&funcion=getTable",
       "dataSrc":""
@@ -15,7 +35,7 @@ $(document).ready(function () {
   });
 
 
-  obtener_data_editar("#tablaGestionarMaquina tbody",table);
+  obtener_data_editar_maquina("#tablaGestionarMaquina tbody",table);
 
   $("#btn-reload").on("click", function () {
     //table.ajax.reload();
@@ -30,8 +50,13 @@ $(document).ready(function () {
       type: "POST",
       data: formulario,
       success: function (mensaje) {
-        Notify(mensaje,'Exito!','success','fas fa-check');
-        table.ajax.reload();
+        if(mensaje == 'Insercion exitosa'){
+          Notify(mensaje,'Exito!','success','fas fa-check');
+          table.ajax.reload();
+        }else{
+          Notify(mensaje, "Error!", "danger", giconError);
+        }
+
         $(".loading").hide();
       },
     });
@@ -49,8 +74,13 @@ $(document).ready(function () {
       type: "POST",
       data: formulario,
       success: function (mensaje) {
-        Notify(mensaje,'Exito!','success','fas fa-check');
-        table.ajax.reload();
+        if(mensaje == 'Insercion exitosa'){
+          Notify(mensaje,'Exito!','success','fas fa-check');
+          table.ajax.reload();
+        }else{
+          Notify(mensaje, "Error!", "danger", giconError);
+        }
+
         $(".loading").hide();
       },
     });
@@ -93,10 +123,10 @@ $(document).ready(function () {
 });
 
 
-var obtener_data_editar = function (tbody,table) {
+var obtener_data_editar_maquina = function (tbody,table) {
   $(tbody).on("click","button.editar",function() {
     var data = table.row( $(this).parents("tr")).data();
-    //console.log(data);
+    // console.log(data);
     $("#editIdenMaquina").val(data.maq_identificador);
     $("#editNomMaquina").val(data.maq_nombre);
     $("#editCodigoMaquina").val(data.maq_codigo);
@@ -115,8 +145,13 @@ function cambioEstado(id,est_codigo,url,table) {
     type: "POST",
     data: parametros,
     success: function (mensaje) {
-      Notify(mensaje,'Exito!','success','fas fa-check');
-      table.ajax.reload();
+      if(mensaje == 'Insercion exitosa'){
+        Notify(mensaje,'Exito!','success','fas fa-check');
+        table.ajax.reload();
+      }else{
+        Notify(mensaje, "Error!", "danger", giconError);
+      }
+
       $(".loading").hide();
     },
   });

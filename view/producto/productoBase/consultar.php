@@ -171,7 +171,7 @@
                                     </form>
                                 </div>
                                 <div class="modal-footer no-bd">
-                                    <button type="button" id="editarProducto" data-url="<?php echo getUrl('producto', 'productobase', 'editar', false, 'ajax'); ?>" class="btn btn-primary">Agregar</button>
+                                    <button type="button" id="editarProducto" data-url="<?php echo getUrl('producto', 'productobase', 'editar', false, 'ajax'); ?>" class="btn btn-primary">Actualizar</button>
                                     <button type="button" class="btn btn-danger resetSubCategoria" data-dismiss="modal">Cancelar</button>
                                 </div>
                             </div>

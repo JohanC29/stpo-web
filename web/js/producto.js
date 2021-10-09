@@ -1,7 +1,7 @@
 $(document).ready(function () {
  $(".loading").hide();
  // Se Crea la tabla y se deja activa para el resto de procesos
- var table = $("#tablaGestionarProducto").DataTable({
+ var tableprod = $("#tablaGestionarProducto").DataTable({
     "ajax":{
       "url" : "ajax.php?modulo=producto&controlador=productobase&funcion=getTable",
       "dataSrc":""
@@ -16,7 +16,7 @@ $(document).ready(function () {
   });
 
 
-  obtener_data_editar("#tablaGestionarProducto tbody",table);
+  obtener_data_editar_prod("#tablaGestionarProducto tbody",tableprod);
 
 
   $("#agregarProducto").click(function () {
@@ -28,8 +28,13 @@ $(document).ready(function () {
       type: "POST",
       data: formulario,
       success: function (mensaje) {
-        Notify(mensaje,'Exito!','success','fas fa-check');
-        table.ajax.reload();
+        if(mensaje == 'Insercion exitosa'){
+          Notify(mensaje,'Exito!','success','fas fa-check');
+          tableprod.ajax.reload();
+        }else{
+          Notify(mensaje, "Error!", "danger", giconError);
+        }
+
         $(".loading").hide();
       },
     });
@@ -47,8 +52,12 @@ $(document).ready(function () {
       type: "POST",
       data: formulario,
       success: function (mensaje) {
-        Notify(mensaje,'Exito!','success','fas fa-check');
-        table.ajax.reload();
+        if(mensaje == 'Insercion exitosa'){
+          Notify(mensaje,'Exito!','success','fas fa-check');
+          tableprod.ajax.reload();
+        }else{
+          Notify(mensaje, "Error!", "danger", giconError);
+        }
         $(".loading").hide();
       },
     });
@@ -58,7 +67,7 @@ $(document).ready(function () {
   // Deshabilitar Maquina
 
   $("#tablaGestionarProducto tbody").on("click","button.eliminar",function() {
-    var data = table.row( $(this).parents("tr")).data();
+    var data = tableprod.row( $(this).parents("tr")).data();
     //console.log(data.est_codigo);
     var titulo='';
     var est_codigo = data.est_codigo.substr(data.est_codigo.indexOf('<button estado = ')+18,1);
@@ -82,7 +91,7 @@ $(document).ready(function () {
       if (willDelete) {
 
         //Se le deja el control del tiempo de espera a la funcion
-        cambioEstado(data.prod_codigo,est_codigo,urlEliminar,table);
+        cambioEstado(data.prod_codigo,est_codigo,urlEliminar,tableprod);
       }
     });
 
@@ -124,7 +133,7 @@ $(document).ready(function () {
 });
 
 
-var obtener_data_editar = function (tbody,table) {
+var obtener_data_editar_prod = function (tbody,table) {
   $(tbody).on("click","button.editar",function() {
     var data = table.row( $(this).parents("tr")).data();
     // console.log(data);
@@ -146,8 +155,12 @@ function cambioEstado(id,est_codigo,url,table) {
     type: "POST",
     data: parametros,
     success: function (mensaje) {
-      Notify(mensaje,'Exito!','success','fas fa-check');
-      table.ajax.reload();
+      if(mensaje == 'Insercion exitosa'){
+        Notify(mensaje,'Exito!','success','fas fa-check');
+        table.ajax.reload();
+      }else{
+        Notify(mensaje, "Error!", "danger", giconError);
+      }
       $(".loading").hide();
     },
   });

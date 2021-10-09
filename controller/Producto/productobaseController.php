@@ -53,7 +53,7 @@ class ProductobaseController {
 
         $ejecutar= $obj->insert($sql);
         if($ejecutar){
-            echo 'Actualizacion exitosa';
+            echo 'Insercion exitosa';
         }else{
             echo $ejecutar;
             echo "Ocurrio un error creando la nueva maquina.";
@@ -83,7 +83,7 @@ class ProductobaseController {
 
         $ejecutar= $obj->insert($sql);
         if($ejecutar){
-            echo 'Actualizacion exitosa';
+            echo 'Insercion exitosa';
         }else{
             echo $ejecutar;
             echo "Ocurrio un error actualizando la maquina.";
@@ -440,7 +440,7 @@ class ProductobaseController {
 
         $ejecutar= $obj->insert($sql);
         if($ejecutar){
-            echo 'Eliminacion exitosa';
+            echo 'Insercion exitosa';
         }else{
             echo $ejecutar;
             echo "Ocurrio un error creando el nuevo proceso.";

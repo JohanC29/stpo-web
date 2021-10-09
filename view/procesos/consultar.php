@@ -129,7 +129,7 @@
                                     </form>
                                 </div>
                                 <div class="modal-footer no-bd">
-                                    <button type="button" id="editarProceso" data-url="<?php echo getUrl('procesos', 'procesos', 'editar', false, 'ajax'); ?>" class="btn btn-primary">Agregar</button>
+                                    <button type="button" id="editarProceso" data-url="<?php echo getUrl('procesos', 'procesos', 'editar', false, 'ajax'); ?>" class="btn btn-primary">Actualizar</button>
                                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                                 </div>
                             </div>

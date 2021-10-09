@@ -4,6 +4,26 @@ $(document).ready(function () {
   
   // Proceso de Producto Detalle
   var tabladotr = $("#tablaOtDetalle").DataTable({
+    language: {
+      "decimal": "",
+      "emptyTable": "No hay información",
+      "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+      "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+      "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+      "infoPostFix": "",
+      "thousands": ",",
+      "lengthMenu": "Mostrar _MENU_ Entradas",
+      "loadingRecords": "Cargando...",
+      "processing": "Procesando...",
+      "search": "Buscar:",
+      "zeroRecords": "Sin resultados encontrados",
+      "paginate": {
+          "first": "Primero",
+          "last": "Ultimo",
+          "next": "Siguiente",
+          "previous": "Anterior"
+          }
+      },
     destroy: true, //Cada vez que se construya una nueva tabla, destruye la anterior
     processing: true, //En caso de que sea mucha data, aparecerá un texto "procesando"
     columns: [
@@ -28,6 +48,26 @@ $(document).ready(function () {
     // Limpiar Data Table
     tabladotr.destroy();
     tabladotr = $("#tablaOtDetalle").DataTable({
+      language: {
+        "decimal": "",
+        "emptyTable": "No hay información",
+        "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+        "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+        "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+        "infoPostFix": "",
+        "thousands": ",",
+        "lengthMenu": "Mostrar _MENU_ Entradas",
+        "loadingRecords": "Cargando...",
+        "processing": "Procesando...",
+        "search": "Buscar:",
+        "zeroRecords": "Sin resultados encontrados",
+        "paginate": {
+            "first": "Primero",
+            "last": "Ultimo",
+            "next": "Siguiente",
+            "previous": "Anterior"
+            }
+        },
       destroy: true, //Cada vez que se construya una nueva tabla, destruye la anterior
       processing: true, //En caso de que sea mucha data, aparecerá un texto "procesando"
       columns: [
@@ -61,6 +101,26 @@ $(document).ready(function () {
 
       
       tabladotr = $("#tablaOtDetalle").DataTable({
+        language: {
+          "decimal": "",
+          "emptyTable": "No hay información",
+          "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+          "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+          "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+          "infoPostFix": "",
+          "thousands": ",",
+          "lengthMenu": "Mostrar _MENU_ Entradas",
+          "loadingRecords": "Cargando...",
+          "processing": "Procesando...",
+          "search": "Buscar:",
+          "zeroRecords": "Sin resultados encontrados",
+          "paginate": {
+              "first": "Primero",
+              "last": "Ultimo",
+              "next": "Siguiente",
+              "previous": "Anterior"
+              }
+          },
         destroy: true, //Cada vez que se construya una nueva tabla, destruye la anterior
         processing: true, //En caso de que sea mucha data, aparecerá un texto "procesando"
         columns: [
@@ -82,6 +142,26 @@ $(document).ready(function () {
 
 
       tabladotr = $("#tablaOtDetalle").DataTable({
+        language: {
+          "decimal": "",
+          "emptyTable": "No hay información",
+          "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+          "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+          "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+          "infoPostFix": "",
+          "thousands": ",",
+          "lengthMenu": "Mostrar _MENU_ Entradas",
+          "loadingRecords": "Cargando...",
+          "processing": "Procesando...",
+          "search": "Buscar:",
+          "zeroRecords": "Sin resultados encontrados",
+          "paginate": {
+              "first": "Primero",
+              "last": "Ultimo",
+              "next": "Siguiente",
+              "previous": "Anterior"
+              }
+          },
         destroy: true, //Cada vez que se construya una nueva tabla, destruye la anterior
         processing: true, //En caso de que sea mucha data, aparecerá un texto "procesando"
         columns: [
@@ -139,6 +219,26 @@ $(document).ready(function () {
                 );
 
                 tabladotr = $("#tablaOtDetalle").DataTable({
+                  language: {
+                    "decimal": "",
+                    "emptyTable": "No hay información",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                    "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "Mostrar _MENU_ Entradas",
+                    "loadingRecords": "Cargando...",
+                    "processing": "Procesando...",
+                    "search": "Buscar:",
+                    "zeroRecords": "Sin resultados encontrados",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Ultimo",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                        }
+                    },
                   destroy: true, //Cada vez que se construya una nueva tabla, destruye la anterior
                   processing: true, //En caso de que sea mucha data, aparecerá un texto "procesando"
                   columns: [
@@ -158,6 +258,26 @@ $(document).ready(function () {
                
 
                 tabladotr = $("#tablaOtDetalle").DataTable({
+                  language: {
+                    "decimal": "",
+                    "emptyTable": "No hay información",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                    "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "Mostrar _MENU_ Entradas",
+                    "loadingRecords": "Cargando...",
+                    "processing": "Procesando...",
+                    "search": "Buscar:",
+                    "zeroRecords": "Sin resultados encontrados",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Ultimo",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                        }
+                    },
                   ajax: {
                     url:
                       "ajax.php?modulo=ordentrabajo&controlador=ordentrabajo&funcion=getTableProductoDetalle&id=" +
@@ -179,6 +299,26 @@ $(document).ready(function () {
                 
                 // Consulta por id
                 tabladotr = $("#tablaOtDetalle").DataTable({
+                  language: {
+                    "decimal": "",
+                    "emptyTable": "No hay información",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                    "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "Mostrar _MENU_ Entradas",
+                    "loadingRecords": "Cargando...",
+                    "processing": "Procesando...",
+                    "search": "Buscar:",
+                    "zeroRecords": "Sin resultados encontrados",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Ultimo",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                        }
+                    },
                   ajax: {
                     url:
                       "ajax.php?modulo=ordentrabajo&controlador=ordentrabajo&funcion=getTableProductoDetalle&id=" +
@@ -203,6 +343,26 @@ $(document).ready(function () {
               } else {
                 Notify("Datos no validos.", "Error", "danger");
                 tabladotr = $("#tablaOtDetalle").DataTable({
+                  language: {
+                    "decimal": "",
+                    "emptyTable": "No hay información",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                    "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "Mostrar _MENU_ Entradas",
+                    "loadingRecords": "Cargando...",
+                    "processing": "Procesando...",
+                    "search": "Buscar:",
+                    "zeroRecords": "Sin resultados encontrados",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Ultimo",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                        }
+                    },
                   destroy: true, //Cada vez que se construya una nueva tabla, destruye la anterior
                   processing: true, //En caso de que sea mucha data, aparecerá un texto "procesando"
                   columns: [
@@ -223,6 +383,26 @@ $(document).ready(function () {
                 "info"
               );
               tabladotr = $("#tablaOtDetalle").DataTable({
+                language: {
+                  "decimal": "",
+                  "emptyTable": "No hay información",
+                  "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                  "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                  "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                  "infoPostFix": "",
+                  "thousands": ",",
+                  "lengthMenu": "Mostrar _MENU_ Entradas",
+                  "loadingRecords": "Cargando...",
+                  "processing": "Procesando...",
+                  "search": "Buscar:",
+                  "zeroRecords": "Sin resultados encontrados",
+                  "paginate": {
+                      "first": "Primero",
+                      "last": "Ultimo",
+                      "next": "Siguiente",
+                      "previous": "Anterior"
+                      }
+                  },
                 destroy: true, //Cada vez que se construya una nueva tabla, destruye la anterior
                 processing: true, //En caso de que sea mucha data, aparecerá un texto "procesando"
                 columns: [
@@ -246,6 +426,26 @@ $(document).ready(function () {
             // El proceso no existe
             Notify("El proceso ingresado no existe.", "Error", "danger");
             tabladotr = $("#tablaOtDetalle").DataTable({
+              language: {
+                "decimal": "",
+                "emptyTable": "No hay información",
+                "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                "infoPostFix": "",
+                "thousands": ",",
+                "lengthMenu": "Mostrar _MENU_ Entradas",
+                "loadingRecords": "Cargando...",
+                "processing": "Procesando...",
+                "search": "Buscar:",
+                "zeroRecords": "Sin resultados encontrados",
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Ultimo",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                    }
+                },
               destroy: true, //Cada vez que se construya una nueva tabla, destruye la anterior
               processing: true, //En caso de que sea mucha data, aparecerá un texto "procesando"
               columns: [
@@ -286,6 +486,9 @@ $(document).ready(function () {
       type: "POST",
       data: formulario,
       success: function (mensaje) {
+        if(mensaje == 'Insercion exitosa'){
+
+        
         Notify(mensaje, "Exito!", "success", "fas fa-check");
         // tabladpm.ajax.reload();
  
@@ -306,6 +509,26 @@ $(document).ready(function () {
       
             
             tabladotr = $("#tablaOtDetalle").DataTable({
+              language: {
+                "decimal": "",
+                "emptyTable": "No hay información",
+                "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                "infoPostFix": "",
+                "thousands": ",",
+                "lengthMenu": "Mostrar _MENU_ Entradas",
+                "loadingRecords": "Cargando...",
+                "processing": "Procesando...",
+                "search": "Buscar:",
+                "zeroRecords": "Sin resultados encontrados",
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Ultimo",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                    }
+                },
               destroy: true, //Cada vez que se construya una nueva tabla, destruye la anterior
               processing: true, //En caso de que sea mucha data, aparecerá un texto "procesando"
               columns: [
@@ -327,6 +550,26 @@ $(document).ready(function () {
       
       
             tabladotr = $("#tablaOtDetalle").DataTable({
+              language: {
+                "decimal": "",
+                "emptyTable": "No hay información",
+                "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                "infoPostFix": "",
+                "thousands": ",",
+                "lengthMenu": "Mostrar _MENU_ Entradas",
+                "loadingRecords": "Cargando...",
+                "processing": "Procesando...",
+                "search": "Buscar:",
+                "zeroRecords": "Sin resultados encontrados",
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Ultimo",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                    }
+                },
               destroy: true, //Cada vez que se construya una nueva tabla, destruye la anterior
               processing: true, //En caso de que sea mucha data, aparecerá un texto "procesando"
               columns: [
@@ -384,6 +627,26 @@ $(document).ready(function () {
                       );
       
                       tabladotr = $("#tablaOtDetalle").DataTable({
+                        language: {
+                          "decimal": "",
+                          "emptyTable": "No hay información",
+                          "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                          "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                          "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                          "infoPostFix": "",
+                          "thousands": ",",
+                          "lengthMenu": "Mostrar _MENU_ Entradas",
+                          "loadingRecords": "Cargando...",
+                          "processing": "Procesando...",
+                          "search": "Buscar:",
+                          "zeroRecords": "Sin resultados encontrados",
+                          "paginate": {
+                              "first": "Primero",
+                              "last": "Ultimo",
+                              "next": "Siguiente",
+                              "previous": "Anterior"
+                              }
+                          },
                         destroy: true, //Cada vez que se construya una nueva tabla, destruye la anterior
                         processing: true, //En caso de que sea mucha data, aparecerá un texto "procesando"
                         columns: [
@@ -403,6 +666,26 @@ $(document).ready(function () {
                      
       
                       tabladotr = $("#tablaOtDetalle").DataTable({
+                        language: {
+                          "decimal": "",
+                          "emptyTable": "No hay información",
+                          "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                          "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                          "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                          "infoPostFix": "",
+                          "thousands": ",",
+                          "lengthMenu": "Mostrar _MENU_ Entradas",
+                          "loadingRecords": "Cargando...",
+                          "processing": "Procesando...",
+                          "search": "Buscar:",
+                          "zeroRecords": "Sin resultados encontrados",
+                          "paginate": {
+                              "first": "Primero",
+                              "last": "Ultimo",
+                              "next": "Siguiente",
+                              "previous": "Anterior"
+                              }
+                          },
                         ajax: {
                           url:
                             "ajax.php?modulo=ordentrabajo&controlador=ordentrabajo&funcion=getTableProductoDetalle&id=" +
@@ -424,6 +707,26 @@ $(document).ready(function () {
                       
                       // Consulta por id
                       tabladotr = $("#tablaOtDetalle").DataTable({
+                        language: {
+                          "decimal": "",
+                          "emptyTable": "No hay información",
+                          "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                          "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                          "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                          "infoPostFix": "",
+                          "thousands": ",",
+                          "lengthMenu": "Mostrar _MENU_ Entradas",
+                          "loadingRecords": "Cargando...",
+                          "processing": "Procesando...",
+                          "search": "Buscar:",
+                          "zeroRecords": "Sin resultados encontrados",
+                          "paginate": {
+                              "first": "Primero",
+                              "last": "Ultimo",
+                              "next": "Siguiente",
+                              "previous": "Anterior"
+                              }
+                          },
                         ajax: {
                           url:
                             "ajax.php?modulo=ordentrabajo&controlador=ordentrabajo&funcion=getTableProductoDetalle&id=" +
@@ -448,6 +751,26 @@ $(document).ready(function () {
                     } else {
                       Notify("Datos no validos.", "Error", "danger");
                       tabladotr = $("#tablaOtDetalle").DataTable({
+                        language: {
+                          "decimal": "",
+                          "emptyTable": "No hay información",
+                          "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                          "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                          "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                          "infoPostFix": "",
+                          "thousands": ",",
+                          "lengthMenu": "Mostrar _MENU_ Entradas",
+                          "loadingRecords": "Cargando...",
+                          "processing": "Procesando...",
+                          "search": "Buscar:",
+                          "zeroRecords": "Sin resultados encontrados",
+                          "paginate": {
+                              "first": "Primero",
+                              "last": "Ultimo",
+                              "next": "Siguiente",
+                              "previous": "Anterior"
+                              }
+                          },
                         destroy: true, //Cada vez que se construya una nueva tabla, destruye la anterior
                         processing: true, //En caso de que sea mucha data, aparecerá un texto "procesando"
                         columns: [
@@ -468,6 +791,26 @@ $(document).ready(function () {
                       "info"
                     );
                     tabladotr = $("#tablaOtDetalle").DataTable({
+                      language: {
+                        "decimal": "",
+                        "emptyTable": "No hay información",
+                        "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                        "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                        "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                        "infoPostFix": "",
+                        "thousands": ",",
+                        "lengthMenu": "Mostrar _MENU_ Entradas",
+                        "loadingRecords": "Cargando...",
+                        "processing": "Procesando...",
+                        "search": "Buscar:",
+                        "zeroRecords": "Sin resultados encontrados",
+                        "paginate": {
+                            "first": "Primero",
+                            "last": "Ultimo",
+                            "next": "Siguiente",
+                            "previous": "Anterior"
+                            }
+                        },
                       destroy: true, //Cada vez que se construya una nueva tabla, destruye la anterior
                       processing: true, //En caso de que sea mucha data, aparecerá un texto "procesando"
                       columns: [
@@ -491,6 +834,26 @@ $(document).ready(function () {
                   // El proceso no existe
                   Notify("El proceso ingresado no existe.", "Error", "danger");
                   tabladotr = $("#tablaOtDetalle").DataTable({
+                    language: {
+                      "decimal": "",
+                      "emptyTable": "No hay información",
+                      "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                      "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                      "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                      "infoPostFix": "",
+                      "thousands": ",",
+                      "lengthMenu": "Mostrar _MENU_ Entradas",
+                      "loadingRecords": "Cargando...",
+                      "processing": "Procesando...",
+                      "search": "Buscar:",
+                      "zeroRecords": "Sin resultados encontrados",
+                      "paginate": {
+                          "first": "Primero",
+                          "last": "Ultimo",
+                          "next": "Siguiente",
+                          "previous": "Anterior"
+                          }
+                      },
                     destroy: true, //Cada vez que se construya una nueva tabla, destruye la anterior
                     processing: true, //En caso de que sea mucha data, aparecerá un texto "procesando"
                     columns: [
@@ -515,7 +878,9 @@ $(document).ready(function () {
         
 
         //---------------------------------------------
-
+      }else{
+        Notify(mensaje, "Error!", "danger", giconError);
+      }
         $(".loading").hide();
       },
     });
@@ -583,8 +948,13 @@ function cambioEstado(id, est_codigo, url, table) {
     type: "POST",
     data: parametros,
     success: function (mensaje) {
-      Notify(mensaje, "Exito!", "success", "fas fa-check");
-      table.ajax.reload();
+      if(mensaje == 'Insercion exitosa'){
+        Notify(mensaje,'Exito!','success','fas fa-check');
+        table.ajax.reload();
+      }else{
+        Notify(mensaje, "Error!", "danger", giconError);
+      }
+
       $(".loading").hide();
     },
   });
@@ -602,8 +972,13 @@ function eliminarRelacion(idCampo1, idCampo2, url, table) {
     type: "POST",
     data: parametros,
     success: function (mensaje) {
-      Notify(mensaje, "Exito!", "success", "fas fa-check");
-      table.ajax.reload();
+      if(mensaje == 'Insercion exitosa'){
+        Notify(mensaje,'Exito!','success','fas fa-check');
+        table.ajax.reload();
+      }else{
+        Notify(mensaje, "Error!", "danger", giconError);
+      }
+
       $(".loading").hide();
     },
   });

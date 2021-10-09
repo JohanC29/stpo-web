@@ -137,50 +137,103 @@
 	<script src="../assets/js/setting-demo.js"></script>
 	<script src="../assets/js/demo.js"></script>
 	<script>
-		Circles.create({
-			id: "circles-1",
-			radius: 45,
-			value: 60,
-			maxValue: 100,
-			width: 7,
-			text: 5,
-			colors: ["#f1f1f1", "#FF9E27"],
-			duration: 400,
-			wrpClass: "circles-wrp",
-			textClass: "circles-text",
-			styleWrapper: true,
-			styleText: true,
-		});
+		$.ajax({
+			url: "ajax.php?modulo=seguimiento&controlador=seguimiento&funcion=cir_usuarios",
+			type: "POST",
+			// data: parametros,
+			success: function (c) {
+				var cJson = JSON.parse(c);
+				console.log(cJson);
+				Circles.create({
+					id: cJson.id,
+					radius: cJson.radius,
+					value: cJson.value,
+					maxValue: cJson.maxValue,
+					width: cJson.width,
+					text: cJson.text,
+					colors: cJson.colors,  //["#f1f1f1", "#FF9E27"],
+					duration: cJson.duration,
+					wrpClass: cJson.wrpClass,
+					textClass: cJson.textClass,
+					styleWrapper: cJson.styleWrapper,
+					styleText: cJson.styleText,
+				});
+			// var errorJson = JSON.parse(error); 
 
-		Circles.create({
-			id: "circles-2",
-			radius: 45,
-			value: 70,
-			maxValue: 100,
-			width: 7,
-			text: 36,
-			colors: ["#f1f1f1", "#2BB930"],
-			duration: 400,
-			wrpClass: "circles-wrp",
-			textClass: "circles-text",
-			styleWrapper: true,
-			styleText: true,
-		});
+			},
+      	});		
+	  
+	 
+	 	// Circles.create({
+		// 	id: "circles-1",
+		// 	radius: 45,
+		// 	value: 60,
+		// 	maxValue: 100,
+		// 	width: 7,
+		// 	text: 5,
+		// 	colors: ["#f1f1f1", "#FF9E27"],
+		// 	duration: 400,
+		// 	wrpClass: "circles-wrp",
+		// 	textClass: "circles-text",
+		// 	styleWrapper: true,
+		// 	styleText: true,
+		// });
 
-		Circles.create({
-			id: "circles-3",
-			radius: 45,
-			value: 40,
-			maxValue: 100,
-			width: 7,
-			text: 12,
-			colors: ["#f1f1f1", "#F25961"],
-			duration: 400,
-			wrpClass: "circles-wrp",
-			textClass: "circles-text",
-			styleWrapper: true,
-			styleText: true,
-		});
+
+		$.ajax({
+			url: "ajax.php?modulo=seguimiento&controlador=seguimiento&funcion=cir_orden_sistema",
+			type: "POST",
+			// data: parametros,
+			success: function (c) {
+				var cJson = JSON.parse(c);
+				console.log(cJson);
+				Circles.create({
+					id: cJson.id,
+					radius: cJson.radius,
+					value: cJson.value,
+					maxValue: cJson.maxValue,
+					width: cJson.width,
+					text: cJson.text,
+					colors: cJson.colors,  //["#f1f1f1", "#FF9E27"],
+					duration: cJson.duration,
+					wrpClass: cJson.wrpClass,
+					textClass: cJson.textClass,
+					styleWrapper: cJson.styleWrapper,
+					styleText: cJson.styleText,
+				});
+			// var errorJson = JSON.parse(error); 
+
+			},
+      	});		
+
+
+		$.ajax({
+			url: "ajax.php?modulo=seguimiento&controlador=seguimiento&funcion=cir_maq",
+			type: "POST",
+			// data: parametros,
+			success: function (c) {
+				var cJson = JSON.parse(c);
+				console.log(cJson);
+				Circles.create({
+					id: cJson.id,
+					radius: cJson.radius,
+					value: cJson.value,
+					maxValue: cJson.maxValue,
+					width: cJson.width,
+					text: cJson.text,
+					colors: cJson.colors,  //["#f1f1f1", "#FF9E27"],
+					duration: cJson.duration,
+					wrpClass: cJson.wrpClass,
+					textClass: cJson.textClass,
+					styleWrapper: cJson.styleWrapper,
+					styleText: cJson.styleText,
+				});
+			// var errorJson = JSON.parse(error); 
+
+			},
+      	});	
+
+
 
 		var totalIncomeChart = document
 			.getElementById("totalIncomeChart")

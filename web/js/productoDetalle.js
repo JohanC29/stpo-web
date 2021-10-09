@@ -52,7 +52,8 @@ $(document).ready(function () {
       Notify(
         "Datos no validos. Ingrese un parametro de filtro.",
         "Error",
-        "danger"
+        "danger",
+        giconError
       );
 
       tabladprod = $("#tablaDetalleProducto").DataTable({
@@ -71,7 +72,7 @@ $(document).ready(function () {
       $("#dprodIdCodigoNombre").val("");
       $(".loading").hide();
     } else if (id != 0 && iden != "") {
-      Notify("Datos no validos. Ingrese solo un parametro.", "Error", "danger");
+      Notify("Datos no validos. Ingrese solo un parametro.", "Error", "danger",giconError);
 
       tabladprod = $("#tablaDetalleProducto").DataTable({
         destroy: true, //Cada vez que se construya una nueva tabla, destruye la anterior
@@ -124,7 +125,8 @@ $(document).ready(function () {
                 Notify(
                   "La consulta solo se realiza por un campo ingresado.",
                   "Error",
-                  "danger"
+                  "danger",
+                  giconError
                 );
 
                 tabladprod = $("#tablaDetalleProducto").DataTable({
@@ -187,7 +189,7 @@ $(document).ready(function () {
                 // "&idenP=" +
                 // iden);
               } else {
-                Notify("Datos no validos.", "Error", "danger");
+                Notify("Datos no validos.", "Error", "danger",giconError);
                 tabladpm = $("#tablaDetalleProcesoMaquina").DataTable({
                   destroy: true, //Cada vez que se construya una nueva tabla, destruye la anterior
                   processing: true, //En caso de que sea mucha data, aparecerá un texto "procesando"
@@ -226,7 +228,7 @@ $(document).ready(function () {
             }
           } else {
             // El proceso no existe
-            Notify("El proceso ingresado no existe.", "Error", "danger");
+            Notify("El proceso ingresado no existe.", "Error", "danger",giconError);
             tabladprod = $("#tablaDetalleProducto").DataTable({
               destroy: true, //Cada vez que se construya una nueva tabla, destruye la anterior
               processing: true, //En caso de que sea mucha data, aparecerá un texto "procesando"
@@ -267,6 +269,9 @@ $(document).ready(function () {
       type: "POST",
       data: formulario,
       success: function (mensaje) {
+        if(mensaje == 'Insercion exitosa'){
+
+        
         Notify(mensaje, "Exito!", "success", "fas fa-check");
         // tabladpm.ajax.reload();
 
@@ -305,7 +310,7 @@ $(document).ready(function () {
             $("#dprodIdCodigoNombre").val("");
             $(".loading").hide();
           } else if (id != 0 && iden != "") {
-            Notify("Datos no validos. Ingrese solo un parametro.", "Error", "danger");
+            Notify("Datos no validos. Ingrese solo un parametro.", "Error", "danger",giconError);
       
             tabladprod = $("#tablaDetalleProducto").DataTable({
               destroy: true, //Cada vez que se construya una nueva tabla, destruye la anterior
@@ -421,7 +426,7 @@ $(document).ready(function () {
                       // "&idenP=" +
                       // iden);
                     } else {
-                      Notify("Datos no validos.", "Error", "danger");
+                      Notify("Datos no validos.", "Error", "danger",giconError);
                       tabladpm = $("#tablaDetalleProcesoMaquina").DataTable({
                         destroy: true, //Cada vez que se construya una nueva tabla, destruye la anterior
                         processing: true, //En caso de que sea mucha data, aparecerá un texto "procesando"
@@ -460,7 +465,7 @@ $(document).ready(function () {
                   }
                 } else {
                   // El proceso no existe
-                  Notify("El proceso ingresado no existe.", "Error", "danger");
+                  Notify("El proceso ingresado no existe.", "Error", "danger",giconError);
                   tabladprod = $("#tablaDetalleProducto").DataTable({
                     destroy: true, //Cada vez que se construya una nueva tabla, destruye la anterior
                     processing: true, //En caso de que sea mucha data, aparecerá un texto "procesando"
@@ -487,7 +492,9 @@ $(document).ready(function () {
 
 
         //---------------------------------------------
-
+        }else{
+          Notify(mensaje, "Error!", "danger", giconError);
+        }
         $(".loading").hide();
       },
     });
@@ -532,16 +539,7 @@ $(document).ready(function () {
   );
 });
 
-// Proceso Gestionar Maquina
-var obtener_data_editar_proceso = function (tbody, table) {
-  $(tbody).on("click", "button.editar", function () {
-    var data = table.row($(this).parents("tr")).data();
-    // console.log(data);
-    $("#editIdenProceso").val(data.pro_identificador);
-    $("#editNomProceso").val(data.pro_nombre);
-    $("#editCodigoProceso").val(data.pro_codigo);
-  });
-};
+
 
 function cambioEstado(id, est_codigo, url, table) {
   $(".loading").show();
@@ -555,8 +553,12 @@ function cambioEstado(id, est_codigo, url, table) {
     type: "POST",
     data: parametros,
     success: function (mensaje) {
-      Notify(mensaje, "Exito!", "success", "fas fa-check");
-      table.ajax.reload();
+      if(mensaje == 'Insercion exitosa'){
+        Notify(mensaje,'Exito!','success','fas fa-check');
+        table.ajax.reload();
+      }else{
+        Notify(mensaje, "Error!", "danger", giconError);
+      }
       $(".loading").hide();
     },
   });
@@ -574,8 +576,12 @@ function eliminarRelacion(idCampo1, idCampo2, url, table) {
     type: "POST",
     data: parametros,
     success: function (mensaje) {
-      Notify(mensaje, "Exito!", "success", "fas fa-check");
-      table.ajax.reload();
+      if(mensaje == 'Insercion exitosa'){
+        Notify(mensaje,'Exito!','success','fas fa-check');
+        table.ajax.reload();
+      }else{
+        Notify(mensaje, "Error!", "danger", giconError);
+      }
       $(".loading").hide();
     },
   });

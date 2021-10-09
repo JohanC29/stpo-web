@@ -27,7 +27,7 @@ class OrdentrabajoController {
             echo 'Insercion exitosa';
         }else{
             echo $ejecutar;
-            echo "Ocurrio un error creando la nueva maquina.";
+            echo "Ocurrio un error creando la orden de trabajo.";
         }
 
 
@@ -51,7 +51,7 @@ class OrdentrabajoController {
             //echo 'Insercion exitosa';
         }else{
             echo $ejecutar;
-            echo "Ocurrio un error creando la nueva maquina.";
+            echo "Ocurrio un error creando la orden de trabajo.";
         }
         
     }
@@ -71,10 +71,10 @@ class OrdentrabajoController {
 
         $ejecutar= $obj->insert($sql);
         if($ejecutar){
-            echo 'Actualizacion exitosa';
+            echo 'Insercion exitosa';
         }else{
             echo $ejecutar;
-            echo "Ocurrio un error creando la nueva maquina.";
+            echo "Ocurrio un error actualizando la orden de trabajo.";
         }
         
     }
@@ -101,10 +101,10 @@ class OrdentrabajoController {
 
         $ejecutar= $obj->insert($sql);
         if($ejecutar){
-            echo 'Actualizacion exitosa';
+            echo 'Insercion exitosa';
         }else{
             echo $ejecutar;
-            echo "Ocurrio un error actualizando la maquina.";
+            echo "Ocurrio un error eliminando la orden de trabajo.";
         }
     }
 
@@ -459,16 +459,33 @@ class OrdentrabajoController {
         //---
         $dotrIdCodigoNombre    = substr($dotrIdCodigoNombre,0,strpos($dotrIdCodigoNombre,'-'));
 
-        $sql = "INSERT INTO `detalleordentrabajo` (`dotr_codigo`, `otr_codigo`, `pro_codigo`, `dotr_cantidad`, `dotr_orden`) 
-                VALUES ($id, $dotrIdCodigoNombre, $dotrIdCodigoProcesoSelect, '0', '0')";
-              
-        $ejecutar= $obj->insert($sql);
-        if($ejecutar){
-            echo 'Insercion exitosa';
+
+        //Validacion de la insercion
+        $sql = "SELECT COUNT(1) 
+                    FROM detalleordentrabajo dp
+                    WHERE
+                        dp.otr_codigo = $dotrIdCodigoNombre
+                    AND dp.pro_codigo = $dotrIdCodigoProcesoSelect";
+        $ejecutar_count = $obj->insert($sql);
+
+        if( $ejecutar_count == '0'){
+
+            // Se agrega el detalle del proceso a la orden de trabajo
+            $sql = "INSERT INTO `detalleordentrabajo` (`dotr_codigo`, `otr_codigo`, `pro_codigo`, `dotr_cantidad`, `dotr_orden`) 
+            VALUES ($id, $dotrIdCodigoNombre, $dotrIdCodigoProcesoSelect, '0', '0')";
+          
+            $ejecutar= $obj->insert($sql);
+            if($ejecutar){
+                echo 'Insercion exitosa';
+            }else{
+                echo $ejecutar;
+                echo "Ocurrio un error creando el nuevo proceso.";
+            }
         }else{
-            echo $ejecutar;
-            echo "Ocurrio un error creando el nuevo proceso.";
+            echo 'El registro ya existe.';
         }
+
+
         
     }
 
@@ -483,10 +500,10 @@ class OrdentrabajoController {
 
         $ejecutar= $obj->insert($sql);
         if($ejecutar){
-            echo 'Eliminacion exitosa';
+            echo 'Insercion exitosa';
         }else{
             echo $ejecutar;
-            echo "Ocurrio un error creando el nuevo proceso.";
+            echo "Ocurrio un error eliminando el proceso.";
         }
         
     }

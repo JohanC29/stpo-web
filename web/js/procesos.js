@@ -4,7 +4,27 @@ $(document).ready(function () {
   // Proceso de -- Gestionar Maquina
   // Se Crea la tabla y se deja activa para el resto de procesos
 
-  var table = $("#tablaGestionarProceso").DataTable({
+  var tablepro = $("#tablaGestionarProceso").DataTable({
+    language: {
+      "decimal": "",
+      "emptyTable": "No hay información",
+      "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+      "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+      "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+      "infoPostFix": "",
+      "thousands": ",",
+      "lengthMenu": "Mostrar _MENU_ Entradas",
+      "loadingRecords": "Cargando...",
+      "processing": "Procesando...",
+      "search": "Buscar:",
+      "zeroRecords": "Sin resultados encontrados",
+      "paginate": {
+          "first": "Primero",
+          "last": "Ultimo",
+          "next": "Siguiente",
+          "previous": "Anterior"
+          }
+      },
     ajax: {
       url: "ajax.php?modulo=procesos&controlador=procesos&funcion=getTable",
       dataSrc: "",
@@ -17,7 +37,7 @@ $(document).ready(function () {
     ],
   });
 
-  obtener_data_editar_proceso("#tablaGestionarProceso tbody", table);
+  obtener_data_editar_proceso("#tablaGestionarProceso tbody", tablepro);
 
   $("#agregarProceso").click(function () {
     $(".loading").show();
@@ -28,8 +48,13 @@ $(document).ready(function () {
       type: "POST",
       data: formulario,
       success: function (mensaje) {
-        Notify(mensaje, "Exito!", "success", "fas fa-check");
-        table.ajax.reload();
+        if(mensaje == 'Insercion exitosa'){
+          Notify(mensaje, "Exito!", "success", "fas fa-check");
+          tablepro.ajax.reload();
+        }else{
+          Notify(mensaje, "Error!", "danger", giconError);
+        }
+
         $(".loading").hide();
       },
     });
@@ -39,6 +64,7 @@ $(document).ready(function () {
   //Editar Proceso
 
   $("#editarProceso").click(function () {
+
     $(".loading").show();
     var url = $(this).attr("data-url");
     var formulario = $("#formEditarProceso").serialize();
@@ -47,8 +73,12 @@ $(document).ready(function () {
       type: "POST",
       data: formulario,
       success: function (mensaje) {
-        Notify(mensaje, "Exito!", "success", "fas fa-check");
-        table.ajax.reload();
+        if(mensaje == 'Insercion exitosa'){
+          Notify(mensaje, "Exito!", "success", "fas fa-check");
+          tablepro.ajax.reload();
+        }else{
+          Notify(mensaje, "Error!", "danger", giconError);
+        }
         $(".loading").hide();
       },
     });
@@ -58,7 +88,7 @@ $(document).ready(function () {
   // Deshabilitar Maquina
 
   $("#tablaGestionarProceso tbody").on("click", "button.eliminar", function () {
-    var data = table.row($(this).parents("tr")).data();
+    var data = tablepro.row($(this).parents("tr")).data();
     //console.log(data.est_codigo);
     var titulo = "";
     var est_codigo = data.est_codigo.substr(
@@ -83,7 +113,7 @@ $(document).ready(function () {
     }).then((willDelete) => {
       if (willDelete) {
         //Se le deja el control del tiempo de espera a la funcion
-        cambioEstado(data.pro_codigo, est_codigo, urlEliminar, table);
+        cambioEstado(data.pro_codigo, est_codigo, urlEliminar, tablepro);
       }
     });
   });
@@ -94,6 +124,26 @@ $(document).ready(function () {
   
   // Proceso de Asignacion de Maquina
   var tabladpm = $("#tablaDetalleProcesoMaquina").DataTable({
+    language: {
+      "decimal": "",
+      "emptyTable": "No hay información",
+      "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+      "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+      "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+      "infoPostFix": "",
+      "thousands": ",",
+      "lengthMenu": "Mostrar _MENU_ Entradas",
+      "loadingRecords": "Cargando...",
+      "processing": "Procesando...",
+      "search": "Buscar:",
+      "zeroRecords": "Sin resultados encontrados",
+      "paginate": {
+          "first": "Primero",
+          "last": "Ultimo",
+          "next": "Siguiente",
+          "previous": "Anterior"
+          }
+      },
     destroy: true, //Cada vez que se construya una nueva tabla, destruye la anterior
     processing: true, //En caso de que sea mucha data, aparecerá un texto "procesando"
     columns: [
@@ -115,6 +165,26 @@ $(document).ready(function () {
     // Limpiar Data Table
     tabladpm.destroy();
     tabladpm = $("#tablaDetalleProcesoMaquina").DataTable({
+      language: {
+        "decimal": "",
+        "emptyTable": "No hay información",
+        "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+        "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+        "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+        "infoPostFix": "",
+        "thousands": ",",
+        "lengthMenu": "Mostrar _MENU_ Entradas",
+        "loadingRecords": "Cargando...",
+        "processing": "Procesando...",
+        "search": "Buscar:",
+        "zeroRecords": "Sin resultados encontrados",
+        "paginate": {
+            "first": "Primero",
+            "last": "Ultimo",
+            "next": "Siguiente",
+            "previous": "Anterior"
+            }
+        },
       destroy: true, //Cada vez que se construya una nueva tabla, destruye la anterior
       processing: true, //En caso de que sea mucha data, aparecerá un texto "procesando"
       columns: [
@@ -140,10 +210,31 @@ $(document).ready(function () {
       Notify(
         "Datos no validos. Ingrese un parametro de filtro.",
         "Error",
-        "danger"
+        "danger",
+        giconError
       );
 
       tabladpm = $("#tablaDetalleProcesoMaquina").DataTable({
+        language: {
+          "decimal": "",
+          "emptyTable": "No hay información",
+          "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+          "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+          "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+          "infoPostFix": "",
+          "thousands": ",",
+          "lengthMenu": "Mostrar _MENU_ Entradas",
+          "loadingRecords": "Cargando...",
+          "processing": "Procesando...",
+          "search": "Buscar:",
+          "zeroRecords": "Sin resultados encontrados",
+          "paginate": {
+              "first": "Primero",
+              "last": "Ultimo",
+              "next": "Siguiente",
+              "previous": "Anterior"
+              }
+          },
         destroy: true, //Cada vez que se construya una nueva tabla, destruye la anterior
         processing: true, //En caso de que sea mucha data, aparecerá un texto "procesando"
         columns: [
@@ -158,9 +249,29 @@ $(document).ready(function () {
       $("#pmIdCodigoNombreProceso").val("");
       $(".loading").hide();
     } else if (id != 0 && iden != "") {
-      Notify("Datos no validos. Ingrese solo un parametro.", "Error", "danger");
+      Notify("Datos no validos. Ingrese solo un parametro.", "Error", "danger", giconError);
 
       tabladpm = $("#tablaDetalleProcesoMaquina").DataTable({
+        language: {
+          "decimal": "",
+          "emptyTable": "No hay información",
+          "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+          "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+          "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+          "infoPostFix": "",
+          "thousands": ",",
+          "lengthMenu": "Mostrar _MENU_ Entradas",
+          "loadingRecords": "Cargando...",
+          "processing": "Procesando...",
+          "search": "Buscar:",
+          "zeroRecords": "Sin resultados encontrados",
+          "paginate": {
+              "first": "Primero",
+              "last": "Ultimo",
+              "next": "Siguiente",
+              "previous": "Anterior"
+              }
+          },
         destroy: true, //Cada vez que se construya una nueva tabla, destruye la anterior
         processing: true, //En caso de que sea mucha data, aparecerá un texto "procesando"
         columns: [
@@ -208,10 +319,31 @@ $(document).ready(function () {
                 Notify(
                   "La consulta solo se realiza por un campo ingresado.",
                   "Error",
-                  "danger"
+                  "danger",
+                  giconError
                 );
 
                 tabladpm = $("#tablaDetalleProcesoMaquina").DataTable({
+                  language: {
+                    "decimal": "",
+                    "emptyTable": "No hay información",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                    "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "Mostrar _MENU_ Entradas",
+                    "loadingRecords": "Cargando...",
+                    "processing": "Procesando...",
+                    "search": "Buscar:",
+                    "zeroRecords": "Sin resultados encontrados",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Ultimo",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                        }
+                    },
                   destroy: true, //Cada vez que se construya una nueva tabla, destruye la anterior
                   processing: true, //En caso de que sea mucha data, aparecerá un texto "procesando"
                   columns: [
@@ -227,6 +359,26 @@ $(document).ready(function () {
                 // Consulta por identificador text
 
                 tabladpm = $("#tablaDetalleProcesoMaquina").DataTable({
+                  language: {
+                    "decimal": "",
+                    "emptyTable": "No hay información",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                    "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "Mostrar _MENU_ Entradas",
+                    "loadingRecords": "Cargando...",
+                    "processing": "Procesando...",
+                    "search": "Buscar:",
+                    "zeroRecords": "Sin resultados encontrados",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Ultimo",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                        }
+                    },
                   ajax: {
                     url:
                       "ajax.php?modulo=procesos&controlador=procesos&funcion=getTableAsignacionMaquina&id=" +
@@ -245,6 +397,26 @@ $(document).ready(function () {
               } else if (id != 0 && iden == "") {
                 // Consulta por id
                 tabladpm = $("#tablaDetalleProcesoMaquina").DataTable({
+                  language: {
+                    "decimal": "",
+                    "emptyTable": "No hay información",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                    "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "Mostrar _MENU_ Entradas",
+                    "loadingRecords": "Cargando...",
+                    "processing": "Procesando...",
+                    "search": "Buscar:",
+                    "zeroRecords": "Sin resultados encontrados",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Ultimo",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                        }
+                    },
                   ajax: {
                     url:
                       "ajax.php?modulo=procesos&controlador=procesos&funcion=getTableAsignacionMaquina&id=" +
@@ -261,8 +433,28 @@ $(document).ready(function () {
                   ],
                 });
               } else {
-                Notify("Datos no validos.", "Error", "danger");
+                Notify("Datos no validos.", "Error", "danger",giconError);
                 tabladpm = $("#tablaDetalleProcesoMaquina").DataTable({
+                  language: {
+                    "decimal": "",
+                    "emptyTable": "No hay información",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                    "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "Mostrar _MENU_ Entradas",
+                    "loadingRecords": "Cargando...",
+                    "processing": "Procesando...",
+                    "search": "Buscar:",
+                    "zeroRecords": "Sin resultados encontrados",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Ultimo",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                        }
+                    },
                   destroy: true, //Cada vez que se construya una nueva tabla, destruye la anterior
                   processing: true, //En caso de que sea mucha data, aparecerá un texto "procesando"
                   columns: [
@@ -281,6 +473,26 @@ $(document).ready(function () {
                 "info"
               );
               tabladpm = $("#tablaDetalleProcesoMaquina").DataTable({
+                language: {
+                  "decimal": "",
+                  "emptyTable": "No hay información",
+                  "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                  "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                  "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                  "infoPostFix": "",
+                  "thousands": ",",
+                  "lengthMenu": "Mostrar _MENU_ Entradas",
+                  "loadingRecords": "Cargando...",
+                  "processing": "Procesando...",
+                  "search": "Buscar:",
+                  "zeroRecords": "Sin resultados encontrados",
+                  "paginate": {
+                      "first": "Primero",
+                      "last": "Ultimo",
+                      "next": "Siguiente",
+                      "previous": "Anterior"
+                      }
+                  },
                 destroy: true, //Cada vez que se construya una nueva tabla, destruye la anterior
                 processing: true, //En caso de que sea mucha data, aparecerá un texto "procesando"
                 columns: [
@@ -295,8 +507,28 @@ $(document).ready(function () {
             }
           } else {
             // El proceso no existe
-            Notify("El proceso ingresado no existe.", "Error", "danger");
+            Notify("El proceso ingresado no existe.", "Error", "danger",giconError);
             tabladpm = $("#tablaDetalleProcesoMaquina").DataTable({
+              language: {
+                "decimal": "",
+                "emptyTable": "No hay información",
+                "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                "infoPostFix": "",
+                "thousands": ",",
+                "lengthMenu": "Mostrar _MENU_ Entradas",
+                "loadingRecords": "Cargando...",
+                "processing": "Procesando...",
+                "search": "Buscar:",
+                "zeroRecords": "Sin resultados encontrados",
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Ultimo",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                    }
+                },
               destroy: true, //Cada vez que se construya una nueva tabla, destruye la anterior
               processing: true, //En caso de que sea mucha data, aparecerá un texto "procesando"
               columns: [
@@ -334,6 +566,8 @@ $(document).ready(function () {
       type: "POST",
       data: formulario,
       success: function (mensaje) {
+        if(mensaje == 'Insercion exitosa'){
+
         Notify(mensaje, "Exito!", "success", "fas fa-check");
         // tabladpm.ajax.reload();
 
@@ -346,10 +580,31 @@ $(document).ready(function () {
             Notify(
               "Datos no validos. Ingrese un parametro de filtro.",
               "Error",
-              "danger"
+              "danger",
+              giconError
             );
       
             tabladpm = $("#tablaDetalleProcesoMaquina").DataTable({
+              language: {
+                "decimal": "",
+                "emptyTable": "No hay información",
+                "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                "infoPostFix": "",
+                "thousands": ",",
+                "lengthMenu": "Mostrar _MENU_ Entradas",
+                "loadingRecords": "Cargando...",
+                "processing": "Procesando...",
+                "search": "Buscar:",
+                "zeroRecords": "Sin resultados encontrados",
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Ultimo",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                    }
+                },
               destroy: true, //Cada vez que se construya una nueva tabla, destruye la anterior
               processing: true, //En caso de que sea mucha data, aparecerá un texto "procesando"
               columns: [
@@ -364,9 +619,29 @@ $(document).ready(function () {
             $("#pmIdCodigoNombreProceso").val("");
             $(".loading").hide();
           } else if (id != 0 && iden != "") {
-            Notify("Datos no validos. Ingrese solo un parametro.", "Error", "danger");
+            Notify("Datos no validos. Ingrese solo un parametro.", "Error", "danger",giconError);
       
             tabladpm = $("#tablaDetalleProcesoMaquina").DataTable({
+              language: {
+                "decimal": "",
+                "emptyTable": "No hay información",
+                "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                "infoPostFix": "",
+                "thousands": ",",
+                "lengthMenu": "Mostrar _MENU_ Entradas",
+                "loadingRecords": "Cargando...",
+                "processing": "Procesando...",
+                "search": "Buscar:",
+                "zeroRecords": "Sin resultados encontrados",
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Ultimo",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                    }
+                },
               destroy: true, //Cada vez que se construya una nueva tabla, destruye la anterior
               processing: true, //En caso de que sea mucha data, aparecerá un texto "procesando"
               columns: [
@@ -413,10 +688,31 @@ $(document).ready(function () {
                       Notify(
                         "La consulta solo se realiza por un campo ingresado.",
                         "Error",
-                        "danger"
+                        "danger",
+                        giconError
                       );
       
                       tabladpm = $("#tablaDetalleProcesoMaquina").DataTable({
+                        language: {
+                          "decimal": "",
+                          "emptyTable": "No hay información",
+                          "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                          "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                          "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                          "infoPostFix": "",
+                          "thousands": ",",
+                          "lengthMenu": "Mostrar _MENU_ Entradas",
+                          "loadingRecords": "Cargando...",
+                          "processing": "Procesando...",
+                          "search": "Buscar:",
+                          "zeroRecords": "Sin resultados encontrados",
+                          "paginate": {
+                              "first": "Primero",
+                              "last": "Ultimo",
+                              "next": "Siguiente",
+                              "previous": "Anterior"
+                              }
+                          },
                         destroy: true, //Cada vez que se construya una nueva tabla, destruye la anterior
                         processing: true, //En caso de que sea mucha data, aparecerá un texto "procesando"
                         columns: [
@@ -432,6 +728,26 @@ $(document).ready(function () {
                       // Consulta por identificador text
       
                       tabladpm = $("#tablaDetalleProcesoMaquina").DataTable({
+                        language: {
+                          "decimal": "",
+                          "emptyTable": "No hay información",
+                          "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                          "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                          "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                          "infoPostFix": "",
+                          "thousands": ",",
+                          "lengthMenu": "Mostrar _MENU_ Entradas",
+                          "loadingRecords": "Cargando...",
+                          "processing": "Procesando...",
+                          "search": "Buscar:",
+                          "zeroRecords": "Sin resultados encontrados",
+                          "paginate": {
+                              "first": "Primero",
+                              "last": "Ultimo",
+                              "next": "Siguiente",
+                              "previous": "Anterior"
+                              }
+                          },
                         ajax: {
                           url:
                             "ajax.php?modulo=procesos&controlador=procesos&funcion=getTableAsignacionMaquina&id=" +
@@ -450,6 +766,26 @@ $(document).ready(function () {
                     } else if (id != 0 && iden == "") {
                       // Consulta por id
                       tabladpm = $("#tablaDetalleProcesoMaquina").DataTable({
+                        language: {
+                          "decimal": "",
+                          "emptyTable": "No hay información",
+                          "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                          "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                          "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                          "infoPostFix": "",
+                          "thousands": ",",
+                          "lengthMenu": "Mostrar _MENU_ Entradas",
+                          "loadingRecords": "Cargando...",
+                          "processing": "Procesando...",
+                          "search": "Buscar:",
+                          "zeroRecords": "Sin resultados encontrados",
+                          "paginate": {
+                              "first": "Primero",
+                              "last": "Ultimo",
+                              "next": "Siguiente",
+                              "previous": "Anterior"
+                              }
+                          },
                         ajax: {
                           url:
                             "ajax.php?modulo=procesos&controlador=procesos&funcion=getTableAsignacionMaquina&id=" +
@@ -466,8 +802,28 @@ $(document).ready(function () {
                         ],
                       });
                     } else {
-                      Notify("Datos no validos.", "Error", "danger");
+                      Notify("Datos no validos.", "Error", "danger", giconError);
                       tabladpm = $("#tablaDetalleProcesoMaquina").DataTable({
+                        language: {
+                          "decimal": "",
+                          "emptyTable": "No hay información",
+                          "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                          "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                          "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                          "infoPostFix": "",
+                          "thousands": ",",
+                          "lengthMenu": "Mostrar _MENU_ Entradas",
+                          "loadingRecords": "Cargando...",
+                          "processing": "Procesando...",
+                          "search": "Buscar:",
+                          "zeroRecords": "Sin resultados encontrados",
+                          "paginate": {
+                              "first": "Primero",
+                              "last": "Ultimo",
+                              "next": "Siguiente",
+                              "previous": "Anterior"
+                              }
+                          },
                         destroy: true, //Cada vez que se construya una nueva tabla, destruye la anterior
                         processing: true, //En caso de que sea mucha data, aparecerá un texto "procesando"
                         columns: [
@@ -486,6 +842,26 @@ $(document).ready(function () {
                       "info"
                     );
                     tabladpm = $("#tablaDetalleProcesoMaquina").DataTable({
+                      language: {
+                        "decimal": "",
+                        "emptyTable": "No hay información",
+                        "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                        "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                        "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                        "infoPostFix": "",
+                        "thousands": ",",
+                        "lengthMenu": "Mostrar _MENU_ Entradas",
+                        "loadingRecords": "Cargando...",
+                        "processing": "Procesando...",
+                        "search": "Buscar:",
+                        "zeroRecords": "Sin resultados encontrados",
+                        "paginate": {
+                            "first": "Primero",
+                            "last": "Ultimo",
+                            "next": "Siguiente",
+                            "previous": "Anterior"
+                            }
+                        },
                       destroy: true, //Cada vez que se construya una nueva tabla, destruye la anterior
                       processing: true, //En caso de que sea mucha data, aparecerá un texto "procesando"
                       columns: [
@@ -500,8 +876,28 @@ $(document).ready(function () {
                   }
                 } else {
                   // El proceso no existe
-                  Notify("El proceso ingresado no existe.", "Error", "danger");
+                  Notify("El proceso ingresado no existe.", "Error", "danger", giconError);
                   tabladpm = $("#tablaDetalleProcesoMaquina").DataTable({
+                    language: {
+                      "decimal": "",
+                      "emptyTable": "No hay información",
+                      "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                      "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                      "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                      "infoPostFix": "",
+                      "thousands": ",",
+                      "lengthMenu": "Mostrar _MENU_ Entradas",
+                      "loadingRecords": "Cargando...",
+                      "processing": "Procesando...",
+                      "search": "Buscar:",
+                      "zeroRecords": "Sin resultados encontrados",
+                      "paginate": {
+                          "first": "Primero",
+                          "last": "Ultimo",
+                          "next": "Siguiente",
+                          "previous": "Anterior"
+                          }
+                      },
                     destroy: true, //Cada vez que se construya una nueva tabla, destruye la anterior
                     processing: true, //En caso de que sea mucha data, aparecerá un texto "procesando"
                     columns: [
@@ -520,7 +916,9 @@ $(document).ready(function () {
             });
           }
         //---------------------------------------------
-
+      }else{
+        Notify(mensaje, "Error!", "danger", giconError);
+      }
         $(".loading").hide();
       },
     });
@@ -588,8 +986,12 @@ function cambioEstado(id, est_codigo, url, table) {
     type: "POST",
     data: parametros,
     success: function (mensaje) {
-      Notify(mensaje, "Exito!", "success", "fas fa-check");
-      table.ajax.reload();
+      if(mensaje == 'Insercion exitosa'){
+        Notify(mensaje,'Exito!','success','fas fa-check');
+        table.ajax.reload();
+      }else{
+        Notify(mensaje, "Error!", "danger", giconError);
+      }
       $(".loading").hide();
     },
   });
@@ -607,8 +1009,12 @@ function eliminarRelacion(idCampo1, idCampo2, url, table) {
     type: "POST",
     data: parametros,
     success: function (mensaje) {
-      Notify(mensaje, "Exito!", "success", "fas fa-check");
-      table.ajax.reload();
+      if(mensaje == 'Insercion exitosa'){
+        Notify(mensaje,'Exito!','success','fas fa-check');
+        table.ajax.reload();
+      }else{
+        Notify(mensaje, "Error!", "danger", giconError);
+      }
       $(".loading").hide();
     },
   });

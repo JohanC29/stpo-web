@@ -1,7 +1,27 @@
 $(document).ready(function () {
  $(".loading").hide();
  // Se Crea la tabla y se deja activa para el resto de procesos
- var table = $("#tablaGestionarOrdenTrabajo").DataTable({
+ var tableotr = $("#tablaGestionarOrdenTrabajo").DataTable({
+  language: {
+    "decimal": "",
+    "emptyTable": "No hay información",
+    "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+    "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+    "infoPostFix": "",
+    "thousands": ",",
+    "lengthMenu": "Mostrar _MENU_ Entradas",
+    "loadingRecords": "Cargando...",
+    "processing": "Procesando...",
+    "search": "Buscar:",
+    "zeroRecords": "Sin resultados encontrados",
+    "paginate": {
+        "first": "Primero",
+        "last": "Ultimo",
+        "next": "Siguiente",
+        "previous": "Anterior"
+        }
+    },
     "ajax":{
       "url" : "ajax.php?modulo=ordentrabajo&controlador=ordentrabajo&funcion=getTable",
       "dataSrc":""
@@ -16,7 +36,7 @@ $(document).ready(function () {
   });
 
 
-  obtener_data_editar("#tablaGestionarOrdenTrabajo tbody",table);
+  obtener_data_editar_otr("#tablaGestionarOrdenTrabajo tbody",tableotr);
 
 
 
@@ -29,8 +49,14 @@ $(document).ready(function () {
       type: "POST",
       data: formulario,
       success: function (mensaje) {
-        Notify(mensaje,'Exito!','success','fas fa-check');
-        table.ajax.reload();
+        if(mensaje == 'Insercion exitosa'){
+          Notify(mensaje,'Exito!','success','fas fa-check');
+          tableotr.ajax.reload();
+        }else{
+          Notify(mensaje, "Error!", "danger", giconError);
+        }
+
+
         $(".loading").hide();
       },
     });
@@ -48,18 +74,22 @@ $(document).ready(function () {
       type: "POST",
       data: formulario,
       success: function (mensaje) {
-        Notify(mensaje,'Exito!','success','fas fa-check');
-        table.ajax.reload();
+        if(mensaje == 'Insercion exitosa'){
+          Notify(mensaje,'Exito!','success','fas fa-check');
+          tableotr.ajax.reload();
+        }else{
+          Notify(mensaje, "Error!", "danger", giconError);
+        }
         $(".loading").hide();
       },
     });
-    $("#agregarOrdenTrabajoModal").modal("hide");
+    $("#editarOrdenTrabajoModal").modal("hide");
   });
 
   // Deshabilitar Maquina
 
   $("#tablaGestionarOrdenTrabajo tbody").on("click","button.eliminar",function() {
-    var data = table.row( $(this).parents("tr")).data();
+    var data = tableotr.row( $(this).parents("tr")).data();
     // console.log(data);
     var titulo='';
     var est_codigo = data.est_codigo.substr(data.est_codigo.indexOf('<button estado = ')+18,1);
@@ -83,7 +113,7 @@ $(document).ready(function () {
       if (willDelete) {
 
         //Se le deja el control del tiempo de espera a la funcion
-        cambioEstado(data.otr_codigo,est_codigo,urlEliminar,table);
+        cambioEstado(data.otr_codigo,est_codigo,urlEliminar,tableotr);
       }
     });
 
@@ -140,7 +170,7 @@ $(document).ready(function () {
 });
 
 
-var obtener_data_editar = function (tbody,table) {
+var obtener_data_editar_otr = function (tbody,table) {
   $(tbody).on("click","button.editar",function() {
     var data = table.row( $(this).parents("tr")).data();
     console.log(data);
@@ -162,8 +192,13 @@ function cambioEstado(id,est_codigo,url,table) {
     type: "POST",
     data: parametros,
     success: function (mensaje) {
-      Notify(mensaje,'Exito!','success','fas fa-check');
-      table.ajax.reload();
+      if(mensaje == 'Insercion exitosa'){
+        Notify(mensaje,'Exito!','success','fas fa-check');
+        table.ajax.reload();
+      }else{
+        Notify(mensaje, "Error!", "danger", giconError);
+      }
+
       $(".loading").hide();
     },
   });
