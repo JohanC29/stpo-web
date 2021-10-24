@@ -4,25 +4,11 @@
 				<div class="sidebar-content">
 					<ul class="nav nav-primary">
 						<li class="nav-item active">
-							<a data-toggle="collapse" href="#dashboard" class="collapsed" aria-expanded="false">
+							<a href="index.php" aria-expanded="false">
 								<i class="fas fa-home"></i>
 								<p>Dashboard</p>
 								<span class="caret"></span>
 							</a>
-							<div class="collapse" id="dashboard">
-								<ul class="nav nav-collapse">
-									<li>
-										<a href="">
-											<span class="sub-item">Dashboard 1</span>
-										</a>
-									</li>
-									<!-- <li>
-										<a href="../demo2/index.html">
-											<span class="sub-item">Dashboard 2</span>
-										</a>
-									</li> -->
-								</ul>
-							</div>
 						</li>
 
 						<li class="nav-section">
@@ -31,10 +17,38 @@
 							</span>
 							<h4 class="text-section">Modulos</h4>
 						</li>
+						<li class="nav-item">
+							<a data-toggle="collapse" href="#Seguimiento">
+								
+								<i class="fas fa-clipboard-list"></i>
+								<p>Seguimiento</p>
+								<span class="caret"></span>
+							</a>
+							<div class="collapse" id="Seguimiento">
+								<ul class="nav nav-collapse">
+									<li>
+										<a href="">
+											<span class="sub-item">Consultar</span>
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo getUrl("ordentrabajo","ordentrabajo","consultOtDetalle");?>">
+											<span class="sub-item">Configurar Orden Trabajo</span>
+										</a>
+									</li>
+									<li>
+										<a href="<?php echo getUrl("ordentrabajo","ordentrabajo","consult");?>">
+											<span class="sub-item">Gestionar Orden Trabajo</span>
+										</a>
+									</li>
+									
+								</ul>
+							</div>
+						</li>
 
 						<li class="nav-item">
 							<a data-toggle="collapse" href="#OT">
-								<i class="fas fa-layer-group"></i>
+								<i class="far fa-file"></i>
 								<p>Orden Trabajo</p>
 								<span class="caret"></span>
 							</a>
@@ -61,7 +75,7 @@
 						</li>
 						<li class="nav-item">
 							<a data-toggle="collapse" href="#producto">
-								<i class="fas fa-layer-group"></i>
+								<i class="fas fa-box-open"></i>
 								<p>Producto</p>
 								<span class="caret"></span>
 							</a>
@@ -88,7 +102,7 @@
 						</li>
 						<li class="nav-item">
 							<a data-toggle="collapse" href="#procesos">
-								<i class="fas fa-layer-group"></i>
+								<i class="fas fa-cogs"></i>
 								<p>Procesos</p>
 								<span class="caret"></span>
 							</a>
@@ -143,7 +157,7 @@
 
 						<li class="nav-item">
 							<a data-toggle="collapse" href="#usuarios">
-								<i class="fas fa-layer-group"></i>
+								<i class="fas fa-user"></i>
 								<p>Usuarios</p>
 								<span class="caret"></span>
 							</a>
@@ -164,7 +178,7 @@
 						</li>
 						<li class="nav-item">
 							<a data-toggle="collapse" href="#notificaciones">
-								<i class="fas fa-layer-group"></i>
+								<i class="fas fa-bell"></i>
 								<p>Notificaciones</p>
 								<!-- <span class="caret"></span> -->
 							</a>
