@@ -281,7 +281,7 @@ class ProductobaseController {
             while($row = mysqli_fetch_assoc($procesos)) {
                 if($row['pro_codigo'] != -1){
                     $btnAcciones = "<div class='form-button-action'>";
-
+                    $btnAcciones = $btnAcciones."<div class='form-button-action'><button type='button' title='Editar' class='editar btn btn-link btn-primary btn-lg' data-original-title='Editar'  data-toggle='modal' data-target='#editarOrdenProductoDetalleModal' ><i class='fa fa-edit'></i></button>";
                     $btnAcciones=$btnAcciones."<button estado = '1' type='button' data-toggle='tooltip' title='Eliminar'class='eliminar btn btn-link btn-danger' data-original-title='Eliminar'><i class='fas fa-trash-alt'></i></button>";
                     
                     $btnAcciones = $btnAcciones."</div>";
@@ -444,6 +444,33 @@ class ProductobaseController {
         }else{
             echo $ejecutar;
             echo "Ocurrio un error creando el nuevo proceso.";
+        }
+        
+    }
+
+    // Funcion para actualizar el orden de prioridad
+    public function actualizarOrdenDetalleProducto(){
+        $obj = new ProductoModel();
+
+        $dprodIdCodigoNombre2           = $_POST['dprodIdCodigoNombre2'];
+        $editDprodIdCodigoProceso         = $_POST['editDprodIdCodigoProceso'];
+        $editDprodOrden                 = $_POST['editDprodOrden'];
+
+        //Se separa el id
+        $dprodIdCodigoNombre2    = substr($dprodIdCodigoNombre2,0,strpos($dprodIdCodigoNombre2,'-'));
+
+
+        $sql = "UPDATE `detalleproducto` SET `dprod_orden` = $editDprodOrden 
+                WHERE detalleproducto.prod_codigo = $dprodIdCodigoNombre2 
+                AND detalleproducto.pro_codigo = $editDprodIdCodigoProceso";
+
+
+        $ejecutar= $obj->insert($sql);
+        if($ejecutar){
+            echo 'Actualizacion exitosa';
+        }else{
+            echo $ejecutar;
+            echo "Ocurrio un error actualizando el campo orden.";
         }
         
     }

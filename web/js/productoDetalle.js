@@ -246,6 +246,8 @@ $(document).ready(function () {
           }
 
           $(".loading").hide();
+          // Se ordena 
+          tabladprod.order( [ [3,'asc'] ] );
         },
       });
     }
@@ -496,6 +498,7 @@ $(document).ready(function () {
           Notify(mensaje, "Error!", "danger", giconError);
         }
         $(".loading").hide();
+        tabladprod.order( [ [3,'asc'] ] );
       },
     });
 
@@ -533,10 +536,50 @@ $(document).ready(function () {
         if (willDelete) {
           //Se le deja el control del tiempo de espera a la funcion
           eliminarRelacion(idProducto, data.pro_codigo, urlEliminar, tabladprod);
+          
         }
       });
     }
   );
+
+  // Obtener datos para editar el orden
+  $("#tablaDetalleProducto tbody").on("click","button.editar",function() {
+    //console.log($('#dprodIdCodigo').val());
+    var data = tabladprod.row($(this).parents("tr")).data();
+    // console.log(data);
+    
+    $("#dprodIdCodigoNombre2").val( $("#dprodIdCodigoNombre").val() );
+    $("#editDprodIdCodigoProceso").val(data.pro_codigo);
+    $("#editDprodCodigoProceso").val(data.pro_identificador+'-'+data.pro_nombre);
+    $('#editDprodOrden').val(data.dprod_orden);
+  });
+
+  // Se ejecuta actualizar la cantidad para el producto y proceso.
+  $("#editarOrdenProductoDetalle").click(function () {
+    $(".loading").show();
+
+    var url = $(this).attr("data-url");
+    var formulario = $("#formEditOrdenProductoDetalle").serialize();
+    $.ajax({
+      url: url,
+      type: "POST",
+      data: formulario,
+      success: function (mensaje) {
+        if (mensaje == 'Actualizacion exitosa') {
+          Notify(mensaje, "Exito!", "success", "fas fa-check");
+          //---------------------------------------------
+          tabladprod.ajax.reload();
+          tabladprod.order( [ [3,'asc'] ] );
+        } else {
+          Notify(mensaje, "Error!", "danger", giconError);
+        }
+        $(".loading").hide();
+      },
+    });
+
+    $("#editarOrdenProductoDetalleModal").modal("hide");
+  });
+  
 });
 
 
@@ -583,6 +626,7 @@ function eliminarRelacion(idCampo1, idCampo2, url, table) {
         Notify(mensaje, "Error!", "danger", giconError);
       }
       $(".loading").hide();
+      table.order( [ [3,'asc'] ] );
     },
   });
 }

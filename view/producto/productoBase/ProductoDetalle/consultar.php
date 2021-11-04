@@ -87,7 +87,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <!-- modal agegar Maquina -->
+                    <!-- modal agegar producto detalle -->
                     <div class="modal fade" id="agregarProductoDetalleModal" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
@@ -145,6 +145,72 @@
                                 <div class="modal-footer no-bd">
                                     <button type="button" id="agregarProductoDetalle"
                                         data-url="<?php echo getUrl('producto', 'productobase', 'insertarDetalleProducto', false, 'ajax'); ?>"
+                                        class="btn btn-primary">Agregar</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <!-- Modal editar orden de ejecucion -->
+
+                    <!-- modal agegar producto detalle -->
+                    <div class="modal fade" id="editarOrdenProductoDetalleModal" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header no-bd">
+                                    <h5 class="modal-title">
+                                        <span class="fw-mediumbold">
+                                            Editar</span>
+                                        <span class="fw-light">
+                                            Orden
+                                        </span>
+                                    </h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    
+                                    <p class="small">Por favor ingrese los datos para asociar el proceso: </p>
+                                    <form id="formEditOrdenProductoDetalle">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <label>Codigo Producto</label>
+                                                    <input type="number" id="dprodIdCodigo" hidden value="0">
+                                                    <input id="dprodIdCodigoNombre2" name="dprodIdCodigoNombre2" type="text" value=""
+                                                        class="form-control"
+                                                        readonly>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <label>Codigo Proceso</label>
+                                                    <input type="number" id="editDprodIdCodigoProceso" name="editDprodIdCodigoProceso" hidden value="0">
+                                                    <input id="editDprodCodigoProceso" name="editDprodCodigoProceso" type="text" value="001-Proceso Prueba"
+                                                        class="form-control"
+                                                        readonly>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="form-group form-group-default">
+                                                    <label>Orden de Prioridad</label>
+                                                        <input id="editDprodOrden" name="editDprodOrden" type="number" value="0" min="0" max="100"
+                                                            class="form-control"
+                                                            >
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer no-bd">
+                                    <button type="button" id="editarOrdenProductoDetalle"
+                                        data-url="<?php echo getUrl('producto', 'productobase', 'actualizarOrdenDetalleProducto', false, 'ajax'); ?>"
                                         class="btn btn-primary">Agregar</button>
                                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                                 </div>
