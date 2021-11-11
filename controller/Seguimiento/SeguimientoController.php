@@ -25,7 +25,8 @@ class SeguimientoController {
         // Cantidad de usuarios
         // Usuarios con seguimiento solo iniciado
         // 
-        $sql = 'select (  select count(1) from empleado e where e.est_codigo = 1  ) usuario, ( select count(s.emp_codigo) from seguimiento s where s.est_codigo = 3  ) usuario_activo from dual';
+        $sql = 'select (  select count(1) from empleado e where e.est_codigo = 1  ) usuario, 
+        fnu_getCantUsuNow() usuario_activo from dual';
         $seguimiento = $obj->consult($sql);
 
         $usuario = 0;
@@ -77,7 +78,18 @@ class SeguimientoController {
         // Cantidad de usuarios
         // Usuarios con seguimiento solo iniciado
         // 
-        $sql = 'SELECT ( select count(1) from ordentrabajo ot where ot.est_codigo = 1  ) valor_max, ( select count(1) from (select count(1) from seguimiento s1  GROUP BY s1.otr_codigo) s  ) valor from dual';
+        $sql = 'SELECT 
+        100 valor_max,
+        ( select sum(a.valor) from (SELECT 
+               case  
+                 when fnu_getCantFalSegxOtr(ot.otr_codigo) > 0 then 1
+                 else 0
+                 end valor
+            FROM
+                ordentrabajo ot
+                where ot.est_codigo = 1) a
+            ) valor
+    FROM DUAL';
         $seguimiento = $obj->consult($sql);
 
         $valor = 0;
@@ -144,14 +156,25 @@ class SeguimientoController {
 
 ) valor from dual
         */
-        $sql = 'SELECT ( select count(1) from maquina m where m.est_codigo = 1  ) valor_max,
-        (select count(1) from (
-              SELECT dp.* from seguimiento s1, detalleprocesomaquina dp 
+        $sql = 'SELECT 
+        (SELECT 
+                COUNT(1)
+            FROM
+                maquina m
+            WHERE
+                m.est_codigo = 1) valor_max,
+        (SELECT 
+                COUNT(1)
+            FROM
+                (SELECT 
+                    dp.maq_codigo
+                FROM
+                    seguimiento s, detalleprocesomaquina dp
                 WHERE
-                s1.dpm_codigo = dp.dpm_codigo
-                GROUP by dp.maq_codigo
-              ) s  
-        ) valor from dual';
+                    s.dpm_codigo = dp.dpm_codigo
+                        AND s.est_codigo = 3
+                GROUP BY dp.maq_codigo) a) valor
+    FROM DUAL';
         $seguimiento = $obj->consult($sql);
 
         $valor = 0;
