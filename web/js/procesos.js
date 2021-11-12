@@ -566,6 +566,7 @@ $(document).ready(function () {
       type: "POST",
       data: formulario,
       success: function (mensaje) {
+        console.log(mensaje);
         if(mensaje == 'Insercion exitosa'){
 
         Notify(mensaje, "Exito!", "success", "fas fa-check");

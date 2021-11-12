@@ -461,14 +461,19 @@ class OrdentrabajoController {
 
 
         //Validacion de la insercion
-        $sql = "SELECT COUNT(1) 
+        $sql = "SELECT COUNT(1) cantidad
                     FROM detalleordentrabajo dp
                     WHERE
                         dp.otr_codigo = $dotrIdCodigoNombre
                     AND dp.pro_codigo = $dotrIdCodigoProcesoSelect";
         $ejecutar_count = $obj->insert($sql);
+        
+        $cant = 0;
+        foreach($ejecutar_count as $r){
+            $cant = $r['cantidad'];
+        }
 
-        if( $ejecutar_count == '0'){
+        if( $cant == '0'){
 
             // Se agrega el detalle del proceso a la orden de trabajo
             $sql = "INSERT INTO `detalleordentrabajo` (`dotr_codigo`, `otr_codigo`, `pro_codigo`, `dotr_cantidad`, `dotr_orden`) 

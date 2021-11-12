@@ -398,14 +398,17 @@ class ProcesosController {
         $pmIdCodigoNombreProceso    = substr($pmIdCodigoNombreProceso,0,strpos($pmIdCodigoNombreProceso,'-'));
 
         //Validacion de la insercion
-        $sql = "SELECT COUNT(1) 
+        $sql = "SELECT COUNT(1) cantidad
                     FROM detalleprocesomaquina dp
                     WHERE
                         dp.maq_codigo = $pmIdCodigoMaquinaSelect
                     AND dp.pro_codigo = $pmIdCodigoNombreProceso";
-        $ejecutar_count = $obj->insert($sql);
-
-        if( $ejecutar_count == '0'){
+        $ejecutar_count = $obj->consult($sql);
+        $cant = 0;
+        foreach($ejecutar_count as $r){
+            $cant = $r['cantidad'];
+        }
+        if( $cant == '0'){
 
             // Se inserta el detalle proceso maquina
             $sql="INSERT INTO `detalleprocesomaquina` (`dpm_codigo`, `maq_codigo`, `pro_codigo`)
@@ -421,6 +424,7 @@ class ProcesosController {
         }else{
             echo 'El registro ya existe.';
         }
+
 
     }
 

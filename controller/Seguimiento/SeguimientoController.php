@@ -202,6 +202,123 @@ class SeguimientoController {
         
         echo json_encode($result_array);
     }
+
+   public function historialOt(){
+       $obj = new OrdenTrabajoModel();
+
+       // realizar consulta obtener todas las categorias 
+       
+       $sql = "SELECT ca.cat_codigo, ca.cat_descripcion 
+                from categoria ca 
+               where ca.est_codigo = 1 
+                and ca.cat_codigo > 0";
+        $resultCategoria = $obj->consult($sql);
+        
+        $arrCategoria = array();
+        $i=0;
+        foreach ($resultCategoria as $r){
+            array_push($arrCategoria,array('id'          => $r['cat_codigo'],
+                                           'descripcion' => $r['cat_descripcion']));
+            //$i++;
+        }
+
+        //echo $arrCategoria[0]['id'];
+        $arrayDetalle = array();
+
+        for ($i=0; $i < count($arrCategoria) ; $i++) { 
+            // Consulta de detalle por mes.
+            $sql = "SELECT mes, cantidad from (
+                select 1 mes, count(1) cantidad from subcategoria sub, producto prod, ordentrabajo otr, seguimiento s where sub.sub_codigo = prod.sub_codigo and prod.prod_codigo = otr.prod_codigo and sub.cat_codigo = ".$arrCategoria[$i]['id']."   and fnu_getCantFalSegxOtr(otr.otr_codigo) = 0 and otr.est_codigo = 1 and s.otr_codigo = otr.otr_codigo and EXTRACT(MONTH FROM s.seg_fechaFinal) = 1
+
+union all
+select 2 mes, count(1) cantidad from subcategoria sub, producto prod, ordentrabajo otr, seguimiento s where sub.sub_codigo = prod.sub_codigo and prod.prod_codigo = otr.prod_codigo and sub.cat_codigo = ".$arrCategoria[$i]['id']."   and fnu_getCantFalSegxOtr(otr.otr_codigo) = 0 and otr.est_codigo = 1 and s.otr_codigo = otr.otr_codigo and EXTRACT(MONTH FROM s.seg_fechaFinal) = 2
+
+union all
+select 3 mes, count(1) cantidad from subcategoria sub, producto prod, ordentrabajo otr, seguimiento s where sub.sub_codigo = prod.sub_codigo and prod.prod_codigo = otr.prod_codigo and sub.cat_codigo = ".$arrCategoria[$i]['id']."   and fnu_getCantFalSegxOtr(otr.otr_codigo) = 0 and otr.est_codigo = 1 and s.otr_codigo = otr.otr_codigo and EXTRACT(MONTH FROM s.seg_fechaFinal) = 3
+
+union all
+select 4 mes, count(1) cantidad from subcategoria sub, producto prod, ordentrabajo otr, seguimiento s where sub.sub_codigo = prod.sub_codigo and prod.prod_codigo = otr.prod_codigo and sub.cat_codigo = ".$arrCategoria[$i]['id']."   and fnu_getCantFalSegxOtr(otr.otr_codigo) = 0 and otr.est_codigo = 1 and s.otr_codigo = otr.otr_codigo and EXTRACT(MONTH FROM s.seg_fechaFinal) = 4
+
+union all
+select 5 mes, count(1) cantidad from subcategoria sub, producto prod, ordentrabajo otr, seguimiento s where sub.sub_codigo = prod.sub_codigo and prod.prod_codigo = otr.prod_codigo and sub.cat_codigo = ".$arrCategoria[$i]['id']."   and fnu_getCantFalSegxOtr(otr.otr_codigo) = 0 and otr.est_codigo = 1 and s.otr_codigo = otr.otr_codigo and EXTRACT(MONTH FROM s.seg_fechaFinal) = 5
+
+union all
+select 6 mes, count(1) cantidad from subcategoria sub, producto prod, ordentrabajo otr, seguimiento s where sub.sub_codigo = prod.sub_codigo and prod.prod_codigo = otr.prod_codigo and sub.cat_codigo = ".$arrCategoria[$i]['id']."   and fnu_getCantFalSegxOtr(otr.otr_codigo) = 0 and otr.est_codigo = 1 and s.otr_codigo = otr.otr_codigo and EXTRACT(MONTH FROM s.seg_fechaFinal) = 6
+
+union all
+select 7 mes, count(1) cantidad from subcategoria sub, producto prod, ordentrabajo otr, seguimiento s where sub.sub_codigo = prod.sub_codigo and prod.prod_codigo = otr.prod_codigo and sub.cat_codigo = ".$arrCategoria[$i]['id']."   and fnu_getCantFalSegxOtr(otr.otr_codigo) = 0 and otr.est_codigo = 1 and s.otr_codigo = otr.otr_codigo and EXTRACT(MONTH FROM s.seg_fechaFinal) = 7
+
+union all
+select 8 mes, count(1) cantidad from subcategoria sub, producto prod, ordentrabajo otr, seguimiento s where sub.sub_codigo = prod.sub_codigo and prod.prod_codigo = otr.prod_codigo and sub.cat_codigo = ".$arrCategoria[$i]['id']."   and fnu_getCantFalSegxOtr(otr.otr_codigo) = 0 and otr.est_codigo = 1 and s.otr_codigo = otr.otr_codigo and EXTRACT(MONTH FROM s.seg_fechaFinal) = 8
+
+union all
+select 9 mes, count(1) cantidad from subcategoria sub, producto prod, ordentrabajo otr, seguimiento s where sub.sub_codigo = prod.sub_codigo and prod.prod_codigo = otr.prod_codigo and sub.cat_codigo = ".$arrCategoria[$i]['id']."   and fnu_getCantFalSegxOtr(otr.otr_codigo) = 0 and otr.est_codigo = 1 and s.otr_codigo = otr.otr_codigo and EXTRACT(MONTH FROM s.seg_fechaFinal) = 9
+
+union all
+select 10 mes, count(1) cantidad from subcategoria sub, producto prod, ordentrabajo otr, seguimiento s where sub.sub_codigo = prod.sub_codigo and prod.prod_codigo = otr.prod_codigo and sub.cat_codigo = ".$arrCategoria[$i]['id']."   and fnu_getCantFalSegxOtr(otr.otr_codigo) = 0 and otr.est_codigo = 1 and s.otr_codigo = otr.otr_codigo and EXTRACT(MONTH FROM s.seg_fechaFinal) = 10
+
+union all
+select 11 mes, count(1) cantidad from subcategoria sub, producto prod, ordentrabajo otr, seguimiento s where sub.sub_codigo = prod.sub_codigo and prod.prod_codigo = otr.prod_codigo and sub.cat_codigo = ".$arrCategoria[$i]['id']."   and fnu_getCantFalSegxOtr(otr.otr_codigo) = 0 and otr.est_codigo = 1 and s.otr_codigo = otr.otr_codigo and EXTRACT(MONTH FROM s.seg_fechaFinal) = 11
+
+union all
+select 12 mes, count(1) cantidad from subcategoria sub, producto prod, ordentrabajo otr, seguimiento s where sub.sub_codigo = prod.sub_codigo and prod.prod_codigo = otr.prod_codigo and sub.cat_codigo = ".$arrCategoria[$i]['id']."   and fnu_getCantFalSegxOtr(otr.otr_codigo) = 0 and otr.est_codigo = 1 and s.otr_codigo = otr.otr_codigo and EXTRACT(MONTH FROM s.seg_fechaFinal) = 12) w ORDER BY mes ASC         
+            ";
+            //echo $sql;
+            $resultDetalle = $obj->consult($sql);
+
+            $auxArrayDetalle = array();
+            foreach ($resultDetalle as $rd) {
+                array_push($auxArrayDetalle,$rd['cantidad']);
+            }
+
+            array_push($arrayDetalle,$auxArrayDetalle);
+        }
+
+        $color = array('#f3545d','#fdaf4b','#177dff','#f3545d','#fdaf4b','#177dff','#f3545d','#fdaf4b','#177dff','#f3545d','#fdaf4b','#177dff','#f3545d','#fdaf4b','#177dff');
+
+        $result_array = array();
+        for ($i=0; $i < count($arrCategoria) ; $i++) { 
+            array_push($result_array,array(
+                
+                'label' => $arrCategoria[$i]['descripcion'],
+                'borderColor' => $color[$i],
+                'pointBackgroundColor' => 'rgba(243, 84, 93, 0.6)',
+                'pointRadius' => 0,
+                'backgroundColor' => 'rgba(243, 84, 93, 0.4)',
+                'legendColor' => $color[$i],
+                'fill' => true,
+                'borderWidth' => 2,
+                'data' => $arrayDetalle[$i]
+            ));
+
+        }
+
+        echo json_encode($result_array);
+
+
+
+
+
+
+
+        //echo json_encode($arrCategoria);
+
+
+
+
+
+       // Realizar consulta para obtener la cantidad de ordenes finalizadas 
+       // por categoria.
+       
+
+
+
+
+
+
+   }
+
+    
 }
 
 ?>

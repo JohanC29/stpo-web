@@ -299,6 +299,7 @@
 	<!-- importacion de scrips especificos de cada url -->
 
 	<script src="js/home.js"></script>
+	<script src="js/char.js"></script>
 	<script src="js/procesos.js"></script>
 	<script src="js/maquina.js"></script>
 	<script src="js/producto.js"></script>
