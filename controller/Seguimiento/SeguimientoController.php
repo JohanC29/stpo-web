@@ -275,6 +275,9 @@ select 12 mes, count(1) cantidad from subcategoria sub, producto prod, ordentrab
         }
 
         $color = array('#f3545d','#fdaf4b','#177dff','#f3545d','#fdaf4b','#177dff','#f3545d','#fdaf4b','#177dff','#f3545d','#fdaf4b','#177dff','#f3545d','#fdaf4b','#177dff');
+        $colorBackPoint = array('rgba(243, 84, 93, 0.6)','rgba(253, 175, 75, 0.6)','rgba(23, 125, 255, 0.6)','rgba(243, 84, 93, 0.6)','rgba(253, 175, 75, 0.6)','rgba(23, 125, 255, 0.6)','rgba(243, 84, 93, 0.6)','rgba(253, 175, 75, 0.6)','rgba(23, 125, 255, 0.6)');
+        $colorBackColor = array('rgba(243, 84, 93, 0.4)','rgba(253, 175, 75, 0.4)','rgba(23, 125, 255, 0.4)','rgba(243, 84, 93, 0.4)','rgba(253, 175, 75, 0.4)','rgba(23, 125, 255, 0.4)','rgba(243, 84, 93, 0.4)','rgba(253, 175, 75, 0.4)','rgba(23, 125, 255, 0.4)');
+
 
         $result_array = array();
         for ($i=0; $i < count($arrCategoria) ; $i++) { 
@@ -282,9 +285,9 @@ select 12 mes, count(1) cantidad from subcategoria sub, producto prod, ordentrab
                 
                 'label' => $arrCategoria[$i]['descripcion'],
                 'borderColor' => $color[$i],
-                'pointBackgroundColor' => 'rgba(243, 84, 93, 0.6)',
+                'pointBackgroundColor' => $colorBackPoint[$i],
                 'pointRadius' => 0,
-                'backgroundColor' => 'rgba(243, 84, 93, 0.4)',
+                'backgroundColor' => $colorBackColor[$i],
                 'legendColor' => $color[$i],
                 'fill' => true,
                 'borderWidth' => 2,
@@ -295,28 +298,59 @@ select 12 mes, count(1) cantidad from subcategoria sub, producto prod, ordentrab
 
         echo json_encode($result_array);
 
+   }
+
+   public function semanaOt(){
+    $obj = new OrdenTrabajoModel();
+
+    // Cantidad de dias de la semana a mostrar
+    $cantDia = 7;
+
+    $sql = "SELECT dia, cantidad from (";
+
+    for ($i=0; $i < $cantDia; $i++) { 
+        $sql.= "SELECT  fva_getDia( ( DATE_SUB(NOW_COL(),INTERVAL $i DAY) ) ) dia
+                    ,COUNT(1) cantidad, $i orden
+                FROM  ordentrabajo otr, seguimiento s
+                WHERE FNU_GETCANTFALSEGXOTR(otr.otr_codigo) = 0
+                AND otr.est_codigo = 1
+                AND s.otr_codigo = otr.otr_codigo
+                AND DATE_FORMAT(s.seg_fechaInicio, '%Y-%m-%d') = DATE_FORMAT( DATE_SUB(NOW_COL(), INTERVAL $i DAY),'%Y-%m-%d')
+                ";
+        
+        if ( ($i+1) < $cantDia) {
+            $sql.=" UNION ALL 
+                    ";
+        }
+    }
+    $sql.=") x ORDER BY orden desc";
+
+    $result = $obj->consult($sql);
+
+    $arrLabel = array();
+    $arrayDetalle = array();
+    $sumTotalOt = 0;
+    foreach ($result as $r){
+
+    array_push($arrLabel,$r['dia']);
+    array_push($arrayDetalle,$r['cantidad']);
+    $sumTotalOt+=$r['cantidad'];
+
+    }
+
+    
 
 
+    $arrResultado = array( $arrLabel,$arrayDetalle,$sumTotalOt );
 
-
-
-
-        //echo json_encode($arrCategoria);
-
-
-
-
-
-       // Realizar consulta para obtener la cantidad de ordenes finalizadas 
-       // por categoria.
-       
-
-
-
+    echo json_encode($arrResultado);
 
 
 
    }
+
+
+
 
     
 }

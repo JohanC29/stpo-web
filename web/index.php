@@ -20,7 +20,12 @@
         echo "</div>";
 
     include_once '../view/partials/modal.php';
-    include_once '../view/partials/footer.php';
+    
     echo "</body>";
+    include_once '../view/partials/footer.php';
+    include_once '../view/partials/importJs.php';
+    if (!isset($_GET['modulo'])) {
+        include_once '../view/partials/charImport.php';
+    }
     echo "</html>";
 ?>

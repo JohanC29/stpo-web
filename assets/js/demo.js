@@ -53,16 +53,9 @@ $('#map-example').vectorMap(
 
 
 
-var myLegendContainer = document.getElementById("myChartLegend");
 
-// generate HTML legend
-myLegendContainer.innerHTML = statisticsChart.generateLegend();
 
-// bind onClick event to all LI-tags of the legend
-var legendItems = myLegendContainer.getElementsByTagName('li');
-for (var i = 0; i < legendItems.length; i += 1) {
-	legendItems[i].addEventListener("click", legendClickCallback, false);
-}
+
 
 var dailySalesChart = document.getElementById('dailySalesChart').getContext('2d');
 
