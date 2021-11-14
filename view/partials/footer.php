@@ -4,7 +4,7 @@
 					<nav class="pull-left">
 						<ul class="nav">
 							<li class="nav-item">
-								<a class="nav-link" href="">
+								<a class="nav-link" href="https://www.ucc.edu.co/Paginas/inicio.aspx">
 									Universidad Cooperativa de Colombia
 								</a>
 							</li>
@@ -18,14 +18,14 @@
 					</nav>
 					<div class="copyright ml-auto">
 						2021, made with <i class="fa fa-heart heart text-success"></i> by
-						<a href="">UCC</a>
+						<a href="https://www.ucc.edu.co/cali/Paginas/inicio.aspx">UCC</a>
 					</div>
 				</div>
 			</footer>
 		</div>
 
 		<!-- Custom template | don't include it in your project! -->
-		<div class="custom-template">
+		<!-- <div class="custom-template">
 			<div class="title">Settings</div>
 			<div class="custom-content">
 				<div class="switcher">
@@ -93,7 +93,7 @@
 			<div class="custom-toggle">
 				<i class="flaticon-settings"></i>
 			</div>
-		</div>
+		</div> -->
 		<!-- End Custom template -->
 	</div>
 

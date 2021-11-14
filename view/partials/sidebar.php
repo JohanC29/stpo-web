@@ -54,11 +54,11 @@
 							</a>
 							<div class="collapse" id="OT">
 								<ul class="nav nav-collapse">
-									<li>
+									<!-- <li>
 										<a href="">
 											<span class="sub-item">Consultar</span>
 										</a>
-									</li>
+									</li> -->
 									<li>
 										<a href="<?php echo getUrl("ordentrabajo","ordentrabajo","consultOtDetalle");?>">
 											<span class="sub-item">Configurar Orden Trabajo</span>

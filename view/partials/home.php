@@ -47,15 +47,15 @@
             <div class="card full-height">
                 <div class="card-body">
                     <div class="card-title">
-                        Estadistica de uso
+                        Estadistica de OT semanal 
                     </div>
                     <div class="row py-3">
                         <div class="col-md-4 d-flex flex-column justify-content-around">
                             <div>
                                 <h6 class="fw-bold text-uppercase text-success op-8">
-                                    Total Orden Trabajo
+                                    Total Ordenes de Trabajo
                                 </h6>
-                                <h3 class="fw-bold" id="charTotalOt"></h3>
+                                <h3 class="fw-bold" id="charTotalOt">&nbsp;</h3>
                             </div>
                             <!-- <div>
                                 <h6 class="fw-bold text-uppercase text-danger op-8">
@@ -123,7 +123,7 @@
                     <div class="card-header">
                         <div class="card-head-row">
                             <div class="card-title">Actividad Usiarios</div>
-                            <div class="card-tools">
+                            <!-- <div class="card-tools">
                                 <ul class="nav nav-pills nav-secondary nav-pills-no-bd nav-sm" id="pills-tab"
                                     role="tablist">
                                     <li class="nav-item">
@@ -139,10 +139,12 @@
                                             role="tab" aria-selected="false">Month</a>
                                     </li>
                                 </ul>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body scrollCard" id="homeActividadUsuario"
+                    style = "max-height: 430px">
+
                         <div class="d-flex">
                             <div class="avatar avatar-online">
                                 <span class="avatar-title rounded-circle border border-white bg-info">J</span>
@@ -162,7 +164,7 @@
                         <div class="separator-dashed"></div>
                         <div class="d-flex">
                             <div class="avatar avatar-offline">
-                                <span class="avatar-title rounded-circle border border-white bg-secondary">P</span>
+                                <span class="avatar-title rounded-circle border border-white">P</span>
                             </div>
                             <div class="flex-1 ml-3 pt-1">
                                 <h6 class="text-uppercase fw-bold mb-1">
@@ -235,9 +237,9 @@
             <div class="card">
                 <div class="card-header">
                     <div class="card-head-row">
-                        <div class="card-title">Historial Ot</div>
+                        <div class="card-title">Historial Orden de trabajo</div>
                         <div class="card-tools">
-                            <a href="#" class="btn btn-info btn-border btn-round btn-sm mr-2">
+                            <!-- <a href="#" class="btn btn-info btn-border btn-round btn-sm mr-2">
                                 <span class="btn-label">
                                     <i class="fa fa-pencil"></i>
                                 </span>
@@ -248,7 +250,7 @@
                                     <i class="fa fa-print"></i>
                                 </span>
                                 Print
-                            </a>
+                            </a> -->
                         </div>
                     </div>
                 </div>

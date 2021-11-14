@@ -119,3 +119,9 @@
       transform: rotate(360deg);
     }
   }
+
+  .scrollCard {
+    
+    overflow-y: auto;
+}
+

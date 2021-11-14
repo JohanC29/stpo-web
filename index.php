@@ -15,6 +15,7 @@ for ($i=1; $i <= 12 ; $i++) {
     and otr.est_codigo = 1
     and s.otr_codigo = otr.otr_codigo
     and EXTRACT(MONTH FROM s.seg_fechaFinal) = '.$i.'
+    and s.seg_codigo = (select max(se.seg_codigo) from seguimiento se where se.otr_codigo = otr.otr_codigo)
     <br><br>';
 }
 

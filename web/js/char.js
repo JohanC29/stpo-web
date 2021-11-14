@@ -113,7 +113,7 @@ $.ajax({
 	success: function (c) {
 		var cJson = JSON.parse(c);
 		console.log(cJson);
-		$('#charTotalOt').append(cJson[2]+' OT');
+		$('#charTotalOt').append(''+cJson[2]+' ');
 		var mytotalIncomeChart = new Chart(totalIncomeChart, {
 			type: "bar",
 			data: {
@@ -355,6 +355,22 @@ $.ajax({
 
     },
   });	
+
+
+
+
+  // Peticion para actualizar informacion de
+  // las actividades de usuario
+  $.ajax({
+    url: "ajax.php?modulo=seguimiento&controlador=seguimiento&funcion=actividadUsuario",
+    type: "POST",
+    // data: parametros,
+    success: function (res) {
+        console.log(res);
+		$('#homeActividadUsuario').html(res);
+	},	
+ });
+
 
 
 

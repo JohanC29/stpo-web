@@ -228,40 +228,43 @@ class SeguimientoController {
         for ($i=0; $i < count($arrCategoria) ; $i++) { 
             // Consulta de detalle por mes.
             $sql = "SELECT mes, cantidad from (
-                select 1 mes, count(1) cantidad from subcategoria sub, producto prod, ordentrabajo otr, seguimiento s where sub.sub_codigo = prod.sub_codigo and prod.prod_codigo = otr.prod_codigo and sub.cat_codigo = ".$arrCategoria[$i]['id']."   and fnu_getCantFalSegxOtr(otr.otr_codigo) = 0 and otr.est_codigo = 1 and s.otr_codigo = otr.otr_codigo and EXTRACT(MONTH FROM s.seg_fechaFinal) = 1
+                select 1 mes, count(1) cantidad from subcategoria sub, producto prod, ordentrabajo otr, seguimiento s where sub.sub_codigo = prod.sub_codigo and prod.prod_codigo = otr.prod_codigo and sub.cat_codigo = ".$arrCategoria[$i]['id']." /* Codigo categoria */ and fnu_getCantFalSegxOtr(otr.otr_codigo) = 0 and otr.est_codigo = 1 and s.otr_codigo = otr.otr_codigo and EXTRACT(MONTH FROM s.seg_fechaFinal) = 1 and s.seg_codigo = (select max(se.seg_codigo) from seguimiento se where se.otr_codigo = otr.otr_codigo)
 
 union all
-select 2 mes, count(1) cantidad from subcategoria sub, producto prod, ordentrabajo otr, seguimiento s where sub.sub_codigo = prod.sub_codigo and prod.prod_codigo = otr.prod_codigo and sub.cat_codigo = ".$arrCategoria[$i]['id']."   and fnu_getCantFalSegxOtr(otr.otr_codigo) = 0 and otr.est_codigo = 1 and s.otr_codigo = otr.otr_codigo and EXTRACT(MONTH FROM s.seg_fechaFinal) = 2
+select 2 mes, count(1) cantidad from subcategoria sub, producto prod, ordentrabajo otr, seguimiento s where sub.sub_codigo = prod.sub_codigo and prod.prod_codigo = otr.prod_codigo and sub.cat_codigo = ".$arrCategoria[$i]['id']." /* Codigo categoria */ and fnu_getCantFalSegxOtr(otr.otr_codigo) = 0 and otr.est_codigo = 1 and s.otr_codigo = otr.otr_codigo and EXTRACT(MONTH FROM s.seg_fechaFinal) = 2 and s.seg_codigo = (select max(se.seg_codigo) from seguimiento se where se.otr_codigo = otr.otr_codigo)
 
 union all
-select 3 mes, count(1) cantidad from subcategoria sub, producto prod, ordentrabajo otr, seguimiento s where sub.sub_codigo = prod.sub_codigo and prod.prod_codigo = otr.prod_codigo and sub.cat_codigo = ".$arrCategoria[$i]['id']."   and fnu_getCantFalSegxOtr(otr.otr_codigo) = 0 and otr.est_codigo = 1 and s.otr_codigo = otr.otr_codigo and EXTRACT(MONTH FROM s.seg_fechaFinal) = 3
+select 3 mes, count(1) cantidad from subcategoria sub, producto prod, ordentrabajo otr, seguimiento s where sub.sub_codigo = prod.sub_codigo and prod.prod_codigo = otr.prod_codigo and sub.cat_codigo = ".$arrCategoria[$i]['id']." /* Codigo categoria */ and fnu_getCantFalSegxOtr(otr.otr_codigo) = 0 and otr.est_codigo = 1 and s.otr_codigo = otr.otr_codigo and EXTRACT(MONTH FROM s.seg_fechaFinal) = 3 and s.seg_codigo = (select max(se.seg_codigo) from seguimiento se where se.otr_codigo = otr.otr_codigo)
 
 union all
-select 4 mes, count(1) cantidad from subcategoria sub, producto prod, ordentrabajo otr, seguimiento s where sub.sub_codigo = prod.sub_codigo and prod.prod_codigo = otr.prod_codigo and sub.cat_codigo = ".$arrCategoria[$i]['id']."   and fnu_getCantFalSegxOtr(otr.otr_codigo) = 0 and otr.est_codigo = 1 and s.otr_codigo = otr.otr_codigo and EXTRACT(MONTH FROM s.seg_fechaFinal) = 4
+select 4 mes, count(1) cantidad from subcategoria sub, producto prod, ordentrabajo otr, seguimiento s where sub.sub_codigo = prod.sub_codigo and prod.prod_codigo = otr.prod_codigo and sub.cat_codigo = ".$arrCategoria[$i]['id']." /* Codigo categoria */ and fnu_getCantFalSegxOtr(otr.otr_codigo) = 0 and otr.est_codigo = 1 and s.otr_codigo = otr.otr_codigo and EXTRACT(MONTH FROM s.seg_fechaFinal) = 4 and s.seg_codigo = (select max(se.seg_codigo) from seguimiento se where se.otr_codigo = otr.otr_codigo)
 
 union all
-select 5 mes, count(1) cantidad from subcategoria sub, producto prod, ordentrabajo otr, seguimiento s where sub.sub_codigo = prod.sub_codigo and prod.prod_codigo = otr.prod_codigo and sub.cat_codigo = ".$arrCategoria[$i]['id']."   and fnu_getCantFalSegxOtr(otr.otr_codigo) = 0 and otr.est_codigo = 1 and s.otr_codigo = otr.otr_codigo and EXTRACT(MONTH FROM s.seg_fechaFinal) = 5
+select 5 mes, count(1) cantidad from subcategoria sub, producto prod, ordentrabajo otr, seguimiento s where sub.sub_codigo = prod.sub_codigo and prod.prod_codigo = otr.prod_codigo and sub.cat_codigo = ".$arrCategoria[$i]['id']." /* Codigo categoria */ and fnu_getCantFalSegxOtr(otr.otr_codigo) = 0 and otr.est_codigo = 1 and s.otr_codigo = otr.otr_codigo and EXTRACT(MONTH FROM s.seg_fechaFinal) = 5 and s.seg_codigo = (select max(se.seg_codigo) from seguimiento se where se.otr_codigo = otr.otr_codigo)
 
 union all
-select 6 mes, count(1) cantidad from subcategoria sub, producto prod, ordentrabajo otr, seguimiento s where sub.sub_codigo = prod.sub_codigo and prod.prod_codigo = otr.prod_codigo and sub.cat_codigo = ".$arrCategoria[$i]['id']."   and fnu_getCantFalSegxOtr(otr.otr_codigo) = 0 and otr.est_codigo = 1 and s.otr_codigo = otr.otr_codigo and EXTRACT(MONTH FROM s.seg_fechaFinal) = 6
+select 6 mes, count(1) cantidad from subcategoria sub, producto prod, ordentrabajo otr, seguimiento s where sub.sub_codigo = prod.sub_codigo and prod.prod_codigo = otr.prod_codigo and sub.cat_codigo = ".$arrCategoria[$i]['id']." /* Codigo categoria */ and fnu_getCantFalSegxOtr(otr.otr_codigo) = 0 and otr.est_codigo = 1 and s.otr_codigo = otr.otr_codigo and EXTRACT(MONTH FROM s.seg_fechaFinal) = 6 and s.seg_codigo = (select max(se.seg_codigo) from seguimiento se where se.otr_codigo = otr.otr_codigo)
 
 union all
-select 7 mes, count(1) cantidad from subcategoria sub, producto prod, ordentrabajo otr, seguimiento s where sub.sub_codigo = prod.sub_codigo and prod.prod_codigo = otr.prod_codigo and sub.cat_codigo = ".$arrCategoria[$i]['id']."   and fnu_getCantFalSegxOtr(otr.otr_codigo) = 0 and otr.est_codigo = 1 and s.otr_codigo = otr.otr_codigo and EXTRACT(MONTH FROM s.seg_fechaFinal) = 7
+select 7 mes, count(1) cantidad from subcategoria sub, producto prod, ordentrabajo otr, seguimiento s where sub.sub_codigo = prod.sub_codigo and prod.prod_codigo = otr.prod_codigo and sub.cat_codigo = ".$arrCategoria[$i]['id']." /* Codigo categoria */ and fnu_getCantFalSegxOtr(otr.otr_codigo) = 0 and otr.est_codigo = 1 and s.otr_codigo = otr.otr_codigo and EXTRACT(MONTH FROM s.seg_fechaFinal) = 7 and s.seg_codigo = (select max(se.seg_codigo) from seguimiento se where se.otr_codigo = otr.otr_codigo)
 
 union all
-select 8 mes, count(1) cantidad from subcategoria sub, producto prod, ordentrabajo otr, seguimiento s where sub.sub_codigo = prod.sub_codigo and prod.prod_codigo = otr.prod_codigo and sub.cat_codigo = ".$arrCategoria[$i]['id']."   and fnu_getCantFalSegxOtr(otr.otr_codigo) = 0 and otr.est_codigo = 1 and s.otr_codigo = otr.otr_codigo and EXTRACT(MONTH FROM s.seg_fechaFinal) = 8
+select 8 mes, count(1) cantidad from subcategoria sub, producto prod, ordentrabajo otr, seguimiento s where sub.sub_codigo = prod.sub_codigo and prod.prod_codigo = otr.prod_codigo and sub.cat_codigo = ".$arrCategoria[$i]['id']." /* Codigo categoria */ and fnu_getCantFalSegxOtr(otr.otr_codigo) = 0 and otr.est_codigo = 1 and s.otr_codigo = otr.otr_codigo and EXTRACT(MONTH FROM s.seg_fechaFinal) = 8 and s.seg_codigo = (select max(se.seg_codigo) from seguimiento se where se.otr_codigo = otr.otr_codigo)
 
 union all
-select 9 mes, count(1) cantidad from subcategoria sub, producto prod, ordentrabajo otr, seguimiento s where sub.sub_codigo = prod.sub_codigo and prod.prod_codigo = otr.prod_codigo and sub.cat_codigo = ".$arrCategoria[$i]['id']."   and fnu_getCantFalSegxOtr(otr.otr_codigo) = 0 and otr.est_codigo = 1 and s.otr_codigo = otr.otr_codigo and EXTRACT(MONTH FROM s.seg_fechaFinal) = 9
+select 9 mes, count(1) cantidad from subcategoria sub, producto prod, ordentrabajo otr, seguimiento s where sub.sub_codigo = prod.sub_codigo and prod.prod_codigo = otr.prod_codigo and sub.cat_codigo = ".$arrCategoria[$i]['id']." /* Codigo categoria */ and fnu_getCantFalSegxOtr(otr.otr_codigo) = 0 and otr.est_codigo = 1 and s.otr_codigo = otr.otr_codigo and EXTRACT(MONTH FROM s.seg_fechaFinal) = 9 and s.seg_codigo = (select max(se.seg_codigo) from seguimiento se where se.otr_codigo = otr.otr_codigo)
 
 union all
-select 10 mes, count(1) cantidad from subcategoria sub, producto prod, ordentrabajo otr, seguimiento s where sub.sub_codigo = prod.sub_codigo and prod.prod_codigo = otr.prod_codigo and sub.cat_codigo = ".$arrCategoria[$i]['id']."   and fnu_getCantFalSegxOtr(otr.otr_codigo) = 0 and otr.est_codigo = 1 and s.otr_codigo = otr.otr_codigo and EXTRACT(MONTH FROM s.seg_fechaFinal) = 10
+select 10 mes, count(1) cantidad from subcategoria sub, producto prod, ordentrabajo otr, seguimiento s where sub.sub_codigo = prod.sub_codigo and prod.prod_codigo = otr.prod_codigo and sub.cat_codigo = ".$arrCategoria[$i]['id']." /* Codigo categoria */ and fnu_getCantFalSegxOtr(otr.otr_codigo) = 0 and otr.est_codigo = 1 and s.otr_codigo = otr.otr_codigo and EXTRACT(MONTH FROM s.seg_fechaFinal) = 10 and s.seg_codigo = (select max(se.seg_codigo) from seguimiento se where se.otr_codigo = otr.otr_codigo)
 
 union all
-select 11 mes, count(1) cantidad from subcategoria sub, producto prod, ordentrabajo otr, seguimiento s where sub.sub_codigo = prod.sub_codigo and prod.prod_codigo = otr.prod_codigo and sub.cat_codigo = ".$arrCategoria[$i]['id']."   and fnu_getCantFalSegxOtr(otr.otr_codigo) = 0 and otr.est_codigo = 1 and s.otr_codigo = otr.otr_codigo and EXTRACT(MONTH FROM s.seg_fechaFinal) = 11
+select 11 mes, count(1) cantidad from subcategoria sub, producto prod, ordentrabajo otr, seguimiento s where sub.sub_codigo = prod.sub_codigo and prod.prod_codigo = otr.prod_codigo and sub.cat_codigo = ".$arrCategoria[$i]['id']." /* Codigo categoria */ and fnu_getCantFalSegxOtr(otr.otr_codigo) = 0 and otr.est_codigo = 1 and s.otr_codigo = otr.otr_codigo and EXTRACT(MONTH FROM s.seg_fechaFinal) = 11 and s.seg_codigo = (select max(se.seg_codigo) from seguimiento se where se.otr_codigo = otr.otr_codigo)
 
 union all
-select 12 mes, count(1) cantidad from subcategoria sub, producto prod, ordentrabajo otr, seguimiento s where sub.sub_codigo = prod.sub_codigo and prod.prod_codigo = otr.prod_codigo and sub.cat_codigo = ".$arrCategoria[$i]['id']."   and fnu_getCantFalSegxOtr(otr.otr_codigo) = 0 and otr.est_codigo = 1 and s.otr_codigo = otr.otr_codigo and EXTRACT(MONTH FROM s.seg_fechaFinal) = 12) w ORDER BY mes ASC         
+select 12 mes, count(1) cantidad from subcategoria sub, producto prod, ordentrabajo otr, seguimiento s where sub.sub_codigo = prod.sub_codigo and prod.prod_codigo = otr.prod_codigo and sub.cat_codigo = ".$arrCategoria[$i]['id']." /* Codigo categoria */ and fnu_getCantFalSegxOtr(otr.otr_codigo) = 0 and otr.est_codigo = 1 and s.otr_codigo = otr.otr_codigo and EXTRACT(MONTH FROM s.seg_fechaFinal) = 12 and s.seg_codigo = (select max(se.seg_codigo) from seguimiento se where se.otr_codigo = otr.otr_codigo)
+
+
+            ) w ORDER BY mes ASC         
             ";
             //echo $sql;
             $resultDetalle = $obj->consult($sql);
@@ -316,6 +319,7 @@ select 12 mes, count(1) cantidad from subcategoria sub, producto prod, ordentrab
                 AND otr.est_codigo = 1
                 AND s.otr_codigo = otr.otr_codigo
                 AND DATE_FORMAT(s.seg_fechaInicio, '%Y-%m-%d') = DATE_FORMAT( DATE_SUB(NOW_COL(), INTERVAL $i DAY),'%Y-%m-%d')
+                AND s.seg_codigo = (select max(se.seg_codigo) from seguimiento se where se.otr_codigo = otr.otr_codigo)
                 ";
         
         if ( ($i+1) < $cantDia) {
@@ -345,6 +349,126 @@ select 12 mes, count(1) cantidad from subcategoria sub, producto prod, ordentrab
 
     echo json_encode($arrResultado);
 
+
+
+   }
+
+
+   public function actividadUsuario(){
+       $obj = new OrdenTrabajoModel();
+
+       // Select Para traer todas las actividades de los usuario en la tabla 
+       // seguimiento
+       $sql = "SELECT 
+                    x.codigoEstado,
+                    x.estado,
+                    x.seg_codigo,
+                    e.emp_nombre,
+                    e.emp_apellido,
+                    p.pro_nombre,
+                    m.maq_nombre,
+                    otr.otr_identificador,
+                    x.fecha,
+                    x.hora,
+                    x.cantidad
+                FROM
+                    (SELECT 
+                        1 codigoEstado,
+                            'OT INICIADA' estado,
+                            s.seg_codigo,
+                            s.emp_codigo,
+                            s.dpm_codigo,
+                            s.otr_codigo,
+                            s.seg_fechaInicio fecha,
+                            DATE_FORMAT(s.seg_fechaInicio, '%h:%i %p') hora,
+                            - 1 cantidad
+                    FROM
+                        seguimiento s
+                    WHERE
+                        s.est_codigo IN (3 , 4)
+                            AND DATE_FORMAT(s.seg_fechaInicio, '%d-%m-%y') = DATE_FORMAT(NOW_COL(), '%d-%m-%y') UNION ALL SELECT 
+                        2 codigoEstado,
+                            'OT TERMINADA' estado,
+                            s.seg_codigo,
+                            s.emp_codigo,
+                            s.dpm_codigo,
+                            s.otr_codigo,
+                            s.seg_fechaFinal fecha,
+                            DATE_FORMAT(s.seg_fechaFinal, '%h:%i %p') hora,
+                            s.seg_cantidad cantidad
+                    FROM
+                        seguimiento s
+                    WHERE
+                        s.est_codigo IN (3 , 4)
+                            AND DATE_FORMAT(s.seg_fechaFinal, '%d-%m-%y') = DATE_FORMAT(NOW_COL(), '%d-%m-%y')
+                            AND s.seg_fechaFinal IS NOT NULL) x,
+                    empleado e,
+                    detalleprocesomaquina dpm,
+                    ordentrabajo otr,
+                    proceso p,
+                    maquina m
+                WHERE
+                    x.emp_codigo = e.emp_codigo
+                        AND x.dpm_codigo = dpm.dpm_codigo
+                        AND x.otr_codigo = otr.otr_codigo
+                        AND dpm.pro_codigo = p.pro_codigo
+                        AND dpm.maq_codigo = m.maq_codigo
+                ORDER BY fecha DESC";
+
+        //
+        $result = $obj->consult($sql);
+        $html = "";
+        foreach ($result as $r) {
+
+            $logo = substr($r['emp_nombre'],0,1).substr($r['emp_apellido'],0,1);
+            $nombreApellido =$r['emp_nombre'].' '.$r['emp_apellido'];
+            $Ot = $r['otr_identificador'];
+            
+            //validacion del color del estado
+            $estado = $r['estado'];
+            $codigoEstado = $r['codigoEstado'];
+            if($codigoEstado == 1){
+                $estadoCompleto = '<span class="text-success pl-3">'.$estado.'</span>';
+
+                // Concatenamos la descripcion
+                $descripcion = 'Ot '.$Ot.'. Proceso '.$r['pro_nombre'].'. maquinaria
+                            '.$r['maq_nombre'].'.';
+            }else{
+                $estadoCompleto = '<span class="text-warning pl-3">'.$estado.'</span>';
+
+                // Concatenamos la descripcion
+                $descripcion = 'Ot '.$Ot.'. Cantidad '.$r['cantidad'].' proceso '.$r['pro_nombre'].'. maquinaria
+                            '.$r['maq_nombre'].'.';
+            }
+
+            // hora
+            $hora = $r['hora'];
+
+            // Concatenamos el hmtl que se va a aplicar
+            $html.='
+            <div class="d-flex">
+                <div class="avatar avatar-online">
+                    <span class="avatar-title rounded-circle border border-white bg-info">'.$logo.'</span>
+                </div>
+                <div class="flex-1 ml-3 pt-1">
+                    <h6 class="text-uppercase fw-bold mb-1">
+                        '.$nombreApellido.'
+                        '.$estadoCompleto.'
+                    </h6>
+                    <span class="text-muted">'.$descripcion.'</span>
+                </div>
+                <div class="float-right pt-1">
+                    <small class="text-muted">'.$hora.'</small>
+                </div>
+            </div>
+            <div class="separator-dashed"></div>
+            ';
+
+        }
+        // for ($i=0; $i < 10; $i++) { 
+            echo $html;
+        // }
+        
 
 
    }
