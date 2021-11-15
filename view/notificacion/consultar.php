@@ -25,7 +25,18 @@
                     </div>
                 </div>
                 <div class="card-body" id="homeActividadUsuario">
-
+                    <div class="" style="
+                        padding-left: 45%;
+                        padding-top: 5%;">
+                        <div class="lds-ring">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                    </div>
+                    <br />
+                    <h5 class="text-center op-7 mb-2">Cargando información...</h5>
 
                 </div>
             </div>

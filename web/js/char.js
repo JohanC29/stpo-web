@@ -386,5 +386,17 @@ function pagina() {
       },
     });
 
+    // Peticion para actualizar informacion de
+    // las actividades de orden de trabajo
+    $.ajax({
+      url: "ajax.php?modulo=seguimiento&controlador=seguimiento&funcion=actividadOrdenTrabajo",
+      type: "POST",
+      // data: parametros,
+      success: function (res) {
+        // console.log(res);
+        $("#homeActividadOrdenTrabajo").html(res);
+      },
+    });
+
 
 }

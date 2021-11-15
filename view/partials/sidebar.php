@@ -149,7 +149,7 @@
 						</li>
 						<li class="nav-item">
 							<a data-toggle="collapse" href="#Colaboradores">
-								<i class="fas fa-user"></i>
+								<i class="fas fa-id-card"></i>
 								<p>Colaboradores</p>
 								<span class="caret"></span>
 							</a>

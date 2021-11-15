@@ -74,20 +74,55 @@
             </div>
         </div>
     </div>
-    <div class="row">
 
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card full-height">
-                    <div class="card-header">
-                        <div class="card-title">Proceso Ordenes de trabajo</div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card full-height">
+                <div class="card-header">
+                    <div class="card-title">Proceso Ordenes de trabajo</div>
+                    <div class="card-tools">
+                        <ul class="nav nav-pills nav-secondary nav-pills-no-bd nav-sm" id="pills-tab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="pills-today" data-toggle="pill" href="#pills-today"
+                                    role="tab" aria-selected="true">Ultimos 30 dias</a>
+                            </li>
+                            <!-- <li class="nav-item">
+                                    <a class="nav-link active" id="pills-week" data-toggle="pill" href="#pills-week"
+                                        role="tab" aria-selected="false">Week</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="pills-month" data-toggle="pill" href="#pills-month"
+                                        role="tab" aria-selected="false">Month</a>
+                                </li> -->
+                        </ul>
                     </div>
-                    <div class="card-body">
-                        <ol class="activity-feed">
+                </div>
+                <div class="card-body scrollCard" id="homeActividadOrdenTrabajo" style="max-height: 430px">
+                    <div class="" style="
+                            padding-left: 40%;
+                            padding-top: 10%;">
+                        <div class="lds-ring">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                    </div>
+                    <br />
+                    <h5 class="text-center op-7 mb-2">Cargando información...</h5>
+                    <!-- inicio -->
+                    <!-- <ol class="activity-feed">
                             <li class="feed-item feed-item-secondary">
                                 <time class="date" datetime="4-10">Abril 10</time>
                                 <span class="text">Responded to need
-                                    <a href="#">"Volunteer opportunity"</a></span>
+                                    <a href="#">"Volunteer opportunity"</a></span><br/>
+                                    <span class="text">Responded to need
+                                    <a href="#">"Volunteer opportunity"</a></span><br/>
+                                    <span class="text">Responded to need
+                                    <a href="#">"Volunteer opportunity"</a></span><br/>
+                                    <span class="text">Responded to need
+                                    <a href="#">"Volunteer opportunity"</a></span><br/>
                             </li>
                             <li class="feed-item feed-item-success">
                                 <time class="date" datetime="9-24">Sep 24</time>
@@ -114,23 +149,24 @@
                                 <span class="text">Attending the event
                                     <a href="single-event.php">"Some New Event"</a></span>
                             </li>
-                        </ol>
-                    </div>
+                        </ol> -->
+                    <!-- final -->
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="card full-height">
-                    <div class="card-header">
-                        <div class="card-head-row">
-                            <div class="card-title">Actividad Colaboradores</div>
-                            <div class="card-tools">
-                                <ul class="nav nav-pills nav-secondary nav-pills-no-bd nav-sm" id="pills-tab"
-                                    role="tablist">
-                                    <li class="nav-item">
-                                        <a class="nav-link active" id="pills-today" data-toggle="pill"
-                                            href="#pills-today" role="tab" aria-selected="true">Hoy</a>
-                                    </li>
-                                    <!-- <li class="nav-item">
+        </div>
+        <div class="col-md-6">
+            <div class="card full-height">
+                <div class="card-header">
+                    <div class="card-head-row">
+                        <div class="card-title">Actividad Colaboradores</div>
+                        <div class="card-tools">
+                            <ul class="nav nav-pills nav-secondary nav-pills-no-bd nav-sm" id="pills-tab"
+                                role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="pills-today" data-toggle="pill" href="#pills-today"
+                                        role="tab" aria-selected="true">Hoy</a>
+                                </li>
+                                <!-- <li class="nav-item">
                                         <a class="nav-link active" id="pills-week" data-toggle="pill" href="#pills-week"
                                             role="tab" aria-selected="false">Week</a>
                                     </li>
@@ -138,15 +174,29 @@
                                         <a class="nav-link" id="pills-month" data-toggle="pill" href="#pills-month"
                                             role="tab" aria-selected="false">Month</a>
                                     </li> -->
-                                </ul>
-                            </div>
+                            </ul>
                         </div>
                     </div>
-                    <div class="card-body scrollCard" id="homeActividadUsuario" style="max-height: 430px">
+                </div>
+                <div class="card-body scrollCard" id="homeActividadUsuario" style="max-height: 430px">
+                    <div class="" style="
+                        padding-left: 40%;
+                        padding-top: 10%;">
+                        <div class="lds-ring">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
                     </div>
+                    <br />
+                    <h5 class="text-center op-7 mb-2">Cargando información...</h5>
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="row">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">

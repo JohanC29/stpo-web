@@ -25,7 +25,7 @@ class SeguimientoController {
         // Cantidad de usuarios
         // Usuarios con seguimiento solo iniciado
         // 
-        $sql = 'select (  select count(1) from empleado e where e.est_codigo = 1  ) usuario, 
+        $sql = 'SELECT (  select count(1) from empleado e where e.est_codigo = 1  ) usuario, 
         fnu_getCantUsuNow() usuario_activo from dual';
         $seguimiento = $obj->consult($sql);
 
@@ -80,16 +80,19 @@ class SeguimientoController {
         // 
         $sql = 'SELECT 
         100 valor_max,
-        ( select sum(a.valor) from (SELECT 
-               case  
-                 when fnu_getCantFalSegxOtr(ot.otr_codigo) > 0 then 1
-                 else 0
-                 end valor
+        (SELECT 
+            SUM(cantidad)
+        FROM
+            (SELECT 
+                s.otr_codigo,
+                    CASE
+                        WHEN FNU_GETCANTFALSEGXOTR(s.otr_codigo) > 0 THEN 1
+                        ELSE 0
+                    END cantidad
             FROM
-                ordentrabajo ot
-                where ot.est_codigo = 1) a
-            ) valor
-    FROM DUAL';
+                seguimiento s
+            GROUP BY s.otr_codigo) x) valor
+        FROM DUAL';
         $seguimiento = $obj->consult($sql);
 
         $valor = 0;
@@ -349,57 +352,68 @@ class SeguimientoController {
         $html = "";
 
         $bg = array('bg-info','','bg-danger','bg-secondary','bg-success');
+        if (mysqli_num_rows($result) > 0) {
         // $j = 0;
-        foreach ($result as $r) {
+            foreach ($result as $r) {
 
-            $logo = substr($r['emp_nombre'],0,1).substr($r['emp_apellido'],0,1);
-            $nombreApellido =$r['emp_nombre'].' '.$r['emp_apellido'];
-            $Ot = $r['otr_identificador'];
-            
-            //validacion del color del estado
-            $estado = $r['estado'];
-            $codigoEstado = $r['codigoEstado'];
-            if($codigoEstado == 1){
-                $estadoCompleto = '<span class="text-success pl-3">'.$estado.'</span>';
+                $logo = substr($r['emp_nombre'],0,1).substr($r['emp_apellido'],0,1);
+                $nombreApellido =$r['emp_nombre'].' '.$r['emp_apellido'];
+                $Ot = $r['otr_identificador'];
+                
+                //validacion del color del estado
+                $estado = $r['estado'];
+                $codigoEstado = $r['codigoEstado'];
+                if($codigoEstado == 1){
+                    $estadoCompleto = '<span class="text-success pl-3">'.$estado.'</span>';
 
-                // Concatenamos la descripcion
-                $descripcion = 'Ot '.$Ot.'. Proceso '.$r['pro_nombre'].'. maquinaria
-                            '.$r['maq_nombre'].'.';
-            }else{
-                $estadoCompleto = '<span class="text-warning pl-3">'.$estado.'</span>';
+                    // Concatenamos la descripcion
+                    $descripcion = 'Ot '.$Ot.'. Proceso '.$r['pro_nombre'].'. maquinaria
+                                '.$r['maq_nombre'].'.';
+                }else{
+                    $estadoCompleto = '<span class="text-warning pl-3">'.$estado.'</span>';
 
-                // Concatenamos la descripcion
-                $descripcion = 'Ot '.$Ot.'. Cantidad '.$r['cantidad'].' proceso '.$r['pro_nombre'].'. maquinaria
-                            '.$r['maq_nombre'].'.';
+                    // Concatenamos la descripcion
+                    $descripcion = 'Ot '.$Ot.'. Cantidad '.$r['cantidad'].' proceso '.$r['pro_nombre'].'. maquinaria
+                                '.$r['maq_nombre'].'.';
+                }
+
+                // hora
+                $hora = $r['hora'];
+
+                // Concatenamos el hmtl que se va a aplicar
+                $html.='
+                <div class="d-flex">
+                    <div class="avatar ">
+                        <span class="avatar-title rounded-circle border border-white '.$bg[random_int(0,(count($bg)-1))].'">'.$logo.'</span>
+                    </div>
+                    <div class="flex-1 ml-3 pt-1">
+                        <h6 class="text-uppercase fw-bold mb-1">
+                            '.$nombreApellido.'
+                            '.$estadoCompleto.'
+                        </h6>
+                        <span class="text-muted">'.$descripcion.'</span>
+                    </div>
+                    <div class="float-right pt-1">
+                        <small class="text-muted">'.$hora.'</small>
+                    </div>
+                </div>
+                <div class="separator-dashed"></div>
+                ';
+                // if ($j == 3) {
+                //     $j = 0 ;
+                // }else{
+                //     $j++;
+                // }
             }
-
-            // hora
-            $hora = $r['hora'];
-
-            // Concatenamos el hmtl que se va a aplicar
+        }else{
+            // No encontro datos que mostrar
             $html.='
-            <div class="d-flex">
-                <div class="avatar ">
-                    <span class="avatar-title rounded-circle border border-white '.$bg[random_int(0,(count($bg)-1))].'">'.$logo.'</span>
-                </div>
-                <div class="flex-1 ml-3 pt-1">
-                    <h6 class="text-uppercase fw-bold mb-1">
-                        '.$nombreApellido.'
-                        '.$estadoCompleto.'
-                    </h6>
-                    <span class="text-muted">'.$descripcion.'</span>
-                </div>
-                <div class="float-right pt-1">
-                    <small class="text-muted">'.$hora.'</small>
-                </div>
-            </div>
-            <div class="separator-dashed"></div>
+            <img src="imagenes/no_data.svg" class="rounded mx-auto d-block" 
+            width="100" height="100"
+            alt="No hay datos">
+            <br/>
+            <h5 class="text-center op-7 mb-2">Hoy no se han realizado actividades</h5>
             ';
-            // if ($j == 3) {
-            //     $j = 0 ;
-            // }else{
-            //     $j++;
-            // }
         }
         // for ($i=0; $i < 10; $i++) { 
             echo $html;
@@ -499,88 +513,87 @@ class SeguimientoController {
   public function actividadOrdenTrabajo(){
     $obj = new OrdenTrabajoModel();
 
+    // Intervalo de dia que se desea mostrar
+    $intervalo = 30;
+
     // Select Para traer todas las actividades de los usuario en la tabla 
     // seguimiento
     $sql = "SELECT 
-                 x.codigoEstado,
-                 x.estado,
-                 x.seg_codigo,
-                 x.emp_nombre,
-                 x.emp_apellido,
-                 x.pro_nombre,
-                 x.maq_nombre,
-                 x.otr_identificador,
-                 x.fecha,
-                 x.hora,
-                 x.cantidad
-             FROM
-                 actividadUsuario x
-             WHERE
-                 date_format(x.fecha,'%d-%m-%y') = date_format(now_col(),'%d-%m-%y')
-             ORDER BY fecha DESC";
+                otr_identificador, fechaFormat, fecha, IdProceso, proceso
+            FROM
+                (SELECT 
+                    otr.otr_identificador,
+                        FAV_GETFECHACOL(otr.otr_fechaCrea, '%d %b') fechaFormat,
+                        otr.otr_fechaCrea fecha,
+                        1 IdProceso,
+                        'creada' proceso
+                FROM
+                    ordentrabajo otr
+                WHERE
+                    otr.otr_fechaCrea >= DATE_SUB(NOW_COL(), INTERVAL $intervalo DAY)
+                        AND otr.est_codigo = 1 UNION ALL SELECT 
+                    otr.otr_identificador,
+                        FAV_GETFECHACOL(s.seg_fechaFinal, '%d %b') fechaFormat,
+                        s.seg_fechaFinal fecha,
+                        2 IdProceso,
+                        'teminada' proceso
+                FROM
+                    ordentrabajo otr, seguimiento s
+                WHERE
+                    FNU_GETCANTFALSEGXOTR(otr.otr_codigo) = 0
+                        AND otr.est_codigo = 1
+                        AND s.otr_codigo = otr.otr_codigo
+                        AND s.seg_fechaFinal >= DATE_SUB(NOW_COL(), INTERVAL $intervalo DAY)
+                        AND s.seg_codigo = (SELECT 
+                            MAX(se.seg_codigo)
+                        FROM
+                            seguimiento se
+                        WHERE
+                            se.otr_codigo = otr.otr_codigo)) x
+            ORDER BY x.fecha DESC";
 
      //
      $result = $obj->consult($sql);
      $html = "";
 
-     $bg = array('bg-info','','bg-danger','bg-secondary','bg-success');
+     //$bg = array('bg-info','','bg-danger','bg-secondary','bg-success');
      // $j = 0;
-     foreach ($result as $r) {
+     $html.='<ol class="activity-feed">';
+     $auxFecha ='';
 
-         $logo = substr($r['emp_nombre'],0,1).substr($r['emp_apellido'],0,1);
-         $nombreApellido =$r['emp_nombre'].' '.$r['emp_apellido'];
-         $Ot = $r['otr_identificador'];
-         
-         //validacion del color del estado
-         $estado = $r['estado'];
-         $codigoEstado = $r['codigoEstado'];
-         if($codigoEstado == 1){
-             $estadoCompleto = '<span class="text-success pl-3">'.$estado.'</span>';
+    $bg = array('feed-item-secondary','feed-item-success','feed-item-info','feed-item-warning','feed-item-danger','');
+    // Valida si la consulta trajo resultados
+    if (mysqli_num_rows($result) > 0) {
+        foreach ($result as $r) {
+            $fechaSinEspacios = str_replace(' ','',$r['fechaFormat']);
+            if($auxFecha == ''){
+                $auxFecha = $r['fechaFormat'];
+                $html.='<li class="feed-item '.$bg[random_int(0,(count($bg)-1))].'">
+                        <time class="date" datetime="'.$fechaSinEspacios.'">'.strtoupper($r['fechaFormat']).'</time>';
+            }else if($auxFecha != $r['fechaFormat']){
+                // Cerramos el ciclo anterior
+                $html.='</li>';
+                // Abrimos el nuevo ciclo
+                $html.='<li class="feed-item '.$bg[random_int(0,(count($bg)-1))].'">
+                        <time class="date" datetime="'.$fechaSinEspacios.'">'.strtoupper($r['fechaFormat']).'</time>';
+            }
 
-             // Concatenamos la descripcion
-             $descripcion = 'Ot '.$Ot.'. Proceso '.$r['pro_nombre'].'. maquinaria
-                         '.$r['maq_nombre'].'.';
-         }else{
-             $estadoCompleto = '<span class="text-warning pl-3">'.$estado.'</span>';
+            // Se realiza la insercion de los detalles de ordenes
+            $html.='<span class="text">Orden de trabajo <strong>'.$r['otr_identificador'].'</strong> '.$r['proceso'].' con exito.</span><br/>';
 
-             // Concatenamos la descripcion
-             $descripcion = 'Ot '.$Ot.'. Cantidad '.$r['cantidad'].' proceso '.$r['pro_nombre'].'. maquinaria
-                         '.$r['maq_nombre'].'.';
-         }
-
-         // hora
-         $hora = $r['hora'];
-
-         // Concatenamos el hmtl que se va a aplicar
-         $html.='
-         <div class="d-flex">
-             <div class="avatar ">
-                 <span class="avatar-title rounded-circle border border-white '.$bg[random_int(0,(count($bg)-1))].'">'.$logo.'</span>
-             </div>
-             <div class="flex-1 ml-3 pt-1">
-                 <h6 class="text-uppercase fw-bold mb-1">
-                     '.$nombreApellido.'
-                     '.$estadoCompleto.'
-                 </h6>
-                 <span class="text-muted">'.$descripcion.'</span>
-             </div>
-             <div class="float-right pt-1">
-                 <small class="text-muted">'.$hora.'</small>
-             </div>
-         </div>
-         <div class="separator-dashed"></div>
-         ';
-         // if ($j == 3) {
-         //     $j = 0 ;
-         // }else{
-         //     $j++;
-         // }
-     }
-     // for ($i=0; $i < 10; $i++) { 
-         echo $html;
-     // }
-     
-
+        }
+        $html.='</ol>';
+    }else{
+        // No encontro datos que mostrar
+        $html.='
+        <img src="imagenes/no_data.svg" class="rounded mx-auto d-block" 
+        width="100" height="100"
+        alt="No hay datos">
+        <br/>
+        <h5 class="text-center op-7 mb-2">Hoy no se han realizado actividades</h5>
+        ';
+    }
+        echo $html;
 
     }
   
