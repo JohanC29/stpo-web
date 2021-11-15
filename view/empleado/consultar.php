@@ -21,11 +21,11 @@
             <div class="card">
                 <div class="card-header">
                     <div class="card-head-row">
-                        <div class="card-title">Gestion de Maquina</div>
+                        <div class="card-title">Gestion de Colaborador</div>
                         <div class="card-tools">
-                            <button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#agregarMaquinaModal">
+                            <button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#agregarEmpleadoModal">
                                 <i class="fa fa-plus"></i>
-                                Agregar Maquina
+                                Agregar Colaborador
                             </button>
                         </div>
                     </div>
@@ -36,7 +36,7 @@
                         <canvas id="statisticsChart"></canvas>
                     </div>
                     <div id="myChartLegend"></div> -->
-                    <div class="modal fade" id="agregarMaquinaModal" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal fade" id="agregarEmpleadoModal" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header no-bd">
@@ -44,35 +44,47 @@
                                         <span class="fw-mediumbold">
                                             Agregar</span>
                                         <span class="fw-light">
-                                            Maquina
+                                            Colaborador
                                         </span>
                                     </h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="limpiarCampoEmpleado()">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <p class="small">Por favor ingrese los datos para agregar la maquina: </p>
-                                    <form id="formAgregarMaquina">
+                                    <p class="small">Por favor ingrese los datos para agregar el colaborador: </p>
+                                    <form id="formAgregarEmpleado">
                                         <div class="row">
                                             <div class="col-sm-12">
                                                 <div class="form-group form-group-default">
-                                                    <label>Identificador Maquina</label>
-                                                    <input id="idenMaquina" name="idenMaquina" type="text" class="form-control" placeholder="Ingrese identificador Maquina">
+                                                    <label>No. Identificacion Colaborador</label>
+                                                    <input id="idenEmpleado" name="idenEmpleado" type="number" class="form-control" placeholder="Ingrese No. Identificacion del colaborador">
                                                 </div>
                                             </div>
                                             <div class="col-sm-12">
                                                 <div class="form-group form-group-default">
-                                                    <label>Nombre Maquina</label>
-                                                    <input id="nomMaquina" name="nomMaquina" type="text" class="form-control" placeholder="Ingerese nombre Maquina">
+                                                    <label>Nombres Colaborador</label>
+                                                    <input id="nomEmpleado" name="nomEmpleado" type="text" class="form-control" placeholder="Ingerese nombres colaborador">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="form-group form-group-default">
+                                                    <label>Apellidos Colaborador</label>
+                                                    <input id="apeEmpleado" name="apeEmpleado" type="text" class="form-control" placeholder="Ingrese apellidos colaborador">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="form-group form-group-default">
+                                                    <label>Cargo Colaborador</label>
+                                                    <input id="carEmpleado" name="carEmpleado" type="text" class="form-control" placeholder="Ingrese cargo colaborador">
                                                 </div>
                                             </div>
                                         </div>
                                     </form>
                                 </div>
                                 <div class="modal-footer no-bd">
-                                    <button type="button" id="agregarMaquina" data-url="<?php echo getUrl('maquina', 'maquina', 'insertar', false, 'ajax'); ?>" class="btn btn-primary">Agregar</button>
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                                    <button type="button" id="agregarEmpleado" data-url="<?php echo getUrl('empleado', 'empleado', 'insertar', false, 'ajax'); ?>" class="btn btn-primary">Agregar</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="limpiarCampoEmpleado()">Cancelar</button>
                                 </div>
                             </div>
                         </div>
@@ -82,7 +94,7 @@
 
                     <!-- modal editar -->
 
-                    <div class="modal fade" id="editarMaquinaModal" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal fade" id="editarEmpleadoModal" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header no-bd">
@@ -90,7 +102,7 @@
                                         <span class="fw-mediumbold">
                                             Editar</span>
                                         <span class="fw-light">
-                                            Maquina
+                                            Colaborador
                                         </span>
                                     </h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -98,38 +110,50 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <p class="small">Por favor ingrese los datos para actualizar la informacion de la maquina: </p>
-                                    <form id="formEditarMaquina">
+                                    <p class="small">Por favor ingrese los datos para actualizar la informacion del colaborador: </p>
+                                    <form id="formEditarEmpleado">
                                         <div class="row">
                                         <div class="col-sm-12">
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-sm-8" style="text-align: right;">
-                                                        <label >Codigo Maquina</label>
+                                                        <label >Codigo Colaborador</label>
                                                         </div>
                                                         <div class="col-sm-4" >
-                                                        <input id="editCodigoMaquina" name="editCodigoMaquina" type="text" class="form-control" style="text-align: right;" readonly>        
+                                                        <input id="editCodigoEmpleado" name="editCodigoEmpleado" type="text" class="form-control" style="text-align: right;" readonly>        
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-sm-12">
                                                 <div class="form-group form-group-default">
-                                                    <label>Identificador Maquina</label>
-                                                    <input id="editIdenMaquina" name="editIdenMaquina" type="text" class="form-control" placeholder="Ingrese identificador Maquina">
+                                                    <label>No. Identificacion Colaborador</label>
+                                                    <input id="editIdenEmpleado" name="editIdenEmpleado" type="text" class="form-control" placeholder="Ingrese identificador Maquina">
                                                 </div>
                                             </div>
                                             <div class="col-sm-12">
                                                 <div class="form-group form-group-default">
-                                                    <label>Nombre Maquina</label>
-                                                    <input id="editNomMaquina" name="editNomMaquina" type="text" class="form-control" placeholder="Ingerese nombre Maquina">
+                                                    <label>Nombres Colaborador</label>
+                                                    <input id="editNomEmpleado" name="editNomEmpleado" type="text" class="form-control" placeholder="Ingerese nombre Maquina">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="form-group form-group-default">
+                                                    <label>Apellidos Colaboradr</label>
+                                                    <input id="editApeEmpleado" name="editApeEmpleado" type="text" class="form-control" placeholder="Ingerese nombre Maquina">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="form-group form-group-default">
+                                                    <label>Cargo Colaborador</label>
+                                                    <input id="editCarEmpleado" name="editCarEmpleado" type="text" class="form-control" placeholder="Ingerese nombre Maquina">
                                                 </div>
                                             </div>
                                         </div>
                                     </form>
                                 </div>
                                 <div class="modal-footer no-bd">
-                                    <button type="button" id="editarMaquina" data-url="<?php echo getUrl('maquina', 'maquina', 'editar', false, 'ajax'); ?>" class="btn btn-primary">Actualizar</button>
+                                    <button type="button" id="editarEmpleado" data-url="<?php echo getUrl('empleado', 'empleado', 'editar', false, 'ajax'); ?>" class="btn btn-primary">Actualizar</button>
                                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                                 </div>
                             </div>
@@ -139,21 +163,25 @@
 
                     <!-- Table -->
                     <div class="table-responsive">
-                        <table id="tablaGestionarMaquina" class="display table table-striped table-hover">
+                        <table id="tablaGestionarEmpleado" class="display table table-striped table-hover">
 
                             <thead>
                                 <tr>
                                     <th>Codigo</th>
-                                    <th>Identificador</th>
+                                    <th>Identificacion</th>
                                     <th>Nombre</th>
+                                    <th>Apellido</th>
+                                    <th>Cargo</th>
                                     <th style="width: 10%">Acciones</th>
                                 </tr>
                             </thead>
                             <tfoot>
                                 <tr>
                                     <th>Codigo</th>
-                                    <th>Identificador</th>
+                                    <th>Identificacion</th>
                                     <th>Nombre</th>
+                                    <th>Apellido</th>
+                                    <th>Cargo</th>
                                     <th>Acciones</th>
                                 </tr>
                             </tfoot>
@@ -203,7 +231,8 @@
         </div>
 
     </div>
-    
+
+
 
 
 <!-- </div> -->

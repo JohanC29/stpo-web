@@ -125,3 +125,9 @@
     overflow-y: auto;
 }
 
+/* table.dataTable.dataTable_width_auto {
+  width: auto;
+} */
+.width-200{
+  width:200px;
+}

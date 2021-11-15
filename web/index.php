@@ -26,6 +26,10 @@
     include_once '../view/partials/importJs.php';
     if (!isset($_GET['modulo'])) {
         include_once '../view/partials/charImport.php';
+    }else if(ucwords($_GET['modulo'])=='Notificacion'){
+        echo '<script src="js/notificacion.js"></script>';
+    }else if(ucwords($_GET['modulo'])=='Seguimiento'){
+        echo '<script src="js/seguimiento.js"></script>';
     }
     echo "</html>";
 ?>

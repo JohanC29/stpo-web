@@ -51,6 +51,7 @@
 	
 	<script src="js/procesos.js"></script>
 	<script src="js/maquina.js"></script>
+	<script src="js/empleado.js"></script>
 	<script src="js/producto.js"></script>
 	<script src="js/ordentrabajo.js"></script>
 	<script src="js/productoDetalle.js"></script>

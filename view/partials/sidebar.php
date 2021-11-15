@@ -6,7 +6,7 @@
 						<li class="nav-item active">
 							<a href="index.php" aria-expanded="false">
 								<i class="fas fa-home"></i>
-								<p>Dashboard</p>
+								<p>INICIO</p>
 								<span class="caret"></span>
 							</a>
 						</li>
@@ -27,7 +27,7 @@
 							<div class="collapse" id="Seguimiento">
 								<ul class="nav nav-collapse">
 									<li>
-										<a href="">
+										<a href="<?php echo getUrl("seguimiento","seguimiento","consult");?>">
 											<span class="sub-item">Consultar</span>
 										</a>
 									</li>
@@ -147,6 +147,27 @@
 								</ul>
 							</div>
 						</li>
+						<li class="nav-item">
+							<a data-toggle="collapse" href="#Colaboradores">
+								<i class="fas fa-user"></i>
+								<p>Colaboradores</p>
+								<span class="caret"></span>
+							</a>
+							<div class="collapse" id="Colaboradores">
+								<ul class="nav nav-collapse">
+									<li>
+										<a href="<?php echo getUrl("empleado","empleado","consult");?>">
+											<span class="sub-item">Gestionar Colaboradores</span>
+										</a>
+									</li>
+									<!-- <li>
+										<a href="">
+											<span class="sub-item">Gestionar Base</span>
+										</a>
+									</li> -->
+								</ul>
+							</div>
+						</li>
 
 						<li class="nav-section">
 							<span class="sidebar-mini-icon">
@@ -177,7 +198,7 @@
 							</div>
 						</li>
 						<li class="nav-item">
-							<a data-toggle="collapse" href="#notificaciones">
+							<a href="<?php echo getUrl("notificacion","notificacion","consult");?>">
 								<i class="fas fa-bell"></i>
 								<p>Notificaciones</p>
 								<!-- <span class="caret"></span> -->

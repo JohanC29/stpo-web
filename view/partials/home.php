@@ -47,7 +47,7 @@
             <div class="card full-height">
                 <div class="card-body">
                     <div class="card-title">
-                        Estadistica de OT semanal 
+                        Estadistica de OT semanal
                     </div>
                     <div class="row py-3">
                         <div class="col-md-4 d-flex flex-column justify-content-around">
@@ -122,113 +122,27 @@
                 <div class="card full-height">
                     <div class="card-header">
                         <div class="card-head-row">
-                            <div class="card-title">Actividad Usiarios</div>
-                            <!-- <div class="card-tools">
+                            <div class="card-title">Actividad Colaboradores</div>
+                            <div class="card-tools">
                                 <ul class="nav nav-pills nav-secondary nav-pills-no-bd nav-sm" id="pills-tab"
                                     role="tablist">
                                     <li class="nav-item">
-                                        <a class="nav-link" id="pills-today" data-toggle="pill" href="#pills-today"
-                                            role="tab" aria-selected="true">Today</a>
+                                        <a class="nav-link active" id="pills-today" data-toggle="pill"
+                                            href="#pills-today" role="tab" aria-selected="true">Hoy</a>
                                     </li>
-                                    <li class="nav-item">
+                                    <!-- <li class="nav-item">
                                         <a class="nav-link active" id="pills-week" data-toggle="pill" href="#pills-week"
                                             role="tab" aria-selected="false">Week</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" id="pills-month" data-toggle="pill" href="#pills-month"
                                             role="tab" aria-selected="false">Month</a>
-                                    </li>
+                                    </li> -->
                                 </ul>
-                            </div> -->
+                            </div>
                         </div>
                     </div>
-                    <div class="card-body scrollCard" id="homeActividadUsuario"
-                    style = "max-height: 430px">
-
-                        <div class="d-flex">
-                            <div class="avatar avatar-online">
-                                <span class="avatar-title rounded-circle border border-white bg-info">J</span>
-                            </div>
-                            <div class="flex-1 ml-3 pt-1">
-                                <h6 class="text-uppercase fw-bold mb-1">
-                                    Joko Subianto
-                                    <span class="text-warning pl-3">iniciada pendiente</span>
-                                </h6>
-                                <span class="text-muted">Ot 1231231. Pendiente cantidad 5 proceso corte. maquinaria
-                                    guillotina No 2.</span>
-                            </div>
-                            <div class="float-right pt-1">
-                                <small class="text-muted">8:40 AM</small>
-                            </div>
-                        </div>
-                        <div class="separator-dashed"></div>
-                        <div class="d-flex">
-                            <div class="avatar avatar-offline">
-                                <span class="avatar-title rounded-circle border border-white">P</span>
-                            </div>
-                            <div class="flex-1 ml-3 pt-1">
-                                <h6 class="text-uppercase fw-bold mb-1">
-                                    Prabowo Widodo
-                                    <span class="text-success pl-3">ot iniciada</span>
-                                </h6>
-                                <span class="text-muted">OT 52923121. Cantidad 10. Proceso fresado. Maquinaria
-                                    Fresadora R-4.</span>
-                            </div>
-                            <div class="float-right pt-1">
-                                <small class="text-muted">8:20 AM</small>
-                            </div>
-                        </div>
-                        <div class="separator-dashed"></div>
-                        <div class="d-flex">
-                            <div class="avatar avatar-away">
-                                <span class="avatar-title rounded-circle border border-white bg-danger">L</span>
-                            </div>
-                            <div class="flex-1 ml-3 pt-1">
-                                <h6 class="text-uppercase fw-bold mb-1">
-                                    Lee Chong Wei
-                                    <span class="text-muted pl-3">ot terminada</span>
-                                </h6>
-                                <span class="text-muted">OT 16323912. Cantidad 1000. Proceso embalaje. Maquinaria
-                                    ninguna.</span>
-                            </div>
-                            <div class="float-right pt-1">
-                                <small class="text-muted">8:07 AM</small>
-                            </div>
-                        </div>
-                        <div class="separator-dashed"></div>
-                        <div class="d-flex">
-                            <div class="avatar avatar-offline">
-                                <span class="avatar-title rounded-circle border border-white bg-secondary">P</span>
-                            </div>
-                            <div class="flex-1 ml-3 pt-1">
-                                <h6 class="text-uppercase fw-bold mb-1">
-                                    Peter Parker
-                                    <span class="text-success pl-3">ot iniciada</span>
-                                </h6>
-                                <span class="text-muted">OT 343291. Cantidad 65. Proceso Corte. Maquinaria
-                                    Guillotina N 1.</span>
-                            </div>
-                            <div class="float-right pt-1">
-                                <small class="text-muted">8:01 AM</small>
-                            </div>
-                        </div>
-                        <div class="separator-dashed"></div>
-                        <div class="d-flex">
-                            <div class="avatar avatar-away">
-                                <span class="avatar-title rounded-circle border border-white bg-danger">JV</span>
-                            </div>
-                            <div class="flex-1 ml-3 pt-1">
-                                <h6 class="text-uppercase fw-bold mb-1">
-                                    Logan Paul <span class="text-muted pl-3">ot terminada</span>
-                                </h6>
-                                <span class="text-muted">OT 8723161. Cantidad 42. Proceso Embalaje. Maquinaria
-                                    Ninguna. </span>
-                            </div>
-                            <div class="float-right pt-1">
-                                <small class="text-muted">4:58 PM</small>
-                            </div>
-                        </div>
-                        <div class="separator-dashed"></div>
+                    <div class="card-body scrollCard" id="homeActividadUsuario" style="max-height: 430px">
                     </div>
                 </div>
             </div>

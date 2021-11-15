@@ -21,7 +21,7 @@
             <div class="card">
                 <div class="card-header">
                     <div class="card-head-row">
-                        <div class="card-title">Gestion de Maquina</div>
+                        <div class="card-title">Gestion de Seguimiento</div>
                         <div class="card-tools">
                             <button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#agregarMaquinaModal">
                                 <i class="fa fa-plus"></i>
@@ -139,22 +139,45 @@
 
                     <!-- Table -->
                     <div class="table-responsive">
-                        <table id="tablaGestionarMaquina" class="display table table-striped table-hover">
-
+                        <table id="tablaGestionarSeguimiento" class="display table table-striped table-hover" cellspacing="0" width="2000px">
                             <thead>
                                 <tr>
-                                    <th>Codigo</th>
-                                    <th>Identificador</th>
-                                    <th>Nombre</th>
-                                    <th style="width: 10%">Acciones</th>
+                                    <th >Codigo</th>
+                                    <th>Id Empelado</th>
+                                    <th>Nombre Colaborador</th>
+                                    <th>Apellido Colaborador</th>
+                                    <th>Id Proceso</th>
+                                    <th style="width: 100px">Proceso</th>
+                                    <th>Id Maquina</th>
+                                    <th>Maquina</th>
+                                    <th>Orden Trabajo</th>
+                                    <th>Id Producto</th>
+                                    <th style="width: 200px">Producto</th>
+                                    <th>Fecha Inicio</th>
+                                    <th>Fecha Terminado</th>
+                                    <th>Tiempo Ejecucion</th>
+                                    <th>Cantidad Fabricada</th>
+                                    <th>Estado</th>
                                 </tr>
                             </thead>
                             <tfoot>
                                 <tr>
                                     <th>Codigo</th>
-                                    <th>Identificador</th>
-                                    <th>Nombre</th>
-                                    <th>Acciones</th>
+                                    <th>Id Empelado</th>
+                                    <th>Nombre Colaborador</th>
+                                    <th>Apellido Colaborador</th>
+                                    <th>Id Proceso</th>
+                                    <th>Proceso</th>
+                                    <th>Id Maquina</th>
+                                    <th>Maquina</th>
+                                    <th>Orden Trabajo</th>
+                                    <th>Id Producto</th>
+                                    <th>Producto</th>
+                                    <th>Fecha Inicio</th>
+                                    <th>Fecha Terminado</th>
+                                    <th>Tiempo Ejecucion</th>
+                                    <th>Cantidad Fabricada</th>
+                                    <th>Estado</th>
                                 </tr>
                             </tfoot>
                             <tbody>
