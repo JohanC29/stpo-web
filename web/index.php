@@ -29,6 +29,9 @@
     }else if(ucwords($_GET['modulo'])=='Notificacion'){
         echo '<script src="js/notificacion.js"></script>';
     }else if(ucwords($_GET['modulo'])=='Seguimiento'){
+        echo '
+        <script src="../assets/js/plugin/chart.js/chart.min.js"></script>
+        <script src="../assets/js/plugin/chart-circle/circles.min.js"></script>';
         echo '<script src="js/seguimiento.js"></script>';
     }
     echo "</html>";

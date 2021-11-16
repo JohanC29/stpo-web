@@ -655,6 +655,221 @@ class SeguimientoController {
   }
 
 
+  // Consultar por Ot
+  public function consultarPorOt(){
+    include_once '../view/seguimiento/consultarPorOt.php';
+  }
+
+  // Porcentaje de cumplimiento de la orden
+
+    public function circlesOt(){
+        $obj = new OrdenTrabajoModel();
+        $result_array = array();
+
+        $ordenTrabajo = $_POST['ordenTrabajo'];
+
+        // Completitud de la orden
+        // 
+        $sql = "SELECT 
+                    (SELECT 
+                            COUNT(1)
+                        FROM
+                            (SELECT 
+                                dotr.pro_codigo
+                            FROM
+                                ordentrabajo otr, detalleordentrabajo dotr
+                            WHERE
+                                otr.otr_codigo = dotr.otr_codigo
+                                    AND otr.otr_identificador = $ordenTrabajo
+                            GROUP BY dotr.pro_codigo) x) total,
+                    FNU_GETCANTCOMPXOTR($ordenTrabajo) cantidad
+                FROM DUAL";
+
+        $seguimiento = $obj->consult($sql);
+
+        $cantidadTotal = 0;
+        $cantidad = 0;
+        
+
+            foreach ($seguimiento as $s){
+                $cantidadTotal = $s['total'];
+                $cantidad = $s['cantidad'];
+            }
+
+        if ($cantidadTotal > 0 ) {
+
+            $porcentaje = round(($cantidad/$cantidadTotal*100),0,PHP_ROUND_HALF_DOWN);
+            $color ='';
+            if($porcentaje >= 80){
+                $color= '#2BB930';//["#f1f1f1", "#2BB930"],
+            }else if ($porcentaje >= 40){
+                $color = '#FF9E27';
+            }else {
+                $color = '#F25961';
+            }
+        }else{
+            $cantidad = 0;
+            $cantidadTotal = 0;
+            $porcentaje = 0;
+            $color = '#F25961';
+        }
+
+        $result_array = [
+            'id' => "circlesOt",
+            'radius' => 50,
+            'value' => $cantidad,
+            'maxValue' => $cantidadTotal,
+            'width' => 7,
+            'text' => $porcentaje.'%',
+            'colors' => ["#f1f1f1", $color],
+            'duration' => 400,
+            'wrpClass' => "circles-wrp",
+            'textClass' => "circles-text",
+            'styleWrapper' => true,
+            'styleText' => true,
+        ];
+        
+        echo json_encode($result_array);
+        
+    }
+
+
+    public function consultInfoOt(){
+        $obj = new OrdenTrabajoModel();
+
+        $ordenTrabajo = $_POST['ordenTrabajo'];
+        
+        $sql ="SELECT 
+                c.cat_codigo,
+                c.cat_descripcion,
+                sub.sub_codigo,
+                sub.sub_descripcion,
+                p.prod_codigo,
+                p.prod_descripcion,
+                p.prod_detalle,
+                FAV_GETFECHACOL(otr.otr_fechaCrea, '%W, %d de %M %y') fechaCrea
+            FROM
+                ordentrabajo otr,
+                producto p,
+                subcategoria sub,
+                categoria c
+            WHERE
+                otr.prod_codigo = p.prod_codigo
+                    AND p.sub_codigo = sub.sub_codigo
+                    AND c.cat_codigo = sub.cat_codigo
+                    AND otr.otr_identificador = $ordenTrabajo";
+        
+        $result = $obj->consult($sql);
+
+        $result_array = array();
+
+        if (mysqli_num_rows($result) > 0) {
+
+            $item_array = array();
+
+            while($row = mysqli_fetch_assoc($result)) {
+                $row['fechaCrea'] = ucfirst($row['fechaCrea']);
+                $item_array[]=$row;
+            }
+            $result_array = array(
+                'resultado' => 1,
+                'mensaje'   => 'Exito!',
+                'c' => $item_array[0]
+            );
+                         
+        }else{
+            $result_array = array(
+                'resultado' => 0,
+                'mensaje'   => 'Orden de trabajo no existe.'
+            );
+        }
+
+        echo json_encode($result_array);           
+    }
+
+    public function getTableSegxOt(){
+        $obj = new OrdenTrabajoModel();
+
+        $ordenTrabajo = $_GET['id'];
+
+        if($ordenTrabajo > 0){
+
+            $sql = "SELECT 
+            s.seg_codigo,
+            e.emp_codigo,
+            e.emp_nombre,
+            e.emp_apellido,
+            p.pro_codigo,
+            p.pro_nombre,
+            m.maq_codigo,
+            m.maq_nombre,
+            s.seg_fechaInicio,
+            s.seg_fechaFinal,
+            s.seg_tiempoEjecucion,
+            s.seg_cantidad,
+            est.est_descripcion
+            from 
+            seguimiento s,
+            empleado e,
+            detalleprocesomaquina dpm,
+            ordentrabajo otr,
+            producto prod,
+            proceso p,
+            maquina m,
+            estado est
+            where
+            s.emp_codigo = e.emp_codigo
+            and s.dpm_codigo = dpm.dpm_codigo
+            and dpm.maq_codigo = m.maq_codigo
+            and dpm.pro_codigo = p.pro_codigo
+            and s.otr_codigo = otr.otr_codigo
+            and otr.prod_codigo = prod.prod_codigo
+            and s.est_codigo = est.est_codigo
+            and otr.otr_identificador = $ordenTrabajo
+            ";
+        
+            
+        }
+        else{
+            $sql = "SELECT 
+            null seg_codigo,
+            null emp_codigo,
+            null emp_nombre,
+            null emp_apellido,
+            null pro_codigo,
+            null pro_nombre,
+            null maq_codigo,
+            null maq_nombre,
+            null otr_identificador,
+            null prod_codigo,
+            null prod_descripcion,
+            null seg_fechaInicio,
+            null seg_fechaFinal,
+            null seg_tiempoEjecucion,
+            null seg_cantidad,
+            null est_descripcion
+            from 
+            dual
+            ";
+
+        }
+
+        $seguimiento = $obj->consult($sql);
+        
+        $result_array = array();    
+        if (mysqli_num_rows($seguimiento) > 0) {
+            $item_array = array();
+            while($row = mysqli_fetch_assoc($seguimiento)) {
+                $result_array[]=$row;
+            }
+            echo json_encode($result_array);                
+        }
+
+    
+      }
+
+
+
     
 
 

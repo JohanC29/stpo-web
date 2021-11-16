@@ -28,19 +28,19 @@
 								<ul class="nav nav-collapse">
 									<li>
 										<a href="<?php echo getUrl("seguimiento","seguimiento","consult");?>">
-											<span class="sub-item">Consultar</span>
+											<span class="sub-item">Consulta General</span>
 										</a>
 									</li>
 									<li>
-										<a href="<?php echo getUrl("ordentrabajo","ordentrabajo","consultOtDetalle");?>">
-											<span class="sub-item">Configurar Orden Trabajo</span>
+										<a href="<?php echo getUrl("seguimiento","seguimiento","consultarPorOt");?>">
+											<span class="sub-item">Consultar Orden de Trabajo</span>
 										</a>
 									</li>
-									<li>
+									<!-- <li>
 										<a href="<?php echo getUrl("ordentrabajo","ordentrabajo","consult");?>">
 											<span class="sub-item">Gestionar Orden Trabajo</span>
 										</a>
-									</li>
+									</li> -->
 									
 								</ul>
 							</div>
